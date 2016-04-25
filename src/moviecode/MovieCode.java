@@ -14,10 +14,11 @@ public class MovieCode {
 
     private static AppConfig cfg = AppConfig.getInstance();
 
+    /*
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException, MovieDbException {
         cfg.loadAppConfiguration();
 
-        File videofile = new File("C:\\fabian\\example.mkv");
+        File videofile = new File("D:\\Downloads\\02 FILME\\new\\The Dark Knight Rises (IMAX) (2012)\\The Dark Knight Rises (IMAX) (2012).mkv");
         if (videofile.exists()) {
             showAppSettings();
             showTmdbInfo();
@@ -26,7 +27,10 @@ public class MovieCode {
             System.out.println("file not found");
         }
     }
-
+*/
+    
+    
+    
     public static void showTmdbInfo() throws MovieDbException {
         TmdbInfo inf = new TmdbInfo(cfg.API_KEY);
         inf.getMovieSearchResults("Armageddon", 1998);  // ohne jahr: null eingeben

@@ -1,14 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="Controller.MovieContentController">
+<AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MovieContentController">
     <stylesheets>
         <URL value="@main.css" />
     </stylesheets>
    <children>
-      <ImageView fitHeight="396.0" fitWidth="264.0" layoutX="982.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
+      <BorderPane layoutX="296.0" layoutY="200.0" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <AnchorPane prefHeight="720.0" prefWidth="579.0" styleClass="backgroundBlack" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane layoutX="104.0" layoutY="109.0" prefHeight="720.0" prefWidth="550.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <TableView fx:id="tableMovies" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn prefWidth="313.0" text="Filmtitel" />
+                            <TableColumn prefWidth="69.0" text="Jahr" />
+                              <TableColumn prefWidth="77.0" text="Größe" />
+                              <TableColumn prefWidth="79.0" text="Besitzer" />
+                          </columns>
+                           <BorderPane.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </BorderPane.margin>
+                           <styleClass>
+                              <String fx:value="backgroundBlack" />
+                              <String fx:value="borderOrange" />
+                           </styleClass>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+         </left>
+         <center>
+            <AnchorPane prefHeight="720.0" prefWidth="340.0" styleClass="backgroundBlack" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="528.0" fitWidth="396.0" layoutX="14.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
+                  <GridPane layoutX="1.0" layoutY="19.0" prefHeight="69.0" prefWidth="335.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label styleClass="labelMovieTitel" text="Mad Max">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label styleClass="labelMovieTagline" text="Was für ein schöner Tag" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </GridPane>
+                  <GridPane layoutX="1.0" layoutY="621.0" prefHeight="354.0" prefWidth="427.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="85.0" minHeight="0.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="312.0" minHeight="1.0" prefHeight="312.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label styleClass="labelMovieTagline" text="Overview">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </Label>
+                        <TextArea editable="false" prefHeight="290.0" prefWidth="397.0" text="An den äußersten Grenzen unseres Planeten, in einer trüben Wüstenlandschaft, wo die Menschheit verkommen und fast jeder bereit ist, für das Überlebensnotwendige bis an die Grenzen zu gehen, leben zwei Rebellen. Sie sind auf der Flucht und könnten der Schlüssel dazu sein, die zerfallene Ordnung wiederaufzurichten. Auf der einen Seite ist da Max ein Mann der Tat und weniger Worte, der nach dem Verlust seiner Frau und seines Kindes Seelenfrieden sucht. Auf der anderen Seite ist da Furiosa eine Frau der Tat, die glaubt, dass sie ihr Überleben sichern kann, wenn sie es aus der Wüste bis in die Heimat ihrer Kindheit schafft. Als Max gerade beschlossen hat, dass er alleine eigentlich besser dran ist, trifft er auf eine Gruppe in einem Kampfwagen, an dessen Steuer sich die elitäre Herrscherin befindet. Die Rebellen sind dem Warlord Immortan Joe entkommen, der ihnen nun nachstellt." wrapText="true" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </GridPane.margin>
+                        </TextArea>
+                     </children>
+                  </GridPane>
+               </children></AnchorPane>
+         </center>
+         <right>
+            <AnchorPane prefHeight="720.0" prefWidth="315.0" styleClass="backgroundBlack" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
    </children>
 </AnchorPane>

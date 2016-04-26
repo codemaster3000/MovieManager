@@ -9,14 +9,19 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import moviecode.helpers.AppConfig;
 import moviecode.movieinfo.TmdbInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MovieCode {
 
     private static AppConfig cfg = AppConfig.getInstance();
+    private static final Logger log = LoggerFactory.getLogger(MovieCode.class);
+
 
     /*
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException, MovieDbException {
         cfg.loadAppConfiguration();
+        log.info("testlog entry");
 
         File videofile = new File("D:\\Downloads\\02 FILME\\new\\The Dark Knight Rises (IMAX) (2012)\\The Dark Knight Rises (IMAX) (2012).mkv");
         if (videofile.exists()) {

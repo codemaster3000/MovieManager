@@ -4,3 +4,5 @@ database=localhost
 dbuser=lol
 dbpassword=lol
 tmdbImagePathRoot=https://image.tmdb.org/t/p/w396/
+tmdbLanguage=de
+tmdbCoverLanguage=en

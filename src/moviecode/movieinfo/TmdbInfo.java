@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import moviecode.helpers.AppConfig;
+import moviecode.helpers.VarChecks;
 
 /**
  *
@@ -22,28 +23,59 @@ public class TmdbInfo {
 
     private TheMovieDbApi tmdb;
     private AppConfig cfg = AppConfig.getInstance();
-
-    private static final String LANG = "de";
+    private VarChecks chk;
+    private String LANG;                // langage setting
 
     public TmdbInfo(String apikey) throws MovieDbException {
         // setup tmdb
         tmdb = new TheMovieDbApi(apikey);
+        chk = new VarChecks();
+        LANG = cfg.TMDB_LANGUAGE;
     }
-    
-    public void getMovieInfoByID(int movieId) throws MovieDbException{
+
+    public MovieInfo getMovieInfoByID(int movieId) throws MovieDbException {
         MovieInfo inf = tmdb.getMovieInfo(movieId, LANG, null);
-        System.out.println("Get Movie by ID: " + inf.getTitle());
+        return inf;
     }
-    
-    public void getMovieSearchResults(String searchKeyword, int year) throws MovieDbException{
+
+    public ResultList<MovieInfo> getMovieSearchResultsList(String searchKeyword, int year) throws MovieDbException {
         ResultList<MovieInfo> results = tmdb.searchMovie(searchKeyword, null, LANG, true, year, null, SearchType.PHRASE);
-        System.out.println("SearchResults: " + results.getTotalResults());
-        for (int i = 0; i < results.getTotalResults(); i++) {
-            System.out.println("Result #" + i + ": " + results.getResults().get(i).getTitle() + "(" + results.getResults().get(i).getReleaseDate() + ")");
-        }   
+        return results;
+    }
+
+    public MovieInfo getSearchMovieInfo(String movieFilename) throws MovieDbException {
+        // returns 0 if no year available in filename
+        int year = chk.getYearFromMovieFilename(movieFilename); 
+        int posBracket = movieFilename.indexOf('(');
+        
+        // extract moviename from filename without bracket content and file extension
+        String moviename = movieFilename.substring(0, posBracket - 1);
+        
+        ResultList<MovieInfo> results = new ResultList<MovieInfo>();
+        if (year != 0){
+            results = tmdb.searchMovie(moviename, null, LANG, true, year, null, SearchType.PHRASE);
+        } else {
+            results = tmdb.searchMovie(moviename, null, LANG, true, null, null, SearchType.PHRASE);
+        }
+        
+        // return first search result if available
+        if (results.isEmpty()){
+            return null;
+        } else {
+            return results.getResults().get(0);
+        }
     }
     
-    public void showMovieCoverPopup(int movieId) throws MovieDbException{
+    public String getMovieCoverURL(int movieId) throws MovieDbException{
+        ResultList<Artwork> imgs = tmdb.getMovieImages(movieId, "en");
+        if (imgs.isEmpty()){
+            return null;
+        } else {
+            return cfg.TMDB_IMAGEROOTPATH + imgs.getResults().get(0).getFilePath();
+        }
+    }
+
+    public void showMovieCoverPopup(int movieId) throws MovieDbException {
         ResultList<Artwork> imgs = tmdb.getMovieImages(movieId, "en");
 
         try {
@@ -59,6 +91,6 @@ public class TmdbInfo {
             f.setVisible(true);
         } catch (Exception exp) {
             exp.printStackTrace();
-        }    
+        }
     }
 }

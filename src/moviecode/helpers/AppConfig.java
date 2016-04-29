@@ -18,6 +18,8 @@ public class AppConfig {
     public String DB_USER;
     public String DB_PASSWORD;
     public String TMDB_IMAGEROOTPATH;
+    public String TMDB_LANGUAGE;
+    public String TMDB_COVERLANGUAGE;
 
     protected AppConfig() {
         // ....
@@ -44,6 +46,8 @@ public class AppConfig {
             DB_USER = prop.getProperty("dbuser");
             DB_PASSWORD = prop.getProperty("dbpassword");
             TMDB_IMAGEROOTPATH = prop.getProperty("tmdbImagePathRoot");
+            TMDB_LANGUAGE = prop.getProperty("tmdbLanguage");
+            TMDB_COVERLANGUAGE  =  prop.getProperty("tmdbCoverLanguage");
 
         } catch (IOException ex) {
             ex.printStackTrace();

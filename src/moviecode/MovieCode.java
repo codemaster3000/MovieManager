@@ -6,7 +6,6 @@ import moviecode.mediainfo.MediaInfoGetter;
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
 import moviecode.helpers.AppConfig;
 import moviecode.movieinfo.TmdbInfo;
 import org.slf4j.Logger;
@@ -38,7 +37,7 @@ public class MovieCode {
     
     public static void showTmdbInfo() throws MovieDbException {
         TmdbInfo inf = new TmdbInfo(cfg.API_KEY);
-        inf.getMovieSearchResults("Armageddon", 1998);  // ohne jahr: null eingeben
+        //inf.getMovieSearchResults("Armageddon", 1998);  // ohne jahr: null eingeben
         inf.getMovieInfoByID(9802);
         inf.showMovieCoverPopup(9802);
     }

@@ -1,5 +1,5 @@
 
-import Controller.MainViewController;
+import view.controller.MainViewController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29.04.2016 17:03:13 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="domain.Tmdbinfo" table="tmdbinfo" catalog="moviedb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="tmdbId" type="int">
+            <column name="tmdbId" not-null="true" unique="true" />
+        </property>
+        <property name="title" type="string">
+            <column name="title" not-null="true" />
+        </property>
+        <property name="releasedYear" type="int">
+            <column name="releasedYear" not-null="true" />
+        </property>
+        <property name="rating" type="double">
+            <column name="rating" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="overview" type="string">
+            <column name="overview" not-null="true" />
+        </property>
+        <property name="tagline" type="string">
+            <column name="tagline" not-null="true" />
+        </property>
+        <property name="coverUrl" type="string">
+            <column name="coverURL" not-null="true" />
+        </property>
+        <set name="movies" table="movie" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="movie_main_info_id" not-null="true" />
+            </key>
+            <one-to-many class="domain.Movie" />
+        </set>
+    </class>
+</hibernate-mapping>

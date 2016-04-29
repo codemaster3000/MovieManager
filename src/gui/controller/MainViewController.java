@@ -1,5 +1,5 @@
 
-package view.controller;
+package gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;

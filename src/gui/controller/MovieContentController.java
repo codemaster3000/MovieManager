@@ -1,4 +1,4 @@
-package view.controller;
+package gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -72,11 +72,9 @@ public class MovieContentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         String imageSource = "https://image.tmdb.org/t/p/w396/i68IvNkUvqaKPY0UbadXcQ23aik.jpg";
-        
-        
         imageCover.setImage(new Image(imageSource));
         
-        System.out.println("immage");
+        
     }    
     
 }

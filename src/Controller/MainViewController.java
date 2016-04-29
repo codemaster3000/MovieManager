@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -34,8 +35,11 @@ public class MainViewController implements Initializable {
     @FXML
     public AnchorPane paneMovieMenu;
     
+    @FXML
+    public BorderPane borderPaneForContent;
     
-    
+    @FXML
+    public MovieContentController movieContentController;
     
     
     
@@ -58,12 +62,7 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        String imageSource = "https://image.tmdb.org/t/p/w396/i68IvNkUvqaKPY0UbadXcQ23aik.jpg";
         
-        
-        imageCover.setImage(new Image(imageSource));
-        
-        System.out.println("immage");
     }    
     
     

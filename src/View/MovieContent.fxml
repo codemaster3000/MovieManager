@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -46,10 +47,10 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane prefHeight="720.0" prefWidth="340.0" styleClass="backgroundBlack" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="1000.0" prefWidth="560.0" styleClass="backgroundBlack" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="528.0" fitWidth="396.0" layoutX="14.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
-                  <GridPane layoutX="1.0" layoutY="19.0" prefHeight="69.0" prefWidth="335.0">
+                  <ImageView fx:id="imageCover" fitHeight="528.0" fitWidth="396.0" layoutX="14.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
+                  <GridPane layoutX="1.0" layoutY="19.0" prefHeight="69.0" prefWidth="335.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -58,12 +59,12 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label styleClass="labelMovieTitel" text="Mad Max">
+                        <Label fx:id="labelMovieHeadline" styleClass="labelMovieTitel" text="Mad Max">
                            <padding>
                               <Insets left="20.0" right="20.0" />
                            </padding>
                         </Label>
-                        <Label styleClass="labelMovieTagline" text="Was für ein schöner Tag" GridPane.rowIndex="1">
+                        <Label fx:id="labelTagline" styleClass="labelMovieTagline" text="Was für ein schöner Tag" GridPane.rowIndex="1">
                            <padding>
                               <Insets left="20.0" right="20.0" />
                            </padding>
@@ -84,7 +85,7 @@
                               <Insets left="20.0" right="20.0" />
                            </padding>
                         </Label>
-                        <TextArea editable="false" prefHeight="290.0" prefWidth="397.0" text="An den äußersten Grenzen unseres Planeten, in einer trüben Wüstenlandschaft, wo die Menschheit verkommen und fast jeder bereit ist, für das Überlebensnotwendige bis an die Grenzen zu gehen, leben zwei Rebellen. Sie sind auf der Flucht und könnten der Schlüssel dazu sein, die zerfallene Ordnung wiederaufzurichten. Auf der einen Seite ist da Max ein Mann der Tat und weniger Worte, der nach dem Verlust seiner Frau und seines Kindes Seelenfrieden sucht. Auf der anderen Seite ist da Furiosa eine Frau der Tat, die glaubt, dass sie ihr Überleben sichern kann, wenn sie es aus der Wüste bis in die Heimat ihrer Kindheit schafft. Als Max gerade beschlossen hat, dass er alleine eigentlich besser dran ist, trifft er auf eine Gruppe in einem Kampfwagen, an dessen Steuer sich die elitäre Herrscherin befindet. Die Rebellen sind dem Warlord Immortan Joe entkommen, der ihnen nun nachstellt." wrapText="true" GridPane.rowIndex="1">
+                        <TextArea fx:id="textAreaOverview" editable="false" prefHeight="290.0" prefWidth="397.0" text="An den äußersten Grenzen unseres Planeten, in einer trüben Wüstenlandschaft, wo die Menschheit verkommen und fast jeder bereit ist, für das Überlebensnotwendige bis an die Grenzen zu gehen, leben zwei Rebellen. Sie sind auf der Flucht und könnten der Schlüssel dazu sein, die zerfallene Ordnung wiederaufzurichten. Auf der einen Seite ist da Max ein Mann der Tat und weniger Worte, der nach dem Verlust seiner Frau und seines Kindes Seelenfrieden sucht. Auf der anderen Seite ist da Furiosa eine Frau der Tat, die glaubt, dass sie ihr Überleben sichern kann, wenn sie es aus der Wüste bis in die Heimat ihrer Kindheit schafft. Als Max gerade beschlossen hat, dass er alleine eigentlich besser dran ist, trifft er auf eine Gruppe in einem Kampfwagen, an dessen Steuer sich die elitäre Herrscherin befindet. Die Rebellen sind dem Warlord Immortan Joe entkommen, der ihnen nun nachstellt." wrapText="true" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="15.0" right="15.0" />
                            </GridPane.margin>
@@ -94,7 +95,101 @@
                </children></AnchorPane>
          </center>
          <right>
-            <AnchorPane prefHeight="720.0" prefWidth="315.0" styleClass="backgroundBlack" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="1000.0" prefWidth="608.0" styleClass="backgroundBlack" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane layoutY="62.0" prefHeight="798.0" prefWidth="568.0" AnchorPane.bottomAnchor="182.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="131.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="437.0" minWidth="10.0" prefWidth="437.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label styleClass="labelMovieTagline" text="Informationen" />
+                        <Label styleClass="labelHeadline1" text="TMDB-ID:" GridPane.rowIndex="1" />
+                        <Label styleClass="labelHeadline1" text="Filmtitel:" GridPane.rowIndex="2" />
+                        <Label styleClass="labelHeadline1" text="Jahr:" GridPane.rowIndex="3" />
+                        <Label styleClass="labelHeadline1" text="Rating:" GridPane.rowIndex="6" />
+                        <Label styleClass="labelHeadline1" text="Edition::" GridPane.rowIndex="7" />
+                        <Label styleClass="labelHeadline1" text="Remux:" GridPane.rowIndex="8" />
+                        <Label styleClass="labelHeadline1" text="Notiz:" GridPane.rowIndex="9" GridPane.valignment="TOP" />
+                        <Label fx:id="labelMovieTitel" styleClass="labelText1" text="Mad Max" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="labelYear" styleClass="labelText1" text="2015" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="labelRating" styleClass="labelText1" text="7.6" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label fx:id="labelEdition" styleClass="labelText1" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <CheckBox fx:id="labelRemux" mnemonicParsing="false" styleClass="labelText1" text="Remux Version" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <TextArea fx:id="textareaNote" editable="false" prefHeight="86.0" prefWidth="225.0" text="bla bla" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets top="7.0" />
+                           </GridPane.margin>
+                        </TextArea>
+                        <Label styleClass="labelMovieTagline" text="Datei" GridPane.rowIndex="11" />
+                        <Label fx:id="labelTMDBid" styleClass="labelText1" text="236548" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label styleClass="labelHeadline1" text="Dateiname:" GridPane.rowIndex="12" />
+                        <Label styleClass="labelHeadline1" text="Dateigröße" GridPane.rowIndex="13" />
+                        <Label styleClass="labelHeadline1" text="Format:" GridPane.rowIndex="14" />
+                        <Label styleClass="labelHeadline1" text="Bitrate:" GridPane.rowIndex="18" />
+                        <Label styleClass="labelHeadline1" text="Dauer:" GridPane.rowIndex="4" />
+                        <Label fx:id="labelDuration" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label styleClass="labelMovieTagline" text="Videospur" GridPane.rowIndex="17" />
+                        <Label styleClass="labelHeadline1" text="Modus:" GridPane.rowIndex="19" />
+                        <Label styleClass="labelHeadline1" text="Auflösung:" GridPane.rowIndex="21" />
+                        <Label styleClass="labelHeadline1" text="Seitenverhältnis:" GridPane.rowIndex="20" />
+                        <Label styleClass="labelHeadline1" text="Frame-Rate:" GridPane.rowIndex="22" />
+                        <Label styleClass="labelMovieTagline" text="Audiospur" GridPane.rowIndex="24" />
+                        <Label styleClass="labelHeadline1" text="Genre:" GridPane.rowIndex="5" />
+                        <Label styleClass="labelHeadline1" text="Besitzer:" GridPane.rowIndex="15" />
+                        <Label fx:id="labelGenre" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="labelFileName" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                        <Label fx:id="labelFileSize" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                        <Label fx:id="labelFormat" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                        <Label fx:id="labelOwner" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                        <Label fx:id="labelBitrate" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                        <Label fx:id="labelMode" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                        <Label fx:id="labelAspectRatio" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+                        <Label fx:id="labelResolution" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="21" />
+                        <Label fx:id="labelFrameRate" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="22" />
+                     </children>
+                  </GridPane>
+                  <TableView fx:id="tableAudioLine" layoutX="20.0" layoutY="820.0" prefHeight="160.0" prefWidth="571.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                    <columns>
+                      <TableColumn prefWidth="197.0" text="Sprache" />
+                      <TableColumn prefWidth="119.0" text="Format" />
+                        <TableColumn prefWidth="87.0" text="Bitrate" />
+                        <TableColumn prefWidth="75.0" text="Kanäle" />
+                        <TableColumn prefWidth="89.0" text="DTS-Mod" />
+                    </columns>
+                     <styleClass>
+                        <String fx:value="backgroundBlack" />
+                        <String fx:value="borderOrange" />
+                     </styleClass>
+                  </TableView>
+               </children></AnchorPane>
          </right>
       </BorderPane>
    </children>

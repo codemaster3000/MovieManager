@@ -52,6 +52,16 @@
     -fx-text-fill: #e68a00;
 }
 
+.labelHeadline1 {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.labelText1 {
+    -fx-font-size: 13px;
+    -fx-text-fill: #ffffff;
+}
 
 
 .text-area .content{

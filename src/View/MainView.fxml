@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -14,97 +13,96 @@
     <stylesheets>
         <URL value="@main.css" />
     </stylesheets>
-   <children>
-      <VBox layoutX="262.0" layoutY="50.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <AnchorPane prefHeight="26.0" prefWidth="1280.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <HBox prefHeight="695.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane prefWidth="200.0" styleClass="background-Black">
-                           <children>
-                              <VBox layoutX="50.0" layoutY="40.0" prefHeight="661.0" prefWidth="200.0" styleClass="backgroundBlack" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="70.0" prefWidth="198.0">
-                                       <children>
-                                          <Label styleClass="labelNavigation" text="FILME">
-                                             <padding>
-                                                <Insets left="25.0" top="20.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" top="5.0" />
-                                       </VBox.margin>
-                                    </Pane>
-                                    <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="70.0" prefWidth="198.0">
-                                       <children>
-                                          <Label styleClass="labelNavigation" text="DOKUS">
-                                             <padding>
-                                                <Insets left="25.0" top="20.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" top="5.0" />
-                                       </VBox.margin>
-                                    </Pane>
-                                    <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="70.0" prefWidth="198.0">
-                                       <children>
-                                          <Label styleClass="labelNavigation" text="SERIEN">
-                                             <padding>
-                                                <Insets left="25.0" top="20.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </Pane>
-                                    <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="70.0" prefWidth="198.0">
-                                       <children>
-                                          <Label styleClass="labelNavigation" text="STATISTIKEN">
-                                             <padding>
-                                                <Insets left="25.0" top="20.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </Pane>
-                                    <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="70.0" prefWidth="198.0">
-                                       <children>
-                                          <Label styleClass="labelNavigation" text="EINSTELLUNGEN">
-                                             <padding>
-                                                <Insets left="25.0" top="20.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </Pane>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="anchorPaneContent" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <ImageView fx:id="imageCover" fitHeight="594.0" fitWidth="396.0" layoutX="658.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
-                              <AnchorPane fx:id="paneMovieMenu" layoutY="5.0" prefHeight="188.0" prefWidth="300.0">
-                                 <styleClass>
-                                    <String fx:value="borderOrange" />
-                                    <String fx:value="backgroundBlack" />
-                                 </styleClass>
-                              </AnchorPane>
-                           </children></AnchorPane>
-                     </children>
-                  </HBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="22.0" prefWidth="1280.0" styleClass="backgroundBlack" VBox.vgrow="NEVER" />
-         </children>
-      </VBox>
-   </children>
+    <children>
+        <VBox layoutX="262.0" layoutY="50.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane prefHeight="26.0" prefWidth="1280.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <HBox prefHeight="695.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane prefWidth="200.0" styleClass="background-Black">
+                                    <children>
+                                        <VBox layoutX="50.0" layoutY="40.0" prefHeight="661.0" prefWidth="200.0" styleClass="backgroundBlack" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <children>
+                                                <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="70.0" prefWidth="198.0">
+                                                    <children>
+                                                        <Label styleClass="labelNavigation" text="FILME">
+                                                            <padding>
+                                                                <Insets left="25.0" top="20.0" />
+                                                            </padding>
+                                                        </Label>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0" top="5.0" />
+                                                    </VBox.margin>
+                                                </Pane>
+                                                <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="70.0" prefWidth="198.0">
+                                                    <children>
+                                                        <Label styleClass="labelNavigation" text="DOKUS">
+                                                            <padding>
+                                                                <Insets left="25.0" top="20.0" />
+                                                            </padding>
+                                                        </Label>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0" top="5.0" />
+                                                    </VBox.margin>
+                                                </Pane>
+                                                <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="70.0" prefWidth="198.0">
+                                                    <children>
+                                                        <Label styleClass="labelNavigation" text="SERIEN">
+                                                            <padding>
+                                                                <Insets left="25.0" top="20.0" />
+                                                            </padding>
+                                                        </Label>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets />
+                                                    </VBox.margin>
+                                                </Pane>
+                                                <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="70.0" prefWidth="198.0">
+                                                    <children>
+                                                        <Label styleClass="labelNavigation" text="STATISTIKEN">
+                                                            <padding>
+                                                                <Insets left="25.0" top="20.0" />
+                                                            </padding>
+                                                        </Label>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets />
+                                                    </VBox.margin>
+                                                </Pane>
+                                                <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="70.0" prefWidth="198.0">
+                                                    <children>
+                                                        <Label styleClass="labelNavigation" text="EINSTELLUNGEN">
+                                                            <padding>
+                                                                <Insets left="25.0" top="20.0" />
+                                                            </padding>
+                                                        </Label>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets />
+                                                    </VBox.margin>
+                                                </Pane>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane fx:id="anchorPaneContent" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <BorderPane fx:id="borderPaneForContent" prefHeight="698.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <center>
+                                                <fx:include fx:id="movieContent" source="MovieContent.fxml" />
+                                            </center>
+                                        </BorderPane>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </HBox>
+                    </children>
+                </AnchorPane>
+                <AnchorPane prefHeight="22.0" prefWidth="1280.0" styleClass="backgroundBlack" VBox.vgrow="NEVER" />
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

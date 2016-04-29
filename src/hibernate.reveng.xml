@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="database"/>
+  <table-filter match-name="genre"/>
+  <table-filter match-name="ownerpos"/>
+  <table-filter match-name="audioline"/>
+  <table-filter match-name="videoline"/>
+  <table-filter match-name="movie"/>
+  <table-filter match-name="audiolinepos"/>
+  <table-filter match-name="owner"/>
+  <table-filter match-name="genrepos"/>
+  <table-filter match-name="tmdbinfo"/>
+</hibernate-reverse-engineering>

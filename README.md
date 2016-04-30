@@ -1,5 +1,4 @@
 # Movie File Manager
-=======================
 
 Movie File Manager is a mediafiles manager written in java.
 

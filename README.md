@@ -4,13 +4,11 @@ Movie File Manager is a mediafiles manager written in java.
 
 Dependencies
 ------------
-TMDB api
+TMDB api,
 MediaInfo api
 
 Maven
 -----
-//<a href="https://search.maven.org/#search%7Cga%7C1%7Ctmdb-java"><img //src="https://img.shields.io/maven-central/v/com.uwetrottmann/tmdb-java.svg?style=flat-square"></a>
-
 to do: maven
 
 ```xml

@@ -2,7 +2,9 @@
 package database.persistance;
 
 import database.domain.Audioline;
+import database.domain.Genrepos;
 import database.domain.Movie;
+import database.domain.Ownerpos;
 import database.domain.Tmdbinfo;
 import database.domain.Videoline;
 import java.util.List;
@@ -27,6 +29,33 @@ public class DBFacade {
         }
         return results;
     }
+    
+    public List<Genrepos> getAllGenrePoses() {
+        Session session = DBSession.getInstance();
+        List<Genrepos> results;
+        try {
+            Query query = session.createQuery("FROM Genrepos");
+            results = query.list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return results;
+    }
+    
+    public List<Ownerpos> getAllOwnerPoses() {
+        Session session = DBSession.getInstance();
+        List<Ownerpos> results;
+        try {
+            Query query = session.createQuery("FROM Ownerpos");
+            results = query.list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return results;
+    }
+    
     
     public void saveMovie(Movie movie) {
         Session session = DBSession.getInstance();

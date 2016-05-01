@@ -21,13 +21,12 @@ import java.util.Set;
 import moviecode.mediainfo.MediaInfoGetter;
 
 import static java.lang.Math.toIntExact;
+import java.util.List;
 import moviecode.helpers.AppConfig;
 import moviecode.movieinfo.TmdbInfo;
 import org.hibernate.Session;
 
 public class FileHandler {
-
-    private static AppConfig cfg = AppConfig.getInstance();
 
     /* TODO: 
     
@@ -36,11 +35,32 @@ public class FileHandler {
     - TMDB Jahr isch zur zit vo da file.. eventl ändern uf TMDB-info
     - Genre ist immer null, warum?? genreID gibt es
     - tagline ist null??
+    - alle SET auf null überprüfen, sunsch "" --> sus gits nullpointer-exepitions
+    - setOwner() wer es hinzufügt muss iirgndwo festglegt si als "eingeloggt" odr so
+    - auf duplikat prüfen!!! neuen active(1) --> alte auf active(2) setzen
+    
     
      */
+    private static AppConfig cfg = AppConfig.getInstance();
+
     private String _directoryPath;
     private File _currentMovieFile;
     private ArrayList<File> _moviePathList;
+
+    private Tmdbinfo tmdbinfo;
+    private Videoline videoline;
+    private byte active;
+    private String note;
+    private boolean remux;
+    private String edition;
+    private int duration;
+    private String fileName;
+    private double fileSize;
+    private String fileFormat;
+    private Date date;
+    private Set owners = new HashSet(0);
+    private Set genres = new HashSet(0);
+    private Set audiolines = new HashSet(0);
 
     public FileHandler() {
 
@@ -81,28 +101,13 @@ public class FileHandler {
         }
     }
 
-    private Tmdbinfo tmdbinfo;
-    private Videoline videoline;
-    private byte active;
-    private String note;
-    private boolean remux;
-    private String edition;
-    private int duration;
-    private String fileName;
-    private double fileSize;
-    private String fileFormat;
-    private Date date;
-    private Set owners = new HashSet(0);
-    private Set genres = new HashSet(0);
-    private Set audiolines = new HashSet(0);
-
     private void movieToAdd(File file) throws IOException, MovieDbException {
 
         tmdbinfo = new Tmdbinfo();
         MediaInfoGetter inf = new MediaInfoGetter(file);
         TmdbInfo tmdb = new TmdbInfo("dec0b87fe8f35746c1e96d2fa8ba4873");
         MovieInfo movieInfo = tmdb.getSearchMovieInfo(file.getName());
-        
+
         active = 0;
         edition = getVersion(file.getName());
         fileName = getName(file.getName());
@@ -118,12 +123,11 @@ public class FileHandler {
         tmdbinfo.setOverview(movieInfo.getOverview());
         tmdbinfo.setRating(movieInfo.getUserRating());
         tmdbinfo.setReleasedYear(getYear(file.getName()));      //eventl ändern 
-        tmdbinfo.setTagline(movieInfo.getTagline());
+        tmdbinfo.setTagline(setTagline(movieInfo));
         tmdbinfo.setTitle(movieInfo.getTitle());
         tmdbinfo.setTmdbId(movieInfo.getId());
-        //tmdbinfo.setCoverUrl(tmdb.getMovieCoverURL(movieInfo.getId()));
-        tmdbinfo.setCoverUrl("-");
-        
+        tmdbinfo.setCoverUrl(tmdb.getMovieCoverURL(movieInfo.getId()));
+
         genres = setGenres(movieInfo);
         owners = setOwner();
 
@@ -146,11 +150,9 @@ public class FileHandler {
         movie.setRemux(remux);
         movie.setTmdbinfo(tmdbinfo);
         movie.setVideoline(videoline);
-        
 
-        Session session = DBSession.getInstance();
+        // Film speichern
         DBFacade dbfacade = new DBFacade();
-               
         dbfacade.saveMovie(movie);
 
     }
@@ -338,14 +340,20 @@ public class FileHandler {
 
     private Set<Genrepos> setGenres(MovieInfo movieInfo) {
 
+        DBFacade dbfacade = new DBFacade();
+        List<Genrepos> allGenres = dbfacade.getAllGenrePoses();
+
         Set<Genrepos> genres = new HashSet();
 
         for (int i = 0; i < movieInfo.getGenreIds().size(); i++) {
-            Genrepos pos = new Genrepos();
-            pos.setType(movieInfo.getGenreIds().get(i).toString());
-            genres.add(pos);
+            for (Genrepos pos : allGenres) {
+                if (movieInfo.getGenreIds().get(i).equals(pos.getId())) {
+                    genres.add(pos);
+                    System.out.println(pos.getType());
+                }
+            }
         }
-
+        
         return genres;
     }
 
@@ -354,11 +362,18 @@ public class FileHandler {
         Set<Ownerpos> owner = new HashSet();
 
         Ownerpos pos = new Ownerpos();
-        pos.setOwnerName("Ladurner"); 
-        
+        pos.setOwnerName("Ladurner");
+
         owner.add(pos);
 
         return owner;
     }
 
+    private String setTagline(MovieInfo movieInfo) {
+        if (movieInfo.getTagline() != null) {
+            return movieInfo.getTagline();
+        } else {
+            return "";
+        }
+    }
 }

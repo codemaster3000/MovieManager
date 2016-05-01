@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -84,7 +85,7 @@ public class Movie  implements java.io.Serializable {
     }
     
     @Cascade({CascadeType.ALL})
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "Movie")
+    @ManyToOne(fetch = FetchType.LAZY)
     public Tmdbinfo getTmdbinfo() {
         return this.tmdbinfo;
     }
@@ -94,7 +95,7 @@ public class Movie  implements java.io.Serializable {
     }
     
     @Cascade({CascadeType.ALL})
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "Movie")
+    @ManyToOne(fetch = FetchType.LAZY)
     public Videoline getVideoline() {
         return this.videoline;
     }

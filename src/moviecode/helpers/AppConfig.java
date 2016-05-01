@@ -37,7 +37,7 @@ public class AppConfig {
         InputStream input = null;
 
         try {
-            input = new FileInputStream("app.config.txt");
+            input = new FileInputStream("src/app.config.txt");
             prop.load(input);
 
             // get the property values
@@ -51,6 +51,7 @@ public class AppConfig {
 
         } catch (IOException ex) {
             ex.printStackTrace();
+            System.out.println("Error: Config file not found");
         } finally {
             if (input != null) {
                 try {

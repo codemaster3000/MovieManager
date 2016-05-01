@@ -1,5 +1,27 @@
-# MovieManager
-Movie file database
+# Movie File Manager
+
+Movie File Manager is a mediafiles manager written in java.
+
+Dependencies
+------------
+TMDB api,
+MediaInfo api
+
+Maven
+-----
+to do: maven
+
+```xml
+<dependency>
+    <groupId>com.moviedb</groupId>
+    <artifactId>tmdb-java</artifactId>
+    <version>0.1</version>
+</dependency>
+```
+
+
+Functions (translate to english)
+------------
 
 scant filmdateien (unterordner inkl)
 	-> mkv dateiinfos rauslesen
@@ -19,3 +41,7 @@ filmdatenbank oberfläche
 		-> anzahl filme, gesamtgrösse, gesamtdauer usw
 
 Serien & Dokus als extra daten
+
+Licence
+-------------------------
+[![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US)

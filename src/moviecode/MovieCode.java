@@ -18,20 +18,13 @@ public class MovieCode {
 
 
     /*
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException, MovieDbException {
+    public static void main(String[] args) throws IOException, NoSuchAlgorithmException, MovieDbException {
         cfg.loadAppConfiguration();
         log.info("testlog entry");
-
-        File videofile = new File("D:\\Downloads\\02 FILME\\new\\The Dark Knight Rises (IMAX) (2012)\\The Dark Knight Rises (IMAX) (2012).mkv");
-        if (videofile.exists()) {
-            showAppSettings();
-            showTmdbInfo();
-            showVideoInfo(videofile);
-        } else {
-            System.out.println("file not found");
-        }
+        
+        System.out.println(cfg.API_KEY);
     }
-*/
+    */
     
     
     

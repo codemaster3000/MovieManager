@@ -8,14 +8,14 @@
     <property name="hibernate.connection.username">adminDB</property>
     <property name="hibernate.connection.password">waschmaschine</property>
     <property name="hibernate.show_sql">true</property>
-    <mapping resource="domain/Ownerpos.hbm.xml"/>
-    <mapping resource="domain/Audioline.hbm.xml"/>
-    <mapping resource="domain/Genre.hbm.xml"/>
-    <mapping resource="domain/Genrepos.hbm.xml"/>
-    <mapping resource="domain/Audiolinepos.hbm.xml"/>
-    <mapping resource="domain/Movie.hbm.xml"/>
-    <mapping resource="domain/Owner.hbm.xml"/>
-    <mapping resource="domain/Videoline.hbm.xml"/>
-    <mapping resource="domain/Tmdbinfo.hbm.xml"/>
+    <mapping resource="database/domain/Videoline.hbm.xml"/>
+    <mapping resource="database/domain/Ownerpos.hbm.xml"/>
+    <mapping resource="database/domain/Tmdbinfo.hbm.xml"/>
+    <mapping resource="database/domain/Audioline.hbm.xml"/>
+    <mapping resource="database/domain/Audiolinepos.hbm.xml"/>
+    <mapping resource="database/domain/Owner.hbm.xml"/>
+    <mapping resource="database/domain/Genre.hbm.xml"/>
+    <mapping resource="database/domain/Movie.hbm.xml"/>
+    <mapping resource="database/domain/Genrepos.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

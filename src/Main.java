@@ -9,19 +9,27 @@ import javafx.scene.image.Image;
 
 public class Main extends Application {
 
+    private Stage _primaryStage;
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
         
+        _primaryStage = primaryStage;
+        
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/presentation/MainView.fxml"));
-        primaryStage.setScene(new Scene((Parent) fxmlLoader.load()));
-        primaryStage.setTitle("Movie Manager");
-        primaryStage.setMaximized(true);
-        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("gui/presentation/icons/black_folder-icon.png")));   
-        primaryStage.show();
+        _primaryStage.setScene(new Scene((Parent) fxmlLoader.load()));
+        _primaryStage.setTitle("Movie Manager");
+        _primaryStage.setMaximized(true);
+        _primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("gui/presentation/icons/black_folder-icon.png")));   
+        _primaryStage.show();
 
     }
 
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public Stage getPrimaryStage() {
+        return _primaryStage;
     }
 }

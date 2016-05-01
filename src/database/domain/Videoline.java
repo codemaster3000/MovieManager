@@ -1,5 +1,5 @@
 package database.domain;
-// Generated 29.04.2016 17:03:11 by Hibernate Tools 4.3.1
+// Generated 30.04.2016 21:37:04 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,12 +12,8 @@ public class Videoline  implements java.io.Serializable {
 
 
      private Integer id;
-     private String fileName;
-     private int fileSize;
-     private String fileFormat;
      private int videoBitrate;
      private String videoBitrateMode;
-     private int duration;
      private String aspectRatio;
      private int resolutionWidth;
      private int resolutionHeight;
@@ -28,25 +24,17 @@ public class Videoline  implements java.io.Serializable {
     }
 
 	
-    public Videoline(String fileName, int fileSize, String fileFormat, int videoBitrate, String videoBitrateMode, int duration, String aspectRatio, int resolutionWidth, int resolutionHeight, double framerate) {
-        this.fileName = fileName;
-        this.fileSize = fileSize;
-        this.fileFormat = fileFormat;
+    public Videoline(int videoBitrate, String videoBitrateMode, String aspectRatio, int resolutionWidth, int resolutionHeight, double framerate) {
         this.videoBitrate = videoBitrate;
         this.videoBitrateMode = videoBitrateMode;
-        this.duration = duration;
         this.aspectRatio = aspectRatio;
         this.resolutionWidth = resolutionWidth;
         this.resolutionHeight = resolutionHeight;
         this.framerate = framerate;
     }
-    public Videoline(String fileName, int fileSize, String fileFormat, int videoBitrate, String videoBitrateMode, int duration, String aspectRatio, int resolutionWidth, int resolutionHeight, double framerate, Set movies) {
-       this.fileName = fileName;
-       this.fileSize = fileSize;
-       this.fileFormat = fileFormat;
+    public Videoline(int videoBitrate, String videoBitrateMode, String aspectRatio, int resolutionWidth, int resolutionHeight, double framerate, Set movies) {
        this.videoBitrate = videoBitrate;
        this.videoBitrateMode = videoBitrateMode;
-       this.duration = duration;
        this.aspectRatio = aspectRatio;
        this.resolutionWidth = resolutionWidth;
        this.resolutionHeight = resolutionHeight;
@@ -61,27 +49,6 @@ public class Videoline  implements java.io.Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getFileName() {
-        return this.fileName;
-    }
-    
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-    public int getFileSize() {
-        return this.fileSize;
-    }
-    
-    public void setFileSize(int fileSize) {
-        this.fileSize = fileSize;
-    }
-    public String getFileFormat() {
-        return this.fileFormat;
-    }
-    
-    public void setFileFormat(String fileFormat) {
-        this.fileFormat = fileFormat;
-    }
     public int getVideoBitrate() {
         return this.videoBitrate;
     }
@@ -95,13 +62,6 @@ public class Videoline  implements java.io.Serializable {
     
     public void setVideoBitrateMode(String videoBitrateMode) {
         this.videoBitrateMode = videoBitrateMode;
-    }
-    public int getDuration() {
-        return this.duration;
-    }
-    
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
     public String getAspectRatio() {
         return this.aspectRatio;

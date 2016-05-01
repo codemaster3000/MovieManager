@@ -1,5 +1,5 @@
 package database.domain;
-// Generated 29.04.2016 17:03:11 by Hibernate Tools 4.3.1
+// Generated 30.04.2016 21:37:04 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;

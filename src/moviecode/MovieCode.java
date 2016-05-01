@@ -17,6 +17,20 @@ public class MovieCode {
     private static final Logger log = LoggerFactory.getLogger(MovieCode.class);
 
 
+    public MovieCode() {
+        
+    }
+    
+    public void getMovieInfo(String filePath) throws IOException, NoSuchAlgorithmException, MovieDbException {
+        File videofile = new File(filePath);
+        if (videofile.exists()) {
+            showAppSettings();
+            showTmdbInfo();
+            showVideoInfo(videofile);
+        } else {
+            System.out.println("file not found");
+        }
+    }
     /*
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException, MovieDbException {
         cfg.loadAppConfiguration();

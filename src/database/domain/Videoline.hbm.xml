@@ -1,30 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29.04.2016 17:03:13 by Hibernate Tools 4.3.1 -->
+<!-- Generated 30.04.2016 21:37:11 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="domain.Videoline" table="videoline" catalog="moviedb" optimistic-lock="version">
+    <class name="database.domain.Videoline" table="videoline" catalog="moviedb" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
         </id>
-        <property name="fileName" type="string">
-            <column name="fileName" not-null="true" />
-        </property>
-        <property name="fileSize" type="int">
-            <column name="fileSize" not-null="true" />
-        </property>
-        <property name="fileFormat" type="string">
-            <column name="fileFormat" not-null="true" />
-        </property>
         <property name="videoBitrate" type="int">
             <column name="videoBitrate" not-null="true" />
         </property>
         <property name="videoBitrateMode" type="string">
             <column name="videoBitrateMode" length="45" not-null="true" />
-        </property>
-        <property name="duration" type="int">
-            <column name="duration" not-null="true" />
         </property>
         <property name="aspectRatio" type="string">
             <column name="aspectRatio" length="45" not-null="true" />
@@ -42,7 +30,7 @@
             <key>
                 <column name="video_line_id" not-null="true" />
             </key>
-            <one-to-many class="domain.Movie" />
+            <one-to-many class="database.domain.Movie" />
         </set>
     </class>
 </hibernate-mapping>

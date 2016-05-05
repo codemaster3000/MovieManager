@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -76,13 +77,18 @@ public class XRelInfo {
         
         String json = readUrl(jsonurl);
         ObjectMapper mapper = new ObjectMapper();
-
-        List<XRcovers> covers = mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(
-                    List.class, XRcovers.class));
         
-        if (covers.get(0).getType() == "image"){
-            return covers.get(0).getUrl_full();
-        } else {
+        try {
+            List<XRcovers> covers = mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(
+                        List.class, XRcovers.class));
+
+            if (covers.get(0).getType() == "image"){
+                return covers.get(0).getUrl_full();
+            } else {
+                return "";
+            }
+        } catch (Exception e){
+            Logger.getLogger(XRelInfo.class.getName()).log(Level.WARNING, "Json Cover data deserialization failed", "");
             return "";
         }
     }
@@ -95,7 +101,7 @@ public class XRelInfo {
         try {
             results = mapper.readValue(json, XRresults.class);
         } catch (IOException ex) {
-            Logger.getLogger(XRelInfo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(XRelInfo.class.getName()).log(Level.WARNING, null, "");
         }
         
         return results;
@@ -120,7 +126,9 @@ public class XRelInfo {
 
             return buffer.toString();
         } catch (MalformedURLException ex) {
-            Logger.getLogger(XRelInfo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(XRelInfo.class.getName()).log(Level.WARNING, "Malformed URL: " + urlString, "");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(XRelInfo.class.getName()).log(Level.WARNING, "HTTP File not found: " + urlString, "");
         } finally {
             if (reader != null) {
                 reader.close();

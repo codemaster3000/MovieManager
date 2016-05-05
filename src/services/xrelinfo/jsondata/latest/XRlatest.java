@@ -1,5 +1,4 @@
-
-package services.xrelinfo.jsondata;
+package services.xrelinfo.jsondata.latest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +25,7 @@ public class XRlatest {
     @JsonProperty("pagination")
     private Pagination pagination;
     @JsonProperty("list")
-    private java.util.List<services.xrelinfo.jsondata.List> list = new ArrayList<services.xrelinfo.jsondata.List>();
+    private java.util.List<services.xrelinfo.jsondata.latest.List> list = new ArrayList<services.xrelinfo.jsondata.latest.List>();
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -76,7 +75,7 @@ public class XRlatest {
      *     The list
      */
     @JsonProperty("list")
-    public java.util.List<services.xrelinfo.jsondata.List> getList() {
+    public java.util.List<services.xrelinfo.jsondata.latest.List> getList() {
         return list;
     }
 
@@ -86,7 +85,7 @@ public class XRlatest {
      *     The list
      */
     @JsonProperty("list")
-    public void setList(java.util.List<services.xrelinfo.jsondata.List> list) {
+    public void setList(java.util.List<services.xrelinfo.jsondata.latest.List> list) {
         this.list = list;
     }
 

@@ -1,5 +1,5 @@
 
-package services.xrelinfo.jsondata;
+package services.xrelinfo.jsondata.results;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,56 +14,56 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
-    "number",
-    "unit"
+    "id",
+    "name"
 })
-public class Size {
+public class Group {
 
-    @JsonProperty("number")
-    private Integer number;
-    @JsonProperty("unit")
-    private String unit;
+    @JsonProperty("id")
+    private String id;
+    @JsonProperty("name")
+    private String name;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
      * 
      * @return
-     *     The number
+     *     The id
      */
-    @JsonProperty("number")
-    public Integer getNumber() {
-        return number;
+    @JsonProperty("id")
+    public String getId() {
+        return id;
     }
 
     /**
      * 
-     * @param number
-     *     The number
+     * @param id
+     *     The id
      */
-    @JsonProperty("number")
-    public void setNumber(Integer number) {
-        this.number = number;
+    @JsonProperty("id")
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
      * 
      * @return
-     *     The unit
+     *     The name
      */
-    @JsonProperty("unit")
-    public String getUnit() {
-        return unit;
+    @JsonProperty("name")
+    public String getName() {
+        return name;
     }
 
     /**
      * 
-     * @param unit
-     *     The unit
+     * @param name
+     *     The name
      */
-    @JsonProperty("unit")
-    public void setUnit(String unit) {
-        this.unit = unit;
+    @JsonProperty("name")
+    public void setName(String name) {
+        this.name = name;
     }
 
     @JsonAnyGetter

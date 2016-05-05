@@ -1,5 +1,5 @@
 
-package services.xrelinfo.jsondata;
+package services.xrelinfo.jsondata.latest;
 
 import java.util.HashMap;
 import java.util.Map;

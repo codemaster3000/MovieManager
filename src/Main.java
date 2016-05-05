@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import services.xrelinfo.XRelInfo;
+import services.xrelinfo.jsondata.latest.XRlatest;
+import services.xrelinfo.jsondata.results.XRresults;
 
 public class Main extends Application {
 
@@ -40,6 +42,20 @@ public class Main extends Application {
     public static void testOutput() throws IOException, Exception{
         // for debug use only
         XRelInfo xrel = new XRelInfo();
-        xrel.testApi();
+        
+        // get latest releases example
+        XRlatest latest = xrel.getLatestHDMovieReleases();
+        for (int i = 0; i < latest.getList().size(); i++) {
+            System.out.println(latest.getList().get(i).getDirname());
+        }
+        
+        // search example
+        //XRresults results = xrel.searchRelease("1080p");
+        //for (int i = 0; i < results.getResults().size(); i++) {
+        //    System.out.println(results.getResults().get(i).getDirname());
+        //}
+        
+        // cover example
+        //System.out.println(xrel.getCoverURL(latest.getList().get(0).getId()));
     }
 }

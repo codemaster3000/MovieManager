@@ -1,5 +1,5 @@
 
-package services.xrelinfo.jsondata;
+package services.xrelinfo.jsondata.results;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,33 +14,56 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
-    "english"
+    "number",
+    "unit"
 })
-public class Flags {
+public class Size {
 
-    @JsonProperty("english")
-    private Boolean english;
+    @JsonProperty("number")
+    private Integer number;
+    @JsonProperty("unit")
+    private String unit;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
      * 
      * @return
-     *     The english
+     *     The number
      */
-    @JsonProperty("english")
-    public Boolean getEnglish() {
-        return english;
+    @JsonProperty("number")
+    public Integer getNumber() {
+        return number;
     }
 
     /**
      * 
-     * @param english
-     *     The english
+     * @param number
+     *     The number
      */
-    @JsonProperty("english")
-    public void setEnglish(Boolean english) {
-        this.english = english;
+    @JsonProperty("number")
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    /**
+     * 
+     * @return
+     *     The unit
+     */
+    @JsonProperty("unit")
+    public String getUnit() {
+        return unit;
+    }
+
+    /**
+     * 
+     * @param unit
+     *     The unit
+     */
+    @JsonProperty("unit")
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     @JsonAnyGetter

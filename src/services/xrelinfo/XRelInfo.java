@@ -6,6 +6,7 @@ import java.net.URL;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,38 +18,53 @@ import services.xrelinfo.jsondata.results.XRresults;
 /**
  *
  * @author fabian
+ * 
+ * API limits:
+ * 300 calls per hour
+ * 2 calls per 10 seconds
+ * 
  */
 public class XRelInfo {
 
-    XRlatest latest;
     XRresults results;
     
     public XRelInfo() throws IOException{
         // empty
     }
     
-    public XRlatest getLatestHDMovieReleases() throws IOException{
-        String jsonurl = "https://api.xrel.to/v2/release/browse_category.json?category_name=HDTV&ext_info_type=movie&per_page=100";
+    public XRlatest getLatestHDMovieReleases(String category, String type, int pages) throws IOException{
+        ArrayList<String> jsonPages = new ArrayList<String>();
+        jsonPages.add("https://api.xrel.to/v2/release/browse_category.json?category_name=" + category + "&ext_info_type=" + type + "&per_page=100&page=1");
+
+        for (int p = 2; p <= pages; p++) {
+            jsonPages.add("https://api.xrel.to/v2/release/browse_category.json?category_name=" + category + "&ext_info_type=" + type + "&per_page=100&page=" + p);    
+        }
         
-        String json = readUrl(jsonurl);
         ObjectMapper mapper = new ObjectMapper();
+        ArrayList<XRlatest> latest = new ArrayList<XRlatest>();
         
-        try {
-            latest = mapper.readValue(json, XRlatest.class);
-        } catch (IOException ex) {
-            Logger.getLogger(XRelInfo.class.getName()).log(Level.SEVERE, null, ex);
+        for (String jsonPage : jsonPages){
+            try {
+                String json = readUrl(jsonPage);
+                latest.add(mapper.readValue(json, XRlatest.class));
+            } catch (IOException ex) {
+                Logger.getLogger(XRelInfo.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         // do more filtering
         XRlatest latestFiltered = new XRlatest();
         Integer year = Calendar.getInstance().get(Calendar.YEAR);
         
-        for (int i = 0; i < latest.getList().size(); i++) {
-            if (checkStringContains(latest.getList().get(i).getDirname(), "1080p") &&
-                    latest.getList().get(i).getAudioType() != "LineDubbed" &&
-                    checkStringContains(latest.getList().get(i).getDirname(), year.toString())){
-                
-                latestFiltered.getList().add(latest.getList().get(i));
+        for (XRlatest latestpage : latest){
+            for (int i = 0; i < latestpage.getList().size(); i++) {
+                if (checkStringContains(latestpage.getList().get(i).getDirname(), "1080p") &&
+                        latestpage.getList().get(i).getAudioType() != "LineDubbed" &&
+                        checkStringContains(latestpage.getList().get(i).getDirname(), "BluRay") &&
+                        checkStringContains(latestpage.getList().get(i).getDirname(), year.toString())){
+
+                    latestFiltered.getList().add(latestpage.getList().get(i));
+                }
             }
         }
         
@@ -56,7 +72,6 @@ public class XRelInfo {
     }
     
     public String getCoverURL(String XRelID) throws IOException{
-        XRelID = "08f068b020443";
         String jsonurl = "https://api.xrel.to/v2/ext_info/media.json?id=" + XRelID;
         
         String json = readUrl(jsonurl);

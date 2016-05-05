@@ -44,7 +44,7 @@ public class Main extends Application {
         XRelInfo xrel = new XRelInfo();
         
         // get latest releases example
-        XRlatest latest = xrel.getLatestHDMovieReleases();
+        XRlatest latest = xrel.getLatestHDMovieReleases("HDTV", "movie", 5);
         for (int i = 0; i < latest.getList().size(); i++) {
             System.out.println(latest.getList().get(i).getDirname());
         }

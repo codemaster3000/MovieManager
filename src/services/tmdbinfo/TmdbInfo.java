@@ -1,4 +1,4 @@
-package moviecode.movieinfo;
+package services.tmdbinfo;
 
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.TheMovieDbApi;
@@ -12,8 +12,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import moviecode.helpers.AppConfig;
-import moviecode.helpers.VarChecks;
+import application.helpers.AppConfig;
+import application.helpers.VarChecks;
 
 /**
  *

@@ -1,11 +1,13 @@
 
 import gui.controller.MainViewController;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import services.xrelinfo.XRelInfo;
 
 public class Main extends Application {
 
@@ -23,6 +25,8 @@ public class Main extends Application {
         _primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("gui/presentation/icons/black_folder-icon.png")));   
         _primaryStage.show();
 
+        // debug console outputs
+        testOutput();
     }
 
     public static void main(String[] args) {
@@ -31,5 +35,11 @@ public class Main extends Application {
     
     public Stage getPrimaryStage() {
         return _primaryStage;
+    }
+    
+    public static void testOutput() throws IOException, Exception{
+        // for debug use only
+        XRelInfo xrel = new XRelInfo();
+        xrel.testApi();
     }
 }

@@ -1,4 +1,4 @@
-package moviecode.helpers;
+package application.helpers;
 
 import java.io.FileInputStream;
 import java.io.IOException;

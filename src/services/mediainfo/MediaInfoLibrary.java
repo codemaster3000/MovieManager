@@ -1,4 +1,4 @@
-package moviecode.mediainfo;
+package services.mediainfo;
 
 import java.lang.reflect.Method;
 

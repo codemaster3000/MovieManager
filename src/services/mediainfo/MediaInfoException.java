@@ -1,4 +1,4 @@
-package moviecode.mediainfo;
+package services.mediainfo;
 
 import com.sun.jna.Platform;
 

@@ -1,6 +1,6 @@
 import com.omertron.themoviedbapi.MovieDbException;
-import moviecode.helpers.AppConfig;
-import moviecode.movieinfo.TmdbInfo;
+import application.helpers.AppConfig;
+import services.tmdbinfo.TmdbInfo;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;

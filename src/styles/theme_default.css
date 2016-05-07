@@ -1,0 +1,127 @@
+/*------------------------------------------------------------------------------
+    TOP MENUBAR
+------------------------------------------------------------------------------*/
+#background {
+    -light-black: rgb(74, 75, 78);
+    -dark-highlight: rgb(87, 89, 92);
+    -dark-black: rgb(39, 40, 40);
+    -darkest-black: rgb(5, 5, 5);
+    -mid-gray: rgb(216, 222, 227);
+    -fx-background-color: -mid-gray;
+}
+
+#topbar.tool-bar {
+    -fx-base: -dark-black;
+    -fx-font-size: 12pt;
+    -fx-background-color:
+        linear-gradient(to bottom, derive(-fx-base,-30%), derive(-fx-base,-60%)),
+        linear-gradient(to bottom, -light-black 2%, -dark-black 98%);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: .9em 0.416667em .9em 0.416667em;
+    -fx-effect: dropshadow(two-pass-box,black,5,.2,0,0);
+}
+
+#topbar.tool-bar .spacer {
+    -fx-padding: 0 3em 0 0;
+}
+
+#topbar.segmented-button-bar .button {
+    -fx-background-color:
+        -darkest-black,
+        -dark-highlight,
+        linear-gradient(to bottom, -light-black 2%, -dark-black 98%);
+    -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
+    -fx-background-radius: 0;
+    -fx-padding: 0.4em 1.833333em 0.4em 1.833333em;
+}
+
+#topbar.segmented-button-bar .button.first {
+    -fx-background-insets: 0, 1, 2 1 1 1;
+    -fx-background-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2;
+}
+ 
+#topbar.segmented-button-bar .button.last {
+    -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
+    -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 2 2 0;
+}
+ 
+#topbar.segmented-button-bar .button:pressed {
+    -fx-background-color:
+        -darkest-black,
+        rgb(55, 57, 58),
+        linear-gradient(to top, -light-black 2%, -dark-black 98%);
+}
+
+/*------------------------------------------------------------------------------
+    SPLITTER
+------------------------------------------------------------------------------*/
+#splitter.split-pane {
+    -fx-border-color: transparent;
+    -fx-border-style: solid;
+}
+
+#splitter.split-pane > .split-pane-divider {
+    -fx-padding: 0 1 0 0;
+    -fx-background-color: transparent, darkgrey;
+    -fx-background-insets: 0 -3 0 -3, 0;
+    -fx-border-color: null;
+}
+
+/*------------------------------------------------------------------------------
+    TABLEVIEW
+------------------------------------------------------------------------------*/
+#tablelist.table-view {
+    /*
+    -fx-base: #1d1d1d;
+    -fx-control-inner-background: #1d1d1d;
+    */
+    -fx-background-color: white;
+    -fx-background-radius: 3,2,1;
+    -fx-background-insets: 0,1,1;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-font-size: 12px;
+    -fx-padding: 5;
+    -fx-border: black;
+}
+
+
+/* Selected row */
+#tablelist.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: lightsteelblue;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background: -fx-accent;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+/* Selected row when table not focused */
+#tablelist.table-row-cell:filled:focused:selected {
+    -fx-background-color: lightgray;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background: -fx-accent;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+/* Row hovered */
+#tablelist.table-view:row-selection .table-row-cell:filled:hover {
+    -fx-background-color: lightskyblue;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-text-fill: -fx-text-inner-color;
+}
+
+/* Selected row hovered */
+#tablelist.table-view:focused .table-row-cell:filled:focused:selected:hover {
+    -fx-background: -fx-accent;
+    -fx-background-color: lightslategray;
+    -fx-background-insets: 0, 1, 2;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+/* Selected row hovered when table not focused */
+#tablelist.table-view:row-selection .table-row-cell:filled:focused:hover {
+    -fx-background-color: lightslategrey;
+    -fx-background-insets: 0, 0 0 1 0, 1 1 2 1, 2 2 3 2, 3 3 4 3;
+    -fx-text-fill: -fx-text-inner-color;
+}

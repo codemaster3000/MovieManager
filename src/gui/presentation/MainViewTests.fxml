@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="background" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.MainViewTestsController">
+    <top>
+        <ToolBar fx:id="topbar">
+            <items>
+                <Region styleClass="spacer" />
+                <HBox styleClass="segmented-button-bar">
+                   <children>
+                       <Button styleClass="first" text="Movies" />
+                       <Button text="TV Series" />
+                       <Button text="Documentations" />
+                       <Button text="Statistics" />
+                       <Button text="Releases" />
+                       <Button styleClass="last" text="Settings" />
+                  <Pane prefHeight="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <ComboBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="129.0" promptText="User" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ComboBox>
+                   </children>
+                </HBox>
+            </items>
+        </ToolBar>
+    </top>
+   <center>
+      <SplitPane fx:id="splitter" dividerPositions="0.3336673346693387" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane fx:id="splitLeftSide" minHeight="0.0" minWidth="0.0" prefHeight="613.0" prefWidth="291.0" />
+          <AnchorPane fx:id="splitRightSide" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>

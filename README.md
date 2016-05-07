@@ -1,6 +1,6 @@
-# Movie File Manager
+# Black Media Manager
 
-Movie File Manager is a mediafiles manager written in java.
+Black Media Manager is a mediafiles manager written in java.
 
 Dependencies
 ------------

@@ -23,6 +23,7 @@ public class AppConfig {
 
     protected AppConfig() {
         // ....
+        loadAppConfiguration();
     }
 
     public static AppConfig getInstance() {

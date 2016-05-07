@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import org.controlsfx.control.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane fx:id="splitter" dividerPositions="0.29797979797979796" prefHeight="615.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ContentMovieController">
+   <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <VBox prefHeight="613.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <children>
+                    <TableView fx:id="tablelist" prefHeight="628.0" prefWidth="330.0">
+        </TableView>
+                </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="98.0">
+         <children>
+            <GridPane prefHeight="400.0" prefWidth="315.0">
+               <children>
+                  <ImageView fx:id="imgCover" fitHeight="170.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" maxWidth="341.0" minWidth="10.0" prefWidth="31.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="341.0" minWidth="10.0" prefWidth="212.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="10.0" prefWidth="257.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="247.0" minHeight="10.0" prefHeight="55.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="254.0" minHeight="10.0" prefHeight="187.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="254.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="174.0" minHeight="0.0" prefHeight="75.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="background" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.MainViewController">
+    <top>
+        <ToolBar fx:id="topbar">
+            <items>
+                <Region styleClass="spacer" />
+                <HBox styleClass="segmented-button-bar">
+                   <children>
+                       <Button fx:id="buttonMovies" onAction="#showMoviesPane" styleClass="first" text="Movies" />
+                       <Button fx:id="buttonTV" onAction="#showTVPane" text="TV Series" />
+                       <Button fx:id="buttonDocu" onAction="#showDocuPane" text="Documentations" />
+                       <Button fx:id="buttonStatistics" text="Statistics" />
+                       <Button fx:id="buttonReleases" onAction="#showReleasesPane" text="Releases" />
+                       <Button fx:id="buttonSettings" styleClass="last" text="Settings" />
+                  <Pane prefHeight="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <ComboBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="129.0" promptText="User" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ComboBox>
+                   </children>
+                </HBox>
+            </items>
+        </ToolBar>
+    </top>
+   <center>
+      <AnchorPane fx:id="contentPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

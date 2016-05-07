@@ -17,13 +17,13 @@ public class Main extends Application {
         _primaryStage = primaryStage;
         
         //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/presentation/MainView.fxml"));
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/presentation/MainViewTests.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/controller/fxml/MainView.fxml"));
         Scene scene = new Scene((Parent) fxmlLoader.load());
         scene.getStylesheets().add(getClass().getResource("/styles/theme_default.css").toExternalForm());
         _primaryStage.setScene(scene);
         _primaryStage.setTitle("Black Movie Manager");
         _primaryStage.setMaximized(false);
-        _primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("gui/presentation/icons/black_folder-icon.png")));   
+        _primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/icons/black_folder-icon.png")));   
         _primaryStage.show();
 
         // debug console outputs

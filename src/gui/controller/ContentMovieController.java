@@ -1,14 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui.controller;
 
+import application.helpers.AppConfig;
+import com.omertron.themoviedbapi.MovieDbException;
+import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import database.domain.Movie;
 import database.domain.Tmdbinfo;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -21,36 +21,50 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import services.tmdbinfo.TmdbInfo;
 
 /**
  * FXML Controller class
  *
  * @author fabian
  */
-public class ContentListController implements Initializable {
+public class ContentMovieController implements Initializable {
 
     @FXML
     private TableView tablelist;
+    @FXML
+    private ImageView imgCover;
+    
+    private AppConfig cfg = AppConfig.getInstance();
+    private TmdbInfo tminf;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
+        try {
+            tminf = new TmdbInfo(cfg.API_KEY);
+        } catch (MovieDbException ex) {
+            //Logger.getLogger(ContentMovieController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         tablelist.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2 || event.getClickCount() == 1) {
-                    System.out.println("list clicked");
+                    try {
+                        showSelectedItemData((Movie) tablelist.getSelectionModel().getSelectedItem());
+                    } catch (MovieDbException ex) {
+                        Logger.getLogger(ContentMovieController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
+        
+        String imageSource = "https://image.tmdb.org/t/p/w396/i68IvNkUvqaKPY0UbadXcQ23aik.jpg";
+        imgCover.setImage(new Image(imageSource));
     }
 
     private void initTable() {
-        
         // some test content
         Tmdbinfo inf1 = new Tmdbinfo();
         Tmdbinfo inf2 = new Tmdbinfo();
@@ -71,5 +85,12 @@ public class ContentListController implements Initializable {
 
         tablelist.setItems(data);
         tablelist.getColumns().addAll(col01, col02);
+    }
+    
+    private void showSelectedItemData(Movie mov) throws MovieDbException{
+        // loads movie info
+        System.out.println(mov.getFileName());
+        String imageSource = tminf.getMovieCoverURL(mov.getTmdbinfo().getTmdbId());
+        imgCover.setImage(new Image(imageSource));
     }
 }

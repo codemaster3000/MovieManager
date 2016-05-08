@@ -1,11 +1,3 @@
 /nbproject/private/
 /build/
 /dist/
-/target/
-
-# eclipse specific stuff
-RemoteSystemTempFiles/
-.classpath
-.metadata
-.project
-.settings/

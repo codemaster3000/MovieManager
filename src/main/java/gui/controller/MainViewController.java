@@ -15,33 +15,62 @@ import javafx.scene.layout.AnchorPane;
  */
 public class MainViewController implements Initializable {
 
-    @FXML private ToolBar topbar;
-    @FXML private AnchorPane contentPane;
+	@FXML
+	private ToolBar topbar;
+	@FXML
+	private AnchorPane contentPane;
 
-        
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        try {
-            GuiServiceRegistry.instance.getViewLoader().LoadContentMovieView(contentPane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }  
-    
-    public void showMoviesPane() throws IOException{
-           GuiServiceRegistry.instance.getViewLoader().LoadContentMovieView(contentPane);
-    }
-    
-    public void showTVPane(){
-        System.out.println("tv");
-    }
-        
-    public void showDocuPane(){
-        System.out.println("docu");
-    }
-    
-    public void showReleasesPane() throws IOException{
-        GuiServiceRegistry.instance.getViewLoader().LoadContentReleaseView(contentPane);
-    }
-    
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		try {
+			GuiServiceRegistry.instance.getViewLoader().LoadContentMovieView(contentPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void showMoviesPane() throws IOException {
+		GuiServiceRegistry.instance.getViewLoader().LoadContentMovieView(contentPane);
+	}
+
+	public void showTVPane() {
+		try {
+			contentPane.getChildren().clear();
+			contentPane.getChildren()
+					.addAll((SplitPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentTV")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void showDocuPane() {
+		System.out.println("docu");
+	}
+
+	public void showReleasesPane() throws IOException {
+		System.out.println("Releases");
+
+		GuiServiceRegistry.instance.getViewLoader().LoadContentReleaseView(contentPane);
+	}
+
+	public void showStatisticsPane() {
+		try {
+			contentPane.getChildren().clear();
+			contentPane.getChildren()
+					.addAll((AnchorPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentStatistics")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void showSettingsPane() {
+		try {
+			contentPane.getChildren().clear();
+			contentPane.getChildren()
+					.addAll((AnchorPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentSettings")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

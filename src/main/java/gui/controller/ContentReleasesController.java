@@ -33,8 +33,6 @@ public class ContentReleasesController implements Initializable {
     @FXML
     public BorderPane borderPaneForContent;
     @FXML
-    public MovieContentController movieContentController;
-    @FXML
     public FlowPane flowpane;
     @FXML
     public ScrollPane scrollPane;

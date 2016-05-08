@@ -37,6 +37,8 @@ public class ContentMovieController implements Initializable {
     
     private AppConfig cfg = AppConfig.getInstance();
     private TmdbInfo tminf;
+    @FXML
+    private SplitPane splitter;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

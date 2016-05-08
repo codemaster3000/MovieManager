@@ -10,9 +10,9 @@ import services.xrelinfo.jsondata.results.XRresults;
  *
  * @author fabian
  */
-public class TestStuff {
+public class DebugStuff {
 
-    public TestStuff(boolean enabled) throws Exception {
+    public DebugStuff(boolean enabled) throws Exception {
         if (enabled) {
             testXRel();
         }

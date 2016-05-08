@@ -1,3 +1,18 @@
-/nbproject/private/
-/build/
-/dist/
+# netbeans specific ignores
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+.nb-gradle/
+
+# eclipse specific ignores
+RemoteSystemTempFiles/
+.classpath
+.metadata
+.project
+.settings/
+
+#maven
+/target

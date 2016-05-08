@@ -1,3 +1,5 @@
+import gui.util.ResourcePathResolver;
+import gui.util.ResourcePathResolver.ImageType;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
@@ -17,13 +19,15 @@ public class Main extends Application {
         _primaryStage = primaryStage;
         
         //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/presentation/MainView.fxml"));
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/controller/fxml/MainView.fxml"));
+      
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(ResourcePathResolver.resolveFxml("MainView"));
         Scene scene = new Scene((Parent) fxmlLoader.load());
-        scene.getStylesheets().add(getClass().getResource("/styles/theme_default.css").toExternalForm());
+        scene.getStylesheets().add(ResourcePathResolver.resolveCssStyle("theme_default").toExternalForm());
         _primaryStage.setScene(scene);
         _primaryStage.setTitle("Black Movie Manager");
         _primaryStage.setMaximized(false);
-        _primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/icons/black_folder-icon.png")));   
+        _primaryStage.getIcons().add(new Image(ResourcePathResolver.resovleIconPath("black_folder-icon", ImageType.PNG).openStream()));   
         _primaryStage.show();
 
         // debug console outputs

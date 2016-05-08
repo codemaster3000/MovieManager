@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import gui.util.ResourcePathResolver;
+
 /**
  *
  * @author fabian
@@ -38,8 +40,8 @@ public class AppConfig {
         InputStream input = null;
 
         try {
-            input = new FileInputStream("src/app.config.txt");
-            prop.load(input);
+        	input = ResourcePathResolver.resolveResource("app/", "config", ".properties").openStream();
+        	prop.load(input);
 
             // get the property values
             API_KEY = prop.getProperty("apikey");

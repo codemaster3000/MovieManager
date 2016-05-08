@@ -52,5 +52,4 @@ public class ResourcePathResolver {
 	public static URL resovleIconPath(String fileName, ImageType imageType) {
 		return resolveResource(imagePrefix, fileName, imageType.toString());
 	}
-	
 }

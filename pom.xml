@@ -59,6 +59,10 @@
     	<resource>
     		<directory>src/main/resources</directory>
     	</resource>
+    	<resource>
+            <targetPath>.</targetPath>
+            <directory>src/main/config</directory>
+        </resource>
     	</resources>
 		<plugins>
 			<plugin>

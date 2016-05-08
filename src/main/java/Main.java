@@ -19,7 +19,7 @@ public class Main extends Application {
         _primaryStage = primaryStage;
         
         //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/presentation/MainView.fxml"));
-        ClassLoader classLoader = getClass().getClassLoader();
+      
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(ResourcePathResolver.resolveFxml("MainView"));
         Scene scene = new Scene((Parent) fxmlLoader.load());

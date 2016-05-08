@@ -2,8 +2,13 @@ package gui.util;
 
 import java.io.IOException;
 
+import org.hibernate.id.GUIDGenerator;
+
 import gui.controller.ContentMovieController;
 import gui.controller.ContentReleasesController;
+import gui.controller.ContentSettingsController;
+import gui.controller.ContentStatisticsController;
+import gui.controller.ContentTVController;
 import gui.controller.MainViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
@@ -35,5 +40,17 @@ public class ViewLoader {
 	
 	public void LoadContentReleaseView(Pane parent) throws IOException {
 		GuiServiceRegistry.instance.getViewLoader().Load(parent, "ContentReleases", new ContentReleasesController());
+	}
+	
+	public void LoadContentStatisticsView(Pane parent) throws IOException {
+		GuiServiceRegistry.instance.getViewLoader().Load(parent, "ContentStatistics", new ContentStatisticsController());
+	}
+	
+	public void LoadContentSettingsView(Pane parent) throws IOException {
+		GuiServiceRegistry.instance.getViewLoader().Load(parent, "ContentSettings", new ContentSettingsController());
+	}
+	
+	public void LoadContentTVView(Pane parent) throws IOException {
+		GuiServiceRegistry.instance.getViewLoader().Load(parent, "ContentTV", new ContentTVController());
 	}
 }

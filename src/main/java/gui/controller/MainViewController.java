@@ -3,6 +3,9 @@ package gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.hibernate.id.GUIDGenerator;
+
 import gui.util.GuiServiceRegistry;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,14 +36,8 @@ public class MainViewController implements Initializable {
 		GuiServiceRegistry.instance.getViewLoader().LoadContentMovieView(contentPane);
 	}
 
-	public void showTVPane() {
-		try {
-			contentPane.getChildren().clear();
-			contentPane.getChildren()
-					.addAll((SplitPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentTV")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void showTVPane() throws IOException {
+		GuiServiceRegistry.instance.getViewLoader().LoadContentTVView(contentPane);
 	}
 
 	public void showDocuPane() {
@@ -48,29 +45,15 @@ public class MainViewController implements Initializable {
 	}
 
 	public void showReleasesPane() throws IOException {
-		System.out.println("Releases");
-
 		GuiServiceRegistry.instance.getViewLoader().LoadContentReleaseView(contentPane);
 	}
 
-	public void showStatisticsPane() {
-		try {
-			contentPane.getChildren().clear();
-			contentPane.getChildren()
-					.addAll((AnchorPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentStatistics")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void showStatisticsPane() throws IOException {
+		GuiServiceRegistry.instance.getViewLoader().LoadContentStatisticsView(contentPane);
 	}
 
-	public void showSettingsPane() {
-		try {
-			contentPane.getChildren().clear();
-			contentPane.getChildren()
-					.addAll((AnchorPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentSettings")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void showSettingsPane() throws IOException {
+		GuiServiceRegistry.instance.getViewLoader().LoadContentSettingsView(contentPane);
 	}
 
 }

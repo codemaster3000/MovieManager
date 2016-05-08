@@ -15,9 +15,9 @@
                        <Button fx:id="buttonMovies" onAction="#showMoviesPane" styleClass="first" text="Movies" />
                        <Button fx:id="buttonTV" onAction="#showTVPane" text="TV Series" />
                        <Button fx:id="buttonDocu" onAction="#showDocuPane" text="Documentations" />
-                       <Button fx:id="buttonStatistics" text="Statistics" />
+                       <Button fx:id="buttonStatistics" onAction="#showStatisticsPane" text="Statistics" />
                        <Button fx:id="buttonReleases" onAction="#showReleasesPane" text="Releases" />
-                       <Button fx:id="buttonSettings" styleClass="last" text="Settings" />
+                       <Button fx:id="buttonSettings" onAction="#showSettingsPane" styleClass="last" text="Settings" />
                   <Pane prefHeight="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                   <ComboBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="129.0" promptText="User" HBox.hgrow="NEVER">
                      <HBox.margin>

@@ -22,7 +22,7 @@ import javafx.scene.layout.Pane;
  *
  * @author Fabian Ladurner
  */
-public class ContentReleases implements Initializable {
+public class ContentReleasesController implements Initializable {
 
     @FXML
     public AnchorPane anchorPaneContent;
@@ -32,8 +32,6 @@ public class ContentReleases implements Initializable {
     public AnchorPane paneMovieMenu;
     @FXML
     public BorderPane borderPaneForContent;
-    @FXML
-    public MovieContentController movieContentController;
     @FXML
     public FlowPane flowpane;
     @FXML

@@ -41,7 +41,12 @@ public class MainViewController implements Initializable {
     }
     
     public void showTVPane(){
-        System.out.println("tv");
+        try {
+            contentPane.getChildren().clear();
+            contentPane.getChildren().addAll((SplitPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentTV")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
         
     public void showDocuPane(){
@@ -49,9 +54,28 @@ public class MainViewController implements Initializable {
     }
     
     public void showReleasesPane(){
+        System.out.println("Releases");
         try {
             contentPane.getChildren().clear();
             contentPane.getChildren().addAll((AnchorPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentReleases")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showStatisticsPane(){
+        try {
+            contentPane.getChildren().clear();
+            contentPane.getChildren().addAll((AnchorPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentStatistics")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showSettingsPane(){
+        try {
+            contentPane.getChildren().clear();
+            contentPane.getChildren().addAll((AnchorPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentSettings")));
         } catch (IOException e) {
             e.printStackTrace();
         }

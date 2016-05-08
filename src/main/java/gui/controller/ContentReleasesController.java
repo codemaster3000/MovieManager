@@ -22,7 +22,7 @@ import javafx.scene.layout.Pane;
  *
  * @author Fabian Ladurner
  */
-public class ContentReleases implements Initializable {
+public class ContentReleasesController implements Initializable {
 
     @FXML
     public AnchorPane anchorPaneContent;

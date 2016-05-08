@@ -3,12 +3,9 @@ package gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import gui.util.ResourcePathResolver;
+import gui.util.GuiServiceRegistry;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
 
@@ -25,19 +22,14 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            contentPane.getChildren().addAll((SplitPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentMovie")));
+            GuiServiceRegistry.instance.getViewLoader().LoadContentMovieView(contentPane);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }  
     
-    public void showMoviesPane(){
-        try {
-            contentPane.getChildren().clear();
-            contentPane.getChildren().addAll((SplitPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentMovie")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void showMoviesPane() throws IOException{
+           GuiServiceRegistry.instance.getViewLoader().LoadContentMovieView(contentPane);
     }
     
     public void showTVPane(){
@@ -48,13 +40,8 @@ public class MainViewController implements Initializable {
         System.out.println("docu");
     }
     
-    public void showReleasesPane(){
-        try {
-            contentPane.getChildren().clear();
-            contentPane.getChildren().addAll((AnchorPane) FXMLLoader.load(ResourcePathResolver.resolveFxml("ContentReleases")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void showReleasesPane() throws IOException{
+        GuiServiceRegistry.instance.getViewLoader().LoadContentReleaseView(contentPane);
     }
     
 }

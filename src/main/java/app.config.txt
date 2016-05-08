@@ -1,8 +1,0 @@
-#Movie Manager Konfiguration
-apikey=dec0b87fe8f35746c1e96d2fa8ba4873
-database=localhost
-dbuser=lol
-dbpassword=lol
-tmdbImagePathRoot=https://image.tmdb.org/t/p/w396/
-tmdbLanguage=de
-tmdbCoverLanguage=en

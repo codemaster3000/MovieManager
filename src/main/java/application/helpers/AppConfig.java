@@ -1,11 +1,10 @@
 package application.helpers;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import gui.util.ResourcePathResolver;
+import util.ApplicationServices;
 
 /**
  *
@@ -40,7 +39,7 @@ public class AppConfig {
         InputStream input = null;
 
         try {
-        	input = ResourcePathResolver.resolveResource("app/", "config", ".properties").openStream();
+        	input = ApplicationServices.instance.getResourcePathResolver().resolveResource("app/", "config", ".properties").openStream();
         	prop.load(input);
 
             // get the property values

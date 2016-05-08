@@ -1,4 +1,4 @@
-package gui.util;
+package util;
 
 import java.net.URL;
 
@@ -8,7 +8,11 @@ public class ResourcePathResolver {
 	
 	private static final ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
 	
-	public static URL resolveResource(String prefix, String fileName, String fileEnding) {
+	protected ResourcePathResolver() {
+		
+	}
+	
+	public URL resolveResource(String prefix, String fileName, String fileEnding) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(prefix);
 		sb.append(fileName);
@@ -20,14 +24,14 @@ public class ResourcePathResolver {
 	private static final String fxmlPrefix = "view/fxml/";
 	private static final String fxmlFilePostfix = ".fxml";
 	
-	public static URL resolveFxml(String fileName) {
+	public URL resolveFxml(String fileName) {
 		return resolveResource(fxmlPrefix, fileName, fxmlFilePostfix);
 	}
 	
 	private static final String cssPrefix = "view/style/";
 	private static final String cssFilePostfix = ".css";
 	
-	public static URL resolveCssStyle(String fileName) {
+	public URL resolveCssStyle(String fileName) {
 		return resolveResource(cssPrefix, fileName, cssFilePostfix);
 	}
 	
@@ -49,7 +53,7 @@ public class ResourcePathResolver {
 	
 	private static final String imagePrefix = "view/icon/";
 	
-	public static URL resovleIconPath(String fileName, ImageType imageType) {
+	public URL resovleIconPath(String fileName, ImageType imageType) {
 		return resolveResource(imagePrefix, fileName, imageType.toString());
 	}
 }

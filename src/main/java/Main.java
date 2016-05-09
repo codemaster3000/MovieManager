@@ -1,11 +1,10 @@
 import gui.util.GuiServiceRegistry;
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import util.ApplicationServices;
 import util.ResourcePathResolver.ImageType;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
 public class Main extends Application {
 
@@ -26,7 +25,7 @@ public class Main extends Application {
         scene.getStylesheets().add(ApplicationServices.instance.getResourcePathResolver().resolveCssStyle(themeFileName).toExternalForm());
         */
         
-        Scene scene = new Scene(GuiServiceRegistry.instance.getViewLoader().LoadViewController("MainView"));
+        Scene scene = new Scene(GuiServiceRegistry.instance.getViewLoader().LoadMainViewController());
         _primaryStage.setScene(scene);
         _primaryStage.setTitle(appName);
         _primaryStage.setMinHeight(650);

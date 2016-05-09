@@ -1,13 +1,20 @@
 package gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
@@ -15,6 +22,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import services.xrelinfo.XRelInfo;
+import services.xrelinfo.jsondata.latest.XRlatest;
 
 
 /**
@@ -36,6 +45,8 @@ public class ContentReleasesController implements Initializable {
     public FlowPane flowpane;
     @FXML
     public ScrollPane scrollPane;
+    @FXML
+    public ListView listNewReleases;
 
     @FXML
     public void setPaneSelected(Event e) {
@@ -52,7 +63,15 @@ public class ContentReleasesController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        try {
+            initCoverFlow();
+            showNewReleases();
+        } catch (IOException ex) {
+            Logger.getLogger(ContentReleasesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void initCoverFlow(){
         ImageView imageCover;
         Pane pane;
 
@@ -89,6 +108,19 @@ public class ContentReleasesController implements Initializable {
             flowpane.setPrefWidth(50 * 150);
             flowpane.getChildren().add(pane);
         }
+    }
+    
+    private void showNewReleases() throws IOException{
+        ObservableList<String> xrelList = FXCollections.observableArrayList();
+        XRelInfo xrel = new XRelInfo();
+        
+        XRlatest latest = xrel.getLatestHDMovieReleases("HDTV", "movie", 5);
+        for (int i = 0; i < latest.getList().size(); i++) {
+            xrelList.add(latest.getList().get(i).getDirname());
+        }
+        
+        listNewReleases.setItems(xrelList);
+        listNewReleases.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
 }

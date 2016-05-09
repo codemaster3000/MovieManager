@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -11,70 +15,20 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" styleClass="mainFxmlClass" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="527.0" prefWidth="722.0" styleClass="mainFxmlClass" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox layoutX="262.0" layoutY="50.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox layoutX="262.0" layoutY="50.0" prefHeight="527.0" prefWidth="722.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-            <FlowPane prefHeight="29.0" prefWidth="1280.0" styleClass="backgroundLightGray">
-               <children>
-                              <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="40.0" prefWidth="82.0">
-                                  <children>
-                                      <Label styleClass="labelNavigation" text="FILME">
-                                          <padding>
-                                              <Insets left="10.0" right="10.0" top="6.0" />
-                                          </padding>
-                                      </Label>
-                                  </children>
-                              </Pane>
-                              <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="40.0" prefWidth="91.0">
-                                  <children>
-                                      <Label styleClass="labelNavigation" text="DOKUS">
-                                          <padding>
-                                              <Insets left="10.0" top="6.0" />
-                                          </padding>
-                                      </Label>
-                                  </children>
-                              </Pane>
-                              <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="40.0" prefWidth="89.0">
-                                  <children>
-                                      <Label styleClass="labelNavigation" text="SERIEN">
-                                          <padding>
-                                              <Insets left="10.0" top="6.0" />
-                                          </padding>
-                                      </Label>
-                                  </children>
-                              </Pane>
-                              <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="40.0" prefWidth="141.0">
-                                  <children>
-                                      <Label prefWidth="129.0" styleClass="labelNavigation" text="STATISTIKEN">
-                                          <padding>
-                                              <Insets left="10.0" top="6.0" />
-                                          </padding>
-                                      </Label>
-                                  </children>
-                              </Pane>
-                              <Pane onMouseEntered="#setPaneSelected" onMouseExited="#setPaneUnselected" prefHeight="40.0" prefWidth="162.0">
-                                  <children>
-                                      <Label styleClass="labelNavigation" text="EINSTELLUNGEN">
-                                          <padding>
-                                              <Insets left="10.0" top="6.0" />
-                                          </padding>
-                                      </Label>
-                                  </children>
-                              </Pane>
-               </children>
-            </FlowPane>
-                <AnchorPane prefHeight="26.0" prefWidth="1280.0" VBox.vgrow="ALWAYS">
+                <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="296.0" prefWidth="722.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <HBox prefHeight="695.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox prefHeight="262.0" prefWidth="722.0" AnchorPane.bottomAnchor="243.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane fx:id="anchorPaneContent" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                     <children>
                                         <BorderPane fx:id="borderPaneForContent" prefHeight="698.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             
                                        <top>
-                                    <VBox prefHeight="250.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                    <VBox prefHeight="250.0" prefWidth="440.0" BorderPane.alignment="CENTER">
                                        <children>
                                           <FlowPane prefHeight="41.0" prefWidth="1280.0" styleClass="backgroundDarkGray">
                                              <children>
@@ -85,7 +39,7 @@
                                                 </Label>
                                              </children>
                                           </FlowPane>
-                                          <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" pannable="true" prefHeight="220.0" styleClass="backgroundDarkGray" vbarPolicy="NEVER">
+                                          <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" pannable="true" prefHeight="215.0" prefWidth="490.0" styleClass="backgroundDarkGray" vbarPolicy="NEVER">
                                              <content>
                                                 <FlowPane fx:id="flowpane" styleClass="backgroundDarkGray">
                                                    <opaqueInsets>
@@ -107,7 +61,8 @@
                         </HBox>
                     </children>
                 </AnchorPane>
-                <AnchorPane prefHeight="22.0" prefWidth="1280.0" styleClass="backgroundBlack" VBox.vgrow="NEVER" />
+                <AnchorPane prefHeight="0.0" prefWidth="722.0" styleClass="backgroundBlack" VBox.vgrow="NEVER" />
+            <ListView fx:id="listNewReleases" prefHeight="247.0" prefWidth="722.0" />
             </children>
         </VBox>
     </children>

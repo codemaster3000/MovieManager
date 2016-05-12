@@ -7,19 +7,6 @@ Dependencies
 TMDB api,
 MediaInfo api
 
-Maven
------
-to do: maven
-
-```xml
-<dependency>
-    <groupId>com.moviedb</groupId>
-    <artifactId>tmdb-java</artifactId>
-    <version>0.1</version>
-</dependency>
-```
-
-
 Functions (translate to english)
 ------------
 

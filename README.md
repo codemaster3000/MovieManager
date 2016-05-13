@@ -2,13 +2,15 @@
 
 Black Media Manager is a mediafiles manager written in java.
 
-Dependencies
-------------
+##Dependencies
 TMDB api,
 MediaInfo api
 
-Functions (translate to english)
-------------
+##Maven
+### Compile
+`mvn clean compile assembly:single`
+
+##Functions (translate to english)
 
 scant filmdateien (unterordner inkl)
 	-> mkv dateiinfos rauslesen
@@ -29,6 +31,5 @@ filmdatenbank oberfläche
 
 Serien & Dokus als extra daten
 
-Licence
--------------------------
+##Licence
 [![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US)

@@ -20,8 +20,8 @@ Features (ToDo-List)
 ###### ToDo:
 - [ ] Scan & add media files
     - [ ] scan all folders including subfolder for movie filetypes (mkv, avi,..)
-    - [ ] read mkv media informations (MediaInfo.dll api)
-    - [ ] fetch TMDB movie infos (tmdb api)
+    - [x] read mkv media informations (MediaInfo.dll api)
+    - [x] fetch TMDB movie infos (tmdb api)
     - [ ] add all available as new database entry
     	- [ ] check if movie already exist in database (quality replace dialog)
 - [ ] movie statistics view (longest runtime toplist, oldest movie, biggest movie, genre charts, etc)

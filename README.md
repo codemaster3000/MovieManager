@@ -1,6 +1,6 @@
 # Black Media Manager
 
-Black Media Manager is a movie files manager database written in java. Useable with a simpe
+Black Media Manager is a movie files manager database written in java.
 
 Maven
 -----
@@ -17,7 +17,7 @@ not available yet on repo
 Features ToDo List
 -------------------
 
-# To do
+ToDo:
 - [ ] Scan & add media files
     - [ ] scan all folders including subfolder for movie filetypes (mkv, avi,..)
     - [ ] read mkv media informations (MediaInfo.dll api)
@@ -33,7 +33,7 @@ Features ToDo List
     - [ ] filter system (user owned movies, sorting)
     - [ ] TV Series & Documentations added as extra gui views
 
-## Ideas
+Ideas:
 - [ ] Subtitles search
 - [ ] Music files
 

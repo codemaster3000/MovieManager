@@ -53,5 +53,4 @@ public class MainViewController implements Initializable {
 	public void showSettingsPane() throws IOException {
 		GuiServiceRegistry.instance.getViewLoader().LoadContentSettingsView(contentPane);
 	}
-
 }

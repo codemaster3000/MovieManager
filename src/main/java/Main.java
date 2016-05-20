@@ -1,11 +1,10 @@
 import gui.util.GuiServiceRegistry;
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import util.ApplicationServices;
 import util.ResourcePathResolver.ImageType;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
 public class Main extends Application {
 
@@ -20,11 +19,14 @@ public class Main extends Application {
         
         _primaryStage = primaryStage;
         
-        Pane pane = new Pane();       
+        /*Pane pane = new Pane();       
         Scene scene = new Scene(pane);
         GuiServiceRegistry.instance.getViewLoader().LoadMainViewController(pane);
         scene.getStylesheets().add(ApplicationServices.instance.getResourcePathResolver().resolveCssStyle(themeFileName).toExternalForm());
+        */
         
+        Scene scene = new Scene(GuiServiceRegistry.instance.getViewLoader().LoadMainViewController());
+        scene.getStylesheets().add(ApplicationServices.instance.getResourcePathResolver().resolveCssStyle(themeFileName).toExternalForm());
         _primaryStage.setScene(scene);
         _primaryStage.setTitle(appName);
         _primaryStage.setMinHeight(650);

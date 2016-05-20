@@ -2,7 +2,6 @@ package gui.controller;
 
 import application.helpers.AppConfig;
 import com.omertron.themoviedbapi.MovieDbException;
-import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import database.domain.Movie;
 import database.domain.Tmdbinfo;
 import java.net.URL;

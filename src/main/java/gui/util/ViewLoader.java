@@ -2,8 +2,6 @@ package gui.util;
 
 import java.io.IOException;
 
-import org.hibernate.id.GUIDGenerator;
-
 import gui.controller.ContentMovieController;
 import gui.controller.ContentReleasesController;
 import gui.controller.ContentSettingsController;

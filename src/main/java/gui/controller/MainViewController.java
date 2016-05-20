@@ -10,13 +10,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
-import util.pattern.FactoryMethod;
 
 /**
  *
  * @author fabian
  */
-public class MainViewController implements Initializable, FactoryMethod<MainViewController> {
+public class MainViewController implements Initializable {
 
 	@FXML
 	private ToolBar topbar;
@@ -55,10 +54,4 @@ public class MainViewController implements Initializable, FactoryMethod<MainView
 	public void showSettingsPane() throws IOException {
 		GuiServiceRegistry.instance.getViewLoader().LoadContentSettingsView(contentPane);
 	}
-
-	@Override
-	public MainViewController create() {
-		return new MainViewController();
-	}
-
 }

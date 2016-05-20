@@ -26,6 +26,7 @@ public class Main extends Application {
         */
         
         Scene scene = new Scene(GuiServiceRegistry.instance.getViewLoader().LoadMainViewController());
+        scene.getStylesheets().add(ApplicationServices.instance.getResourcePathResolver().resolveCssStyle(themeFileName).toExternalForm());
         _primaryStage.setScene(scene);
         _primaryStage.setTitle(appName);
         _primaryStage.setMinHeight(650);

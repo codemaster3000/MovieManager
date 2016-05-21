@@ -2,8 +2,6 @@ package util;
 
 import java.net.URL;
 
-//TODO: evaluate if a singleton is better suited for this
-
 public class ResourcePathResolver {
 	
 	private static final ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();

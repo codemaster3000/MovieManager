@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import gui.util.GuiServiceRegistry;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
 

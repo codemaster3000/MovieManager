@@ -22,8 +22,7 @@
 			<groupId>com.sun.jna</groupId>
 			<artifactId>jna</artifactId>
 			<version>3.0.9</version>
-		</dependency>
-		
+		</dependency>		
 		
 		<!-- Persistency -->
 		<dependency>
@@ -43,12 +42,9 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
-		</dependency>
-			
+		</dependency>			
     </dependencies>
-    
     <build>
-    	
     	<resources>
     	<resource>
     		<directory>src/main/resources</directory>
@@ -59,21 +55,19 @@
         </resource>
     	</resources>
 		<plugins>
-			<plugin>
-			  <!-- Build an executable JAR -->
-      			<groupId>org.apache.maven.plugins</groupId>
-      			<artifactId>maven-jar-plugin</artifactId>
-      			<version>2.4</version>
+   			<plugin>
+      			<artifactId>maven-assembly-plugin</artifactId>
       			<configuration>
-        			<archive>
-          			<manifest>
-            				<addClasspath>true</addClasspath>
-            				<classpathPrefix>src/main/java</classpathPrefix>
-            				<mainClass>Main</mainClass>
-						</manifest>
+       				<archive>
+       					<manifest>
+							<mainClass>Main</mainClass>
+          				</manifest>
         			</archive>
-      			</configuration>
-			</plugin>
+        			<descriptorRefs>
+          					<descriptorRef>jar-with-dependencies</descriptorRef>
+        				</descriptorRefs>
+      				</configuration>
+    		</plugin>
 			<plugin>
         		<groupId>org.apache.maven.plugins</groupId>
         		<artifactId>maven-compiler-plugin</artifactId>

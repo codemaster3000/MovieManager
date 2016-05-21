@@ -4,7 +4,7 @@ Black Media Manager is a movie files manager database written in java.
 
 Build Status
 -------------------------
-[![Build Status](https://travis-ci.org/codemaster3000/MovieManager.svg?branch=master)](https://travis-ci.org/codemaster3000/MovieManager)
+[![Build Status](https://travis-ci.org/codemaster3000/MovieManager.svg?branch=enhancement%2Ftravis)](https://travis-ci.org/codemaster3000/MovieManager)
 
 Maven
 -----

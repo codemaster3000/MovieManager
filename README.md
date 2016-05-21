@@ -1,15 +1,15 @@
 # Black Media Manager
-[![Build Status](http://jenkins.omertron.com/job/YAMJv3/badge/icon)](http://jenkins.omertron.com/job/YAMJv3)
 
-##Serien & Dokus als extra daten
 Black Media Manager is a movie files manager database written in java.
 
-##Maven
-### Maven Build
-`mvn clean compile assembly:single`
+Build Status
+-------------------------
+[![Build Status](https://travis-ci.org/codemaster3000/MovieManager.svg?branch=master)](https://travis-ci.org/codemaster3000/MovieManager)
 
-### Maven Repo
+Maven
+-----
 not yet available on repo
+
 ```xml
 <dependency>
     <groupId>de.blackmediamanger</groupId>
@@ -18,8 +18,10 @@ not yet available on repo
 </dependency>
 ```
 
-## Features (ToDo-List)
-### ToDo:
+Features (ToDo-List)
+-------------------
+
+###### ToDo:
 - [ ] Scan & add media files
     - [ ] scan all folders including subfolder for movie filetypes (mkv, avi,..)
     - [x] read mkv media informations (MediaInfo.dll api)
@@ -35,9 +37,10 @@ not yet available on repo
     - [ ] filter system (user owned movies, sorting)
     - [ ] TV Series & Documentations added as extra gui views
 
-###Ideas:
+###### Ideas:
 - [ ] Subtitles search
 - [ ] Music files
 
-##Licence
+Licence
+-------------------------
 [![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US)

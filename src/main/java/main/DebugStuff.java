@@ -1,3 +1,5 @@
+package main;
+
 
 import java.io.IOException;
 import services.xrelinfo.XRelInfo;

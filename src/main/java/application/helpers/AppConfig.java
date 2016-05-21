@@ -21,6 +21,7 @@ public class AppConfig {
     public String TMDB_IMAGEROOTPATH;
     public String TMDB_LANGUAGE;
     public String TMDB_COVERLANGUAGE;
+    public String EXTENSIONS_VIDEO;
 
     protected AppConfig() {
         // ....
@@ -50,6 +51,7 @@ public class AppConfig {
             TMDB_IMAGEROOTPATH = prop.getProperty("tmdbImagePathRoot");
             TMDB_LANGUAGE = prop.getProperty("tmdbLanguage");
             TMDB_COVERLANGUAGE  =  prop.getProperty("tmdbCoverLanguage");
+            EXTENSIONS_VIDEO = prop.getProperty("videoextensions");
 
         } catch (IOException ex) {
             ex.printStackTrace();

@@ -1,3 +1,5 @@
+package main;
+
 import gui.util.GuiServiceRegistry;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -8,7 +10,7 @@ import util.ResourcePathResolver.ImageType;
 
 public class Main extends Application {
 
-    private Stage _primaryStage;
+    private static Stage _primaryStage;
     
     private final String appName = "Black Movie Manager";
     
@@ -44,7 +46,7 @@ public class Main extends Application {
         launch(args);
     }
     
-    public Stage getPrimaryStage() {
+    public static Stage getPrimaryStage() {
         return _primaryStage;
     }
 }

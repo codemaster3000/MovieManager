@@ -3,6 +3,7 @@ package gui.util;
 import java.io.IOException;
 import gui.controller.ContentMovieController;
 import gui.controller.ContentReleasesController;
+import gui.controller.ContentScannerController;
 import gui.controller.ContentSettingsController;
 import gui.controller.ContentStatisticsController;
 import gui.controller.ContentTVController;
@@ -58,5 +59,9 @@ public class ViewLoader {
 	
 	public void LoadContentTVView(Pane parent) throws IOException {
 		Load(parent, "ContentTV", new ContentTVController());
+	}
+        
+        public void LoadContentScannerView(Pane parent) throws IOException {
+		Load(parent, "ContentScanner", new ContentScannerController());
 	}
 }

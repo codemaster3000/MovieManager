@@ -19,7 +19,7 @@
     <children>
         <VBox layoutX="262.0" layoutY="50.0" prefHeight="527.0" prefWidth="722.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="296.0" prefWidth="722.0" VBox.vgrow="ALWAYS">
+                <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="264.0" prefWidth="722.0" VBox.vgrow="ALWAYS">
                     <children>
                         <HBox prefHeight="262.0" prefWidth="722.0" AnchorPane.bottomAnchor="243.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
@@ -61,8 +61,7 @@
                         </HBox>
                     </children>
                 </AnchorPane>
-                <AnchorPane prefHeight="0.0" prefWidth="722.0" styleClass="backgroundBlack" VBox.vgrow="NEVER" />
-            <ListView fx:id="listNewReleases" prefHeight="247.0" prefWidth="722.0" />
+            <ListView fx:id="listNewReleases" prefHeight="277.0" prefWidth="722.0" />
             </children>
         </VBox>
     </children>

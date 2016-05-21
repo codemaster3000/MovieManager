@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,6 +35,8 @@ public class ContentMovieController implements Initializable {
     private TableView tablelist;
     @FXML
     private ImageView imgCover;
+    @FXML
+    private TextArea txtMediaInfo;
     
     private AppConfig cfg = AppConfig.getInstance();
     private TmdbInfo tminf;
@@ -94,5 +97,7 @@ public class ContentMovieController implements Initializable {
         System.out.println(mov.getFileName());
         String imageSource = tminf.getMovieCoverURL(mov.getTmdbinfo().getTmdbId());
         imgCover.setImage(new Image(imageSource));
+        
+        txtMediaInfo.setText(mov.toString());
     }
 }

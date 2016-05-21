@@ -5,10 +5,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import application.helpers.AppConfig;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.StringTokenizer;
+import org.apache.commons.io.FilenameUtils;
 
-
-
-public class FileHandler {
+public class FileScanner {
 
     /* TODO: 
     
@@ -23,15 +29,16 @@ public class FileHandler {
     
     
      */
-
     private String _directoryPath;
     private File _currentMovieFile;
     private ArrayList<File> _moviePathList;
+    private AppConfig cfg;
 
+    private Collection<String> videoExtensions = new HashSet<>();
 
-
-    public FileHandler() {
-        // empty constructor
+    public FileScanner() {
+        cfg = AppConfig.getInstance();
+        videoExtensions = stringTokenize(cfg.EXTENSIONS_VIDEO, ",");
     }
 
     public void searchDirectory(String directoryPath) throws IOException, MovieDbException {
@@ -53,6 +60,27 @@ public class FileHandler {
 
     }
 
+    // schnellerer filescan mit java 7 nio library (rekursiv)
+    public ArrayList<String> getScannedFileList(ArrayList<String> fileNames, Path dir) throws IOException {
+        String ext = "";
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
+            for (Path path : stream) {
+                if (path.toFile().isDirectory()) {
+                    getScannedFileList(fileNames, path);
+                } else {
+                    ext = FilenameUtils.getExtension(path.getFileName().toString());
+                    if (videoExtensions.contains(ext)){
+                        fileNames.add(path.toAbsolutePath().toString());
+                        System.out.println(path.getFileName());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileNames;
+    }
+
     private void solvePath(String directoryPath) {
         File directory = new File(directoryPath);
 
@@ -60,7 +88,8 @@ public class FileHandler {
         File[] fList = directory.listFiles();
         for (File file : fList) {
             if (file.isFile()) {
-                if (file.toString().endsWith(".mkv")) {
+                String ext = FilenameUtils.getExtension(file.getName());
+                if (videoExtensions.contains(ext)) {
                     System.out.println(file.toString());
                     _currentMovieFile = file;
                 }
@@ -72,8 +101,18 @@ public class FileHandler {
 
     //auf duplikat prüfen
     private boolean proofIsDuplicate(String name) {
-
+        //TODO
         //alle filme durchgehen
         return false;
+    }
+
+    // convert string list to collection
+    private Collection<String> stringTokenize(String sourceString, String delimiter) {
+        StringTokenizer st = new StringTokenizer(sourceString, delimiter);
+        Collection<String> keywords = new HashSet<>();
+        while (st.hasMoreTokens()) {
+            keywords.add(st.nextToken());
+        }
+        return keywords;
     }
 }

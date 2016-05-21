@@ -5,14 +5,19 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
@@ -24,7 +29,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import services.xrelinfo.XRelInfo;
 import services.xrelinfo.jsondata.latest.XRlatest;
-
 
 /**
  * FXML Controller class
@@ -48,6 +52,8 @@ public class ContentReleasesController implements Initializable {
     @FXML
     public ListView listNewReleases;
 
+    private ObservableList<String> xrelList;
+
     @FXML
     public void setPaneSelected(Event e) {
         ((Pane) e.getSource()).getChildren().get(0).getStyleClass().add("labelSelected");
@@ -70,8 +76,8 @@ public class ContentReleasesController implements Initializable {
             Logger.getLogger(ContentReleasesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void initCoverFlow(){
+
+    private void initCoverFlow() {
         ImageView imageCover;
         Pane pane;
 
@@ -94,7 +100,7 @@ public class ContentReleasesController implements Initializable {
         scrollPane.setFitToHeight(true);
         scrollPane.setContent(flowpane);
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             imageCover = new ImageView();
             pane = new Pane();
             pane.setPadding(new Insets(0, 5, 0, 5));
@@ -109,18 +115,50 @@ public class ContentReleasesController implements Initializable {
             flowpane.getChildren().add(pane);
         }
     }
+
+    private void showNewReleases() throws IOException {
+        Task xrelservice = doFetchNewReleases();
+        
+        xrelservice.stateProperty().addListener(new ChangeListener<Worker.State>() {
+            @Override
+            public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldState, Worker.State newState) {
+                if (newState == Worker.State.SUCCEEDED) {
+                    listNewReleases.setItems(xrelList);
+                    listNewReleases.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                    System.out.println("xrelxervice task done");
+                    // task done
+                }
+            }
+        });
+
+        new Thread(xrelservice).start();
+    }
+
+    public Task doFetchNewReleases() {
+        return new Task() {
+            @Override
+            protected Object call() throws Exception {
+                xrelList = FXCollections.observableArrayList();
+                XRelInfo xrel = new XRelInfo();
+
+                XRlatest latest = xrel.getLatestHDMovieReleases("HDTV", "movie", 5);
+                for (int i = 0; i < latest.getList().size(); i++) {
+                    xrelList.add(latest.getList().get(i).getDirname());
+                }
+
+                return true;
+            }
+        };
+    }
     
-    private void showNewReleases() throws IOException{
-        ObservableList<String> xrelList = FXCollections.observableArrayList();
-        XRelInfo xrel = new XRelInfo();
-        
-        XRlatest latest = xrel.getLatestHDMovieReleases("HDTV", "movie", 5);
-        for (int i = 0; i < latest.getList().size(); i++) {
-            xrelList.add(latest.getList().get(i).getDirname());
-        }
-        
-        listNewReleases.setItems(xrelList);
-        listNewReleases.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    public Task doFetchCovers(){
+        return new Task() {
+            @Override
+            protected Object call() throws Exception {
+                // cover code here
+                return true;
+            }
+        };
     }
 
 }

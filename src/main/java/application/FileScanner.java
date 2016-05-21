@@ -71,7 +71,6 @@ public class FileScanner {
                     ext = FilenameUtils.getExtension(path.getFileName().toString());
                     if (videoExtensions.contains(ext)){
                         fileNames.add(path.toAbsolutePath().toString());
-                        System.out.println(path.getFileName());
                     }
                 }
             }

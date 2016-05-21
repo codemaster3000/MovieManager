@@ -1,6 +1,7 @@
 package gui.controller;
 
 import application.FileScanner;
+import application.MediaAdder;
 import main.Main;
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class ContentScannerController implements Initializable {
     ProgressBar progressScan;
     @FXML
     ListView listFiles;
-    
+
     ArrayList<String> fileNames;
 
     @Override
@@ -74,6 +75,7 @@ public class ContentScannerController implements Initializable {
         labelScaninfo.setText("Scanning files...");
 
         Task scanner = doFilescanning();
+
         progressScan.setProgress(0);
         progressScan.progressProperty().unbind();
         progressScan.progressProperty().bind(scanner.progressProperty());
@@ -82,20 +84,46 @@ public class ContentScannerController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldState, Worker.State newState) {
                 if (newState == Worker.State.SUCCEEDED) {
-                    labelScaninfo.setText("Scan done [found files]: " + fileNames.size());
-                    buttonScan.setDisable(false);
                     progressScan.progressProperty().unbind();
-                    progressScan.setProgress(0);   
-                    
+                    progressScan.setProgress(0);
+                   
                     listFiles.setItems(FXCollections.observableArrayList(fileNames));
                     listFiles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
                     System.out.println("filescanner task done " + fileNames.size());
                     // task done
+                    addFileData();
                 }
             }
         });
 
         new Thread(scanner).start();
+    }
+    
+    public void addFileData(){
+        Task adddata = doAddFilesToDatabase();
+        
+        labelScaninfo.setText("Extract data and add files to database...");
+        progressScan.setProgress(0);
+        progressScan.progressProperty().unbind();
+        progressScan.progressProperty().bind(adddata.progressProperty());
+        
+        
+        adddata.stateProperty().addListener(new ChangeListener<Worker.State>() {
+            @Override
+            public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldState, Worker.State newState) {
+                if (newState == Worker.State.SUCCEEDED) {
+                    labelScaninfo.setText("Scan done [added files]: " + fileNames.size());
+                    buttonScan.setDisable(false);
+                    //progressScan.progressProperty().unbind();
+                    //progressScan.setProgress(0);
+                   
+                    System.out.println("adding files to database done " + fileNames.size());
+                    // task done
+                }
+            }
+        });
+
+        new Thread(adddata).start();
     }
 
     public Task doFilescanning() {
@@ -105,6 +133,26 @@ public class ContentScannerController implements Initializable {
                 FileScanner fh = new FileScanner();
                 Path dir = Paths.get(labelScanpath.getText());
                 fileNames = fh.getScannedFileList(fileNames, dir);
+                return true;
+            }
+        };
+    }
+
+    public Task doAddFilesToDatabase() {
+        return new Task() {
+            @Override
+            protected Object call() throws Exception {
+                MediaAdder adder = new MediaAdder();
+
+                if (fileNames.size() > 0) {
+                    int i = 0;
+                    for (String filename : fileNames) {
+                        File f = new File(filename);
+                        //adder.movieToAdd(f);
+                        updateProgress(i++, fileNames.size() - 1);
+                    }
+                }
+
                 return true;
             }
         };

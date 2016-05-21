@@ -2,6 +2,10 @@
 
 Black Media Manager is a movie files manager database written in java.
 
+Build Status
+-------------------------
+[![Build Status](https://travis-ci.org/codemaster3000/MovieManager.svg?branch=master)](https://travis-ci.org/codemaster3000/MovieManager)
+
 Maven
 -----
 not yet available on repo
@@ -36,10 +40,6 @@ Features (ToDo-List)
 ###### Ideas:
 - [ ] Subtitles search
 - [ ] Music files
-
-Jenkins Build Status
--------------------------
-[![Build Status](http://jenkins.omertron.com/job/YAMJv3/badge/icon)](http://jenkins.omertron.com/job/YAMJv3)
 
 Licence
 -------------------------

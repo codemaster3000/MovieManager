@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23.05.2016 22:31:29 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="database.domain.Audioline" table="audioline" catalog="moviedb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="audiolinepos" class="database.domain.Audiolinepos" fetch="select">
+            <column name="audioLine_id" />
+        </many-to-one>
+        <many-to-one name="movie" class="database.domain.Movie" fetch="select">
+            <column name="movie_id" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -30,7 +30,7 @@ import javafx.stage.DirectoryChooser;
 /**
  * FXML Controller class
  *
- * @author fabian
+ * @author fabian salzgeber
  */
 public class ContentScannerController implements Initializable {
 
@@ -148,7 +148,7 @@ public class ContentScannerController implements Initializable {
                     int i = 0;
                     for (String filename : fileNames) {
                         File f = new File(filename);
-                        //adder.movieToAdd(f);
+                        adder.movieToAdd(f);
                         updateProgress(i++, fileNames.size() - 1);
                     }
                 }

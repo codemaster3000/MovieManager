@@ -1,26 +1,40 @@
 package gui.controller;
 
+import application.DataHandler;
 import application.helpers.AppConfig;
 import com.omertron.themoviedbapi.MovieDbException;
+import database.domain.Audioline;
+import database.domain.Audiolinepos;
+import database.domain.Genre;
 import database.domain.Movie;
+import database.domain.Owner;
+import database.domain.Ownerpos;
 import database.domain.Tmdbinfo;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import services.tmdbinfo.TmdbInfo;
 
 /**
@@ -31,72 +45,229 @@ import services.tmdbinfo.TmdbInfo;
 public class ContentMovieController implements Initializable {
 
     @FXML
-    private TableView tablelist;
+    private TableView tableMovies;
     @FXML
-    private ImageView imgCover;
+    private TableColumn<Movie, String> tableColumnTitel;
     @FXML
-    private TextArea txtMediaInfo;
-    
+    private TableColumn<Movie, Integer> tableColumnYear;
+    @FXML
+    private TableColumn<Movie, Double> tableColumnSize;
+    @FXML
+    private AnchorPane anchorPaneMain;
+    @FXML
+    private ImageView imageCover;
+    @FXML
+    private Label labelMovieHeadline;
+    @FXML
+    private Label labelTagline;
+    @FXML
+    private TextArea textAreaOverview;
+    @FXML
+    private Label labelMovieTitel;
+    @FXML
+    private Label labelYear;
+    @FXML
+    private Label labelRating;
+    @FXML
+    private Label labelEdition;
+    @FXML
+    private CheckBox labelRemux;
+    @FXML
+    private TextArea textareaNote;
+    @FXML
+    private Label labelTMDBid;
+    @FXML
+    private Label labelDuration;
+    @FXML
+    private Label labelGenre;
+    @FXML
+    private Label labelFileName;
+    @FXML
+    private Label labelFileSize;
+    @FXML
+    private Label labelFormat;
+    @FXML
+    private Label labelOwner;
+    @FXML
+    private Label labelBitrate;
+    @FXML
+    private Label labelMode;
+    @FXML
+    private Label labelAspectRatio;
+    @FXML
+    private Label labelResolution;
+    @FXML
+    private Label labelFrameRate;
+    @FXML
+    private TableView tableAudioLine;
+    @FXML
+    private TableColumn<Audiolinepos, String> tableColumnAudioLineLanguage;
+    @FXML
+    private TableColumn<Audiolinepos, String> tableColumnAudioLineFormat;
+    @FXML
+    private TableColumn<Audiolinepos, Integer> tableColumnAudioLineBitrate;
+    @FXML
+    private TableColumn<Audiolinepos, String> tableColumnAudioLineChannels;
+    @FXML
+    private TableColumn<Audiolinepos, Boolean> tableColumnAudioLineDTSMod;
+
     private AppConfig cfg = AppConfig.getInstance();
     private TmdbInfo tminf;
-    @FXML
-    private SplitPane splitter;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initTable();
+
+        tableColumnTitel.setCellValueFactory(new PropertyValueFactory<Movie, String>("fileName"));
+        tableColumnYear.setCellValueFactory(new PropertyValueFactory<Movie, Integer>("year"));
+        tableColumnSize.setCellValueFactory(new PropertyValueFactory<Movie, Double>("fileSize"));
+        
+        
+        tableColumnAudioLineLanguage.setCellValueFactory(new PropertyValueFactory<Audiolinepos, String>("audioLanguage"));
+        tableColumnAudioLineFormat.setCellValueFactory(new PropertyValueFactory<Audiolinepos, String>("audioFormat"));
+        tableColumnAudioLineBitrate.setCellValueFactory(new PropertyValueFactory<Audiolinepos, Integer>("audioBitrate"));
+        tableColumnAudioLineChannels.setCellValueFactory(new PropertyValueFactory<Audiolinepos, String>("audioChannels"));
+        tableColumnAudioLineDTSMod.setCellValueFactory(new PropertyValueFactory<Audiolinepos, Boolean>("dtsMod"));
+
+
+        initializeMovieTable();
+        tableMovies.getSelectionModel().selectFirst();
+
         try {
             tminf = new TmdbInfo(cfg.API_KEY);
         } catch (MovieDbException ex) {
             //Logger.getLogger(ContentMovieController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        tablelist.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        /*
+        tableMovies.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2 || event.getClickCount() == 1) {
                     try {
-                        showSelectedItemData((Movie) tablelist.getSelectionModel().getSelectedItem());
+                        showSelectedItemData((Movie) tableMovies.getSelectionModel().getSelectedItem());
                     } catch (MovieDbException ex) {
                         Logger.getLogger(ContentMovieController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
-        
-        String imageSource = "https://image.tmdb.org/t/p/w396/i68IvNkUvqaKPY0UbadXcQ23aik.jpg";
-        imgCover.setImage(new Image(imageSource));
+         */
     }
 
-    private void initTable() {
-        // some test content
-        Tmdbinfo inf1 = new Tmdbinfo();
-        Tmdbinfo inf2 = new Tmdbinfo();
-        inf1.setTmdbId(106);
-        inf2.setTmdbId(218);
-        
-        final ObservableList<Movie> data = FXCollections.observableArrayList(
-                new Movie(0, inf1, null, (byte) 1, "", false, "", 10, "Predator", 1.0, "", null),
-                new Movie(1, inf2, null, (byte) 1, "", false, "", 10, "Terminator", 1.0, "", null)
-        );
+    private void initializeMovieTable() {
 
-        TableColumn col01 = new TableColumn();
-        col01.setText("ID");
-        col01.setCellValueFactory(new PropertyValueFactory("id"));
-        TableColumn col02 = new TableColumn();
-        col02.setText("Title");
-        col02.setCellValueFactory(new PropertyValueFactory("fileName"));
+        DataHandler dataHandler = new DataHandler();
+        List<Movie> movies = dataHandler.getAllMovies();
 
-        tablelist.setItems(data);
-        tablelist.getColumns().addAll(col01, col02);
+        ObservableList<Movie> masterData = FXCollections.observableList(movies);
+
+        // 2. Set FilteredList and add Listeners to all TextFields
+        FilteredList<Movie> filteredData = new FilteredList<>(masterData, p -> true);
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Movie> sortedData = new SortedList<>(filteredData);
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(tableMovies.comparatorProperty());
+        tableMovies.setItems(masterData);
+
+        tableMovies.setRowFactory(tv -> {
+            TableRow<Movie> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (!row.isEmpty())) {
+                    try {
+                        showSelectedItemData((Movie) tableMovies.getSelectionModel().getSelectedItem());
+                    } catch (MovieDbException ex) {
+                        Logger.getLogger(ContentMovieController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            return row;
+        });
+    }
+
+    private void showSelectedItemData(Movie movie) throws MovieDbException {
+        labelMovieHeadline.setText(movie.getTmdbinfo().getTitle());
+        labelTagline.setText(movie.getTmdbinfo().getTagline());
+        imageCover.setImage(new Image(movie.getTmdbinfo().getCoverUrl()));
+        textAreaOverview.setText(movie.getTmdbinfo().getOverview());
+        labelMovieTitel.setText(movie.getTmdbinfo().getTitle());
+        labelYear.setText(String.valueOf(movie.getYear()));
+        labelRating.setText(String.valueOf(movie.getTmdbinfo().getRating()));
+        labelEdition.setText(movie.getEdition());
+        textareaNote.setText(movie.getNote());
+        labelTMDBid.setText(String.valueOf(movie.getTmdbinfo().getTmdbId()));
+        labelDuration.setText(String.valueOf(movie.getDuration()));
+        labelFileName.setText(movie.getFileName());
+        labelFileSize.setText(String.valueOf(movie.getFileSize()));
+        labelFormat.setText(movie.getFileFormat());
+        labelBitrate.setText(String.valueOf(movie.getVideoline().getVideoBitrate()));
+        labelMode.setText(movie.getVideoline().getVideoBitrateMode());
+        labelAspectRatio.setText(movie.getVideoline().getAspectRatio());
+        labelResolution.setText(movie.getVideoline().getResolutionWidth() + " x " + movie.getVideoline().getResolutionHeight());
+        labelFrameRate.setText(String.valueOf(movie.getVideoline().getFramerate()));
+
+        if (movie.getRemux()) {
+            labelRemux.setSelected(true);
+        }
+
+        labelOwner.setText(getOwnersToString(movie));
+        getGenresToString(movie);
+        initializeAudioLineTable(movie);
+
     }
     
-    private void showSelectedItemData(Movie mov) throws MovieDbException{
-        // loads movie info
-        System.out.println(mov.getFileName());
-        String imageSource = tminf.getMovieCoverURL(mov.getTmdbinfo().getTmdbId());
-        imgCover.setImage(new Image(imageSource));
+    private String getGenresToString(Movie movie) {
+        StringBuilder sb = new StringBuilder();
+        int counter = 1;
+
+        for (Genre g : movie.getGenres()) {
+            sb.append(g.getGenrepos().getType());
+            if (movie.getOwners().size() > counter) {
+                sb.append(", ");
+            }
+            counter++;
+        }
+        return sb.toString();
+    }
+
+    private String getOwnersToString(Movie movie) {
+        StringBuilder sb = new StringBuilder();
+        int counter = 1;
+
+        for (Owner o : movie.getOwners()) {
+            sb.append(o.getOwnerpos().getOwnerName());
+            if (movie.getOwners().size() > counter) {
+                sb.append(", ");
+            }
+            counter++;
+        }
+        return sb.toString();
+    }
+
+    private void initializeAudioLineTable(Movie movie) {
+
+        List<Audiolinepos> audiolines = new LinkedList();
         
-        txtMediaInfo.setText(mov.toString());
+        for(Audioline l : movie.getAudiolines()) {
+            audiolines.add(l.getAudiolinepos());
+        }
+
+        ObservableList<Audiolinepos> masterData = FXCollections.observableList(audiolines);
+
+        // 2. Set FilteredList and add Listeners to all TextFields
+        FilteredList<Audiolinepos> filteredData = new FilteredList<>(masterData, p -> true);
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Audiolinepos> sortedData = new SortedList<>(filteredData);
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(tableAudioLine.comparatorProperty());
+        tableAudioLine.setItems(masterData);
+
+        tableAudioLine.setRowFactory(tv -> {
+            TableRow<Movie> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (!row.isEmpty())) {
+                    //TODO:
+                }
+            });
+            return row;
+        });
     }
 }

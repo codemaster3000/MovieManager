@@ -1,5 +1,5 @@
 package database.domain;
-// Generated 30.04.2016 21:37:04 by Hibernate Tools 4.3.1
+// Generated 23.05.2016 22:31:28 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,24 +13,16 @@ public class Audiolinepos  implements java.io.Serializable {
 
      private Integer id;
      private String audioLanguage;
-     private int audioBitrate;
+     private Integer audioBitrate;
      private String audioFormat;
      private String audioChannels;
-     private boolean dtsMod;
+     private Boolean dtsMod;
      private Set audiolines = new HashSet(0);
 
     public Audiolinepos() {
     }
 
-	
-    public Audiolinepos(String audioLanguage, int audioBitrate, String audioFormat, String audioChannels, boolean dtsMod) {
-        this.audioLanguage = audioLanguage;
-        this.audioBitrate = audioBitrate;
-        this.audioFormat = audioFormat;
-        this.audioChannels = audioChannels;
-        this.dtsMod = dtsMod;
-    }
-    public Audiolinepos(String audioLanguage, int audioBitrate, String audioFormat, String audioChannels, boolean dtsMod, Set audiolines) {
+    public Audiolinepos(String audioLanguage, Integer audioBitrate, String audioFormat, String audioChannels, Boolean dtsMod, Set audiolines) {
        this.audioLanguage = audioLanguage;
        this.audioBitrate = audioBitrate;
        this.audioFormat = audioFormat;
@@ -53,11 +45,11 @@ public class Audiolinepos  implements java.io.Serializable {
     public void setAudioLanguage(String audioLanguage) {
         this.audioLanguage = audioLanguage;
     }
-    public int getAudioBitrate() {
+    public Integer getAudioBitrate() {
         return this.audioBitrate;
     }
     
-    public void setAudioBitrate(int audioBitrate) {
+    public void setAudioBitrate(Integer audioBitrate) {
         this.audioBitrate = audioBitrate;
     }
     public String getAudioFormat() {
@@ -74,11 +66,11 @@ public class Audiolinepos  implements java.io.Serializable {
     public void setAudioChannels(String audioChannels) {
         this.audioChannels = audioChannels;
     }
-    public boolean isDtsMod() {
+    public Boolean getDtsMod() {
         return this.dtsMod;
     }
     
-    public void setDtsMod(boolean dtsMod) {
+    public void setDtsMod(Boolean dtsMod) {
         this.dtsMod = dtsMod;
     }
     public Set getAudiolines() {

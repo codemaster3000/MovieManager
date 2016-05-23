@@ -1,18 +1,21 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30.04.2016 21:37:11 by Hibernate Tools 4.3.1 -->
+<!-- Generated 23.05.2016 22:31:29 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="database.domain.Audioline" table="audioline" catalog="moviedb" optimistic-lock="version">
+    <class name="database.domain.Owner" table="owner" catalog="moviedb" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="audiolinepos" class="database.domain.Audiolinepos" fetch="select">
-            <column name="audio_line_id" not-null="true" />
-        </many-to-one>
         <many-to-one name="movie" class="database.domain.Movie" fetch="select">
-            <column name="movie_id" not-null="true" />
+            <column name="movie_id" />
         </many-to-one>
+        <many-to-one name="ownerpos" class="database.domain.Ownerpos" fetch="select">
+            <column name="owner_id" />
+        </many-to-one>
+        <property name="hdd" type="string">
+            <column name="hdd" />
+        </property>
     </class>
 </hibernate-mapping>

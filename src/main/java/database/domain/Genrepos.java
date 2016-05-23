@@ -1,5 +1,5 @@
 package database.domain;
-// Generated 30.04.2016 21:37:04 by Hibernate Tools 4.3.1
+// Generated 23.05.2016 22:31:28 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -18,10 +18,6 @@ public class Genrepos  implements java.io.Serializable {
     public Genrepos() {
     }
 
-	
-    public Genrepos(String type) {
-        this.type = type;
-    }
     public Genrepos(String type, Set genres) {
        this.type = type;
        this.genres = genres;

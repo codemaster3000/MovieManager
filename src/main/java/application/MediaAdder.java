@@ -1,5 +1,6 @@
 package application;
 
+import application.helpers.AppConfig;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import database.domain.Movie;
@@ -19,9 +20,12 @@ import services.tmdbinfo.TmdbInfo;
  * @author fabian
  */
 public class MediaAdder {
+    
     public MediaAdder(){
         //empty
     }
+    
+    private AppConfig cfg = AppConfig.getInstance();
     
     private Tmdbinfo tmdbinfo;
     private Videoline videoline;
@@ -42,7 +46,7 @@ public class MediaAdder {
 
         tmdbinfo = new Tmdbinfo();
         MediaInfoGetter inf = new MediaInfoGetter(file);
-        TmdbInfo tmdb = new TmdbInfo("dec0b87fe8f35746c1e96d2fa8ba4873");
+        TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
         MovieInfo movieInfo = tmdb.getSearchMovieInfo(file.getName());
         MediaHandler medHand = new MediaHandler();
 
@@ -59,8 +63,8 @@ public class MediaAdder {
 
         //TMDB Infos
         tmdbinfo.setOverview(movieInfo.getOverview());
-        tmdbinfo.setRating(movieInfo.getUserRating());
-        tmdbinfo.setReleasedYear(getYear(file.getName()));      //eventl ändern 
+        tmdbinfo.setRating((double) movieInfo.getUserRating());
+        //tmdbinfo.setReleasedYear(getYear(file.getName()));      -> ändern
         tmdbinfo.setTagline(medHand.setTagline(movieInfo));
         tmdbinfo.setTitle(movieInfo.getTitle());
         tmdbinfo.setTmdbId(movieInfo.getId());
@@ -76,14 +80,15 @@ public class MediaAdder {
         Movie movie = new Movie();
         movie.setActive((byte) 1);
         movie.setAudiolines(audiolines);
-        movie.setDate(date);
+        movie.setDateAdded(date);
+        movie.setDateModified(date);
         movie.setDuration(0);
         movie.setEdition(edition);
         movie.setFileFormat(fileFormat);
         movie.setFileName(fileName);
         movie.setFileSize(fileSize);
         movie.setGenres(genres);
-        movie.setNote("");
+        movie.setNote("");//
         movie.setOwners(owners);
         movie.setRemux(remux);
         movie.setTmdbinfo(tmdbinfo);

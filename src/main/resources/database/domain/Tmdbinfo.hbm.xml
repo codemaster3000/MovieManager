@@ -1,37 +1,37 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30.04.2016 21:37:11 by Hibernate Tools 4.3.1 -->
+<!-- Generated 23.05.2016 22:31:29 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="database.domain.Tmdbinfo" table="tmdbinfo" catalog="moviedb" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
         </id>
-        <property name="tmdbId" type="int">
-            <column name="tmdbId" not-null="true" unique="true" />
+        <property name="tmdbId" type="java.lang.Integer">
+            <column name="tmdbId" />
         </property>
         <property name="title" type="string">
-            <column name="title" not-null="true" />
+            <column name="title" />
         </property>
-        <property name="releasedYear" type="int">
-            <column name="releasedYear" not-null="true" />
+        <property name="releasedDate" type="date">
+            <column name="releasedDate" length="10" />
         </property>
-        <property name="rating" type="double">
-            <column name="rating" precision="22" scale="0" not-null="true" />
+        <property name="rating" type="java.lang.Double">
+            <column name="rating" precision="22" scale="0" />
         </property>
         <property name="overview" type="string">
-            <column name="overview" not-null="true" />
+            <column name="overview" length="65535" />
         </property>
         <property name="tagline" type="string">
-            <column name="tagline" not-null="true" />
+            <column name="tagline" />
         </property>
         <property name="coverUrl" type="string">
-            <column name="coverURL" not-null="true" />
+            <column name="coverURL" />
         </property>
         <set name="movies" table="movie" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="movie_main_info_id" not-null="true" />
+                <column name="tmdbInfo_id" />
             </key>
             <one-to-many class="database.domain.Movie" />
         </set>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30.04.2016 21:37:11 by Hibernate Tools 4.3.1 -->
+<!-- Generated 23.05.2016 22:31:29 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="database.domain.Audiolinepos" table="audiolinepos" catalog="moviedb" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
@@ -9,23 +9,23 @@
             <generator class="identity" />
         </id>
         <property name="audioLanguage" type="string">
-            <column name="audioLanguage" length="45" not-null="true" />
+            <column name="audioLanguage" length="45" />
         </property>
-        <property name="audioBitrate" type="int">
-            <column name="audioBitrate" not-null="true" />
+        <property name="audioBitrate" type="java.lang.Integer">
+            <column name="audioBitrate" />
         </property>
         <property name="audioFormat" type="string">
-            <column name="audioFormat" length="45" not-null="true" />
+            <column name="audioFormat" length="45" />
         </property>
         <property name="audioChannels" type="string">
-            <column name="audioChannels" length="45" not-null="true" />
+            <column name="audioChannels" length="45" />
         </property>
-        <property name="dtsMod" type="boolean">
-            <column name="dtsMod" not-null="true" />
+        <property name="dtsMod" type="java.lang.Boolean">
+            <column name="dtsMod" />
         </property>
         <set name="audiolines" table="audioline" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="audio_line_id" not-null="true" />
+                <column name="audioLine_id" />
             </key>
             <one-to-many class="database.domain.Audioline" />
         </set>

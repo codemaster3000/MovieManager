@@ -1,7 +1,6 @@
 
 package database.persistance;
 
-import database.domain.Audioline;
 import database.domain.Genrepos;
 import database.domain.Movie;
 import database.domain.Ownerpos;
@@ -17,11 +16,12 @@ public class DBFacade {
         
     }
    
+    // gibt nur die aktiven zurück, inaktive und doppelte werden nicht zurückgegeben
     public List<Movie> getAllMovies() {
         Session session = DBSession.getInstance();
         List<Movie> results;
         try {
-            Query query = session.createQuery("FROM movie WHERE active != 2");
+            Query query = session.createQuery("FROM Movie WHERE active = 1");
             results = query.list();
         } catch (Exception ex) {
             ex.printStackTrace();

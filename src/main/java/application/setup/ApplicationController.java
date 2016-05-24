@@ -3,6 +3,7 @@ package application.setup;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import util.ResourcePathResolver;
 
 public class ApplicationController {
@@ -30,22 +31,26 @@ public class ApplicationController {
 		}	
 	}
 	
-	public void load(LoadStateCallbackHandler callback) {
+	public void load(LoadStateCallbackHandler loadStateCallback, LoadFinishedCallbackHandler loadFinishedCallback) {
 		if(_applicationState == ApplicationState.Initialized) {
-			
-			int loadTaskExecutedCount = 0;
-			for(LoadTask currentLoadTask : _loadTasks) {
-				currentLoadTask.run();
-				++loadTaskExecutedCount;
-				
-				int percentageLoaded = (100 / _loadTasks.size())* loadTaskExecutedCount;
-				
-				callback.loadTaskFinished(currentLoadTask, percentageLoaded); 
-			}
-			
-			callback.allLoadTaskFinished();
-			
-			_applicationState = ApplicationState.Loaded;
+			Platform.runLater(new Runnable() {			
+				@Override
+				public void run() {
+					int loadTaskExecutedCount = 0;
+					for(LoadTask currentLoadTask : _loadTasks) {
+						currentLoadTask.run();
+						++loadTaskExecutedCount;
+						
+						double percentageLoaded = (1.0 / _loadTasks.size())* loadTaskExecutedCount;
+						
+						loadStateCallback.loadTaskFinished(currentLoadTask, percentageLoaded); 
+					}
+					
+					loadFinishedCallback.allLoadTaskFinished();
+					
+					_applicationState = ApplicationState.Loaded;
+				}
+			});
 		}
 	}
 	
@@ -53,7 +58,6 @@ public class ApplicationController {
 		if(_applicationState == ApplicationState.Loaded) {
 			//free resources
 			//teardown connections
-			
 			_applicationState = ApplicationState.Unitialized;
 		}
 	}

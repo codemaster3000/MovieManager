@@ -8,9 +8,7 @@ public class XrelLoadTask extends LoadTask {
 
 	@Override
 	public void run() {
-		//TODO: implement
-		System.out.println("Currently no functionality implemented!");
+		// replace with actual action
 	}
-
 
 }

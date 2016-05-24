@@ -8,8 +8,7 @@ public class DatabaseLoadTask extends LoadTask {
 
 	@Override
 	public void run() {
-		//TODO: load from database
-		System.out.println("Currently no functionality implemented!");
+		// replace with actual action
 	}
 
 }

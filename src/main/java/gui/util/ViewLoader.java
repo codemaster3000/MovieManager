@@ -1,6 +1,7 @@
 package gui.util;
 
 import java.io.IOException;
+
 import gui.controller.ContentMovieController;
 import gui.controller.ContentReleasesController;
 import gui.controller.ContentScannerController;

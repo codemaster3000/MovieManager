@@ -1,5 +1,11 @@
 package main;
 
+import application.setup.LoadStateCallbackHandler;
+import application.setup.LoadTask;
+
+import java.io.IOException;
+
+import application.setup.ApplicationController;
 import gui.util.GuiServiceRegistry;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -10,29 +16,47 @@ import util.ResourcePathResolver;
 import util.ResourcePathResolver.ImageType;
 
 public class Main extends Application {
-
-    private static final ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
+    private final static String appName = "Black Movie Manager";
+    private final static String themeFileName = "theme_default";
+    private final static String iconFile = "black_folder-icon";
+    
     private static Stage _primaryStage;
-    
-    private final String appName = "Black Movie Manager";
-    
-    private final String themeFileName = "theme_default";
-    private final String iconFile = "black_folder-icon";
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
-        _primaryStage = primaryStage;
-        
-        /*Pane pane = new Pane();       
-        Scene scene = new Scene(pane);
-        GuiServiceRegistry.instance.getViewLoader().LoadMainViewController(pane);
-        scene.getStylesheets().add(ApplicationServices.instance.getResourcePathResolver().resolveCssStyle(themeFileName).toExternalForm());
-        */
-        
-        // init stuff
-        System.setProperty("jna.library.path", classLoader.getResource("lib/").getPath());
-        
+    	_primaryStage = primaryStage;
+    	
+    	ApplicationController.instance.init();
+    	//replace with handler from space screen controller
+    	ApplicationController.instance.load(new LoadStateCallbackHandler() {
+			
+			@Override
+			public void loadTaskFinished(LoadTask loadTask, int percent) {
+				System.out.println("Finished: " + loadTask.getTaskId() + ", " + percent);
+			}
+			
+			@Override
+			public void allLoadTaskFinished() {
+				System.out.println("Everyting was Loaded");
+			}
+		});
+    	
+    	showMainWindow();
+    	
+        DebugHandler.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+    	ApplicationController.instance.tearDown();
+    	super.stop();
+    }
+    
+    public static Stage getPrimaryStage() {
+        return _primaryStage;
+    }
+    
+    public static void showMainWindow() throws IOException {  
         Scene scene = new Scene(GuiServiceRegistry.instance.getViewLoader().LoadMainViewController());
         scene.getStylesheets().add(ApplicationServices.instance.getResourcePathResolver().resolveCssStyle(themeFileName).toExternalForm());
         _primaryStage.setScene(scene);
@@ -42,17 +66,9 @@ public class Main extends Application {
         _primaryStage.setMaximized(false);
         _primaryStage.getIcons().add(new Image(ApplicationServices.instance.getResourcePathResolver().resovleIconPath(iconFile, ImageType.PNG).openStream()));   
         _primaryStage.show();
-
-        // debug console outputs
-        @SuppressWarnings("unused")
-        DebugStuff stuff = new DebugStuff(true);
     }
 
     public static void main(String[] args) {
         launch(args);
-    }
-    
-    public static Stage getPrimaryStage() {
-        return _primaryStage;
     }
 }

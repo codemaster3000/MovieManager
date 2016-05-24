@@ -20,20 +20,18 @@ import util.ResourcePathResolver;
  *
  * @author fabian
  */
-public class DebugStuff {
+public class DebugHandler {
 
     private static final ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
-    private AppConfig cfg = AppConfig.getInstance();
+    private static AppConfig cfg = AppConfig.getInstance();
     
-    public DebugStuff(boolean enabled) throws Exception {
-        if (enabled) {
-            //testXRel();
-            //testMediaInfo();
-            testTmdbInfo();
-        }
+    public static void show() throws MovieDbException {
+    	//testXRel();
+        //testMediaInfo();
+        testTmdbInfo();
     }
     
-    public void testMediaInfo() throws IOException{
+    public static void testMediaInfo() throws IOException{
         System.setProperty("jna.library.path", classLoader.getResource("lib/").getPath());
         System.out.println("JVM Bit version: " + System.getProperty("sun.arch.data.model"));
         System.out.println("Java library path: " + System.getProperty("jna.library.path"));
@@ -46,17 +44,24 @@ public class DebugStuff {
         System.out.println(inf.getFileFormat());
     }
     
-    public void testTmdbInfo() throws MovieDbException{
+    public static void testTmdbInfo(){
         //Tmdbinfo tmdbinfo = new Tmdbinfo();
-        TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
-        
-        
-        MovieInfo inf = tmdb.getMovieInfoByID(5548);
-        ResultList<MovieInfo> movieInfo = tmdb.getMovieSearchResultsList("armageddon", 1998);
-        System.out.println("Total results: " + movieInfo.getTotalResults());
-    }
+        TmdbInfo tmdb;
+		try {
+			tmdb = new TmdbInfo(cfg.API_KEY);
 
-    public void testXRel() throws IOException, Exception {
+	        MovieInfo inf = tmdb.getMovieInfoByID(5548);
+	        ResultList<MovieInfo> movieInfo = tmdb.getMovieSearchResultsList("armageddon", 1998);
+	        System.out.println("Total results: " + movieInfo.getTotalResults());
+	    
+		} catch (MovieDbException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        }
+
+    public static void testXRel() throws IOException, Exception {
         // for debug use only
         XRelInfo xrel = new XRelInfo();
 

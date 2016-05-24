@@ -27,7 +27,7 @@ public class Main extends Application {
     	_primaryStage = primaryStage;
     	
     	ApplicationController.instance.init();
-    	//replace with handler from space screen controller
+    	//replace with handler from splash screen controller
     	ApplicationController.instance.load(new LoadStateCallbackHandler() {
 			
 			@Override

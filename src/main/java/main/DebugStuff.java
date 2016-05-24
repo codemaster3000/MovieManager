@@ -1,12 +1,17 @@
 package main;
 
 
+import application.helpers.AppConfig;
+import com.omertron.themoviedbapi.MovieDbException;
+import database.domain.Tmdbinfo;
 import java.io.File;
 import java.io.IOException;
 import services.mediainfo.MediaInfoGetter;
+import services.tmdbinfo.TmdbInfo;
 import services.xrelinfo.XRelInfo;
 import services.xrelinfo.jsondata.latest.XRlatest;
 import services.xrelinfo.jsondata.results.XRresults;
+import util.ResourcePathResolver;
 
 /**
  *
@@ -16,20 +21,33 @@ import services.xrelinfo.jsondata.results.XRresults;
  */
 public class DebugStuff {
 
+    private static final ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
+    private AppConfig cfg = AppConfig.getInstance();
+    
     public DebugStuff(boolean enabled) throws Exception {
         if (enabled) {
             //testXRel();
-            testMediaInfo();
+            //testMediaInfo();
+            testTmdbInfo();
         }
     }
     
     public void testMediaInfo() throws IOException{
-        System.out.println("MediaInfo dll tests*");
+        System.setProperty("jna.library.path", classLoader.getResource("lib/").getPath());
+        System.out.println("JVM Bit version: " + System.getProperty("sun.arch.data.model"));
+        System.out.println("Java library path: " + System.getProperty("jna.library.path"));
         File file = new File("C://FABIAN//example.mkv");
         if(!file.exists()){
             System.out.println("file not found: " + file.getPath());
         }
+        
         MediaInfoGetter inf = new MediaInfoGetter(file);
+        System.out.println(inf.getFileFormat());
+    }
+    
+    public void testTmdbInfo() throws MovieDbException{
+        Tmdbinfo tmdbinfo = new Tmdbinfo();
+        TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
     }
 
     public void testXRel() throws IOException, Exception {

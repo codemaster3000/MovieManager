@@ -1,8 +1,10 @@
 package application;
 
 import application.helpers.AppConfig;
+import application.helpers.StringStuff;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
+import com.omertron.themoviedbapi.results.ResultList;
 import database.domain.Movie;
 import database.domain.Tmdbinfo;
 import database.domain.Videoline;
@@ -43,11 +45,18 @@ public class MediaAdder {
     private Set audiolines = new HashSet(0);
     
     public void movieToAdd(File file) throws IOException, MovieDbException {
-        tmdbinfo = new Tmdbinfo();
+        //StringStuff strstuff = new StringStuff();
+        
+        //String movieName = strstuff.getMovieNameOnly(file.getName());
+        //int movieYear = strstuff.getYearFromMovieFilename(file.getName());
+        
+        //tmdbinfo = new Tmdbinfo();
+        //TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
+        //ResultList<MovieInfo> movieInfo = tmdb.getMovieSearchResultsList(movieName, movieYear);
         MediaInfoGetter inf = new MediaInfoGetter(file);
-        TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
-        MovieInfo movieInfo = tmdb.getSearchMovieInfo(file.getName());
         MediaHandler medHand = new MediaHandler();
+        
+        //System.out.print(movieInfo.getResults().size());
         
         active = 0;
         edition = getVersion(file.getName());
@@ -61,15 +70,15 @@ public class MediaAdder {
         audiolines = medHand.setAudiolines(inf);
 
         //TMDB Infos
-        tmdbinfo.setOverview(movieInfo.getOverview());
-        tmdbinfo.setRating((double) movieInfo.getUserRating());
+        //tmdbinfo.setOverview(movieInfo.getOverview());
+        //tmdbinfo.setRating((double) movieInfo.getUserRating());
         //tmdbinfo.setReleasedYear(getYear(file.getName()));      -> ändern
-        tmdbinfo.setTagline(medHand.setTagline(movieInfo));
-        tmdbinfo.setTitle(movieInfo.getTitle());
-        tmdbinfo.setTmdbId(movieInfo.getId());
-        tmdbinfo.setCoverUrl(tmdb.getMovieCoverURL(movieInfo.getId()));
+        //tmdbinfo.setTagline(medHand.setTagline(movieInfo));
+        //tmdbinfo.setTitle(movieInfo.getTitle());
+        //tmdbinfo.setTmdbId(movieInfo.getId());
+        //tmdbinfo.setCoverUrl(tmdb.getMovieCoverURL(movieInfo.getId()));
 
-        genres = medHand.setGenres(movieInfo);
+        //genres = medHand.setGenres(movieInfo);
         owners = medHand.setOwner();
 
         int year = getYear(file.getName());

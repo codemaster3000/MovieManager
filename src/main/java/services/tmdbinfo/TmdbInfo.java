@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import application.helpers.AppConfig;
-import application.helpers.VarChecks;
+import application.helpers.StringStuff;
 
 /**
  *
@@ -23,13 +23,13 @@ public class TmdbInfo {
 
     private TheMovieDbApi tmdb;
     private AppConfig cfg = AppConfig.getInstance();
-    private VarChecks chk;
+    private StringStuff chk;
     private String LANG;                // langage setting
 
     public TmdbInfo(String apikey) throws MovieDbException {
         // setup tmdb
         tmdb = new TheMovieDbApi(apikey);
-        chk = new VarChecks();
+        chk = new StringStuff();
         LANG = cfg.TMDB_LANGUAGE;
     }
 

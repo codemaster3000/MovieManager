@@ -6,16 +6,19 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import util.ApplicationServices;
+import util.ResourcePathResolver;
 import util.ResourcePathResolver.ImageType;
 
 public class Main extends Application {
 
+    private static final ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
     private static Stage _primaryStage;
     
     private final String appName = "Black Movie Manager";
     
     private final String themeFileName = "theme_default";
     private final String iconFile = "black_folder-icon";
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
         
@@ -26,6 +29,9 @@ public class Main extends Application {
         GuiServiceRegistry.instance.getViewLoader().LoadMainViewController(pane);
         scene.getStylesheets().add(ApplicationServices.instance.getResourcePathResolver().resolveCssStyle(themeFileName).toExternalForm());
         */
+        
+        // init stuff
+        System.setProperty("jna.library.path", classLoader.getResource("lib/").getPath());
         
         Scene scene = new Scene(GuiServiceRegistry.instance.getViewLoader().LoadMainViewController());
         scene.getStylesheets().add(ApplicationServices.instance.getResourcePathResolver().resolveCssStyle(themeFileName).toExternalForm());

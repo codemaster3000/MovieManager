@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
  *
  * @author fabian
  */
-public class VarChecks {
+public class StringStuff {
 
-    public VarChecks() {
+    public StringStuff() {
         // empty constructor
     }
 
@@ -49,6 +49,12 @@ public class VarChecks {
         } else {
             return 0;
         }
+    }
+    
+    public String getMovieNameOnly(String filename){
+        int pos = filename.indexOf( '(', 5 );
+        String result = filename.substring(0, pos);
+        return result.trim();
     }
     
     public List<String> getBracketInfosFromFilename(String movieFilename) {

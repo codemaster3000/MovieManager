@@ -16,7 +16,7 @@ interface MediaInfoLibrary extends Library {
 	// libmediainfo for linux depends on libzen, so we need to load dependencies first
 	Library LIB_ZEN = Platform.isLinux() ? (Library) Native.loadLibrary("zen", Library.class) : null;
 
-	MediaInfoLibrary INSTANCE = (MediaInfoLibrary) Native.loadLibrary("mediainfo", MediaInfoLibrary.class, singletonMap(OPTION_FUNCTION_MAPPER, new FunctionMapper() {
+        MediaInfoLibrary INSTANCE = (MediaInfoLibrary) Native.loadLibrary("mediainfo", MediaInfoLibrary.class, singletonMap(OPTION_FUNCTION_MAPPER, new FunctionMapper() {
 
 		@Override
 		public String getFunctionName(NativeLibrary lib, Method method) {

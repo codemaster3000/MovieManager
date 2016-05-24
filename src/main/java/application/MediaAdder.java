@@ -47,9 +47,11 @@ public class MediaAdder {
     private Set genres = new HashSet(0);
     private Set audiolines = new HashSet(0);
     
-    public void movieToAdd(File file) throws IOException, MovieDbException {
+    public boolean movieToAdd(File file) throws IOException, MovieDbException {
         tmdbinfo = new Tmdbinfo();
 
+        boolean tmdbFound = false;
+        
         String movieName = strstuff.getMovieNameOnly(file.getName());
         int movieYear = strstuff.getYearFromMovieFilename(file.getName());
         
@@ -73,7 +75,7 @@ public class MediaAdder {
 
         //TMDB Infos
         if (movieSearchResults.getTotalResults() > 0){
-            
+            tmdbFound = true;
             MovieInfo movieInfo = movieSearchResults.getResults().get(0);
             
             tmdbinfo.setOverview(movieInfo.getOverview());
@@ -108,6 +110,8 @@ public class MediaAdder {
         // Film speichern
         //DBFacade dbfacade = new DBFacade();
         //dbfacade.saveMovie(movie);
+        
+        return tmdbFound;
     }
     
     private String getVersion(String fileName) {

@@ -46,12 +46,16 @@ public class ContentScannerController implements Initializable {
     ProgressBar progressScan;
     @FXML
     ListView listFiles;
+    @FXML
+    ListView listNotFound;
 
     ArrayList<String> fileNames;
+    ArrayList<String> tmdbNotFound;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fileNames = new ArrayList<String>();
+        tmdbNotFound = new ArrayList<String>();
         labelScanpath.setText("no scanpath selected");
         labelScaninfo.setText("");
         buttonScan.setDisable(true);
@@ -116,7 +120,9 @@ public class ContentScannerController implements Initializable {
                     buttonScan.setDisable(false);
                     //progressScan.progressProperty().unbind();
                     //progressScan.setProgress(0);
-                   
+                    
+                    listNotFound.setItems(FXCollections.observableArrayList(tmdbNotFound));
+                    listNotFound.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
                     System.out.println("adding files to database done " + fileNames.size());
                     // task done
                 }
@@ -148,7 +154,9 @@ public class ContentScannerController implements Initializable {
                     int i = 0;
                     for (String filename : fileNames) {
                         File f = new File(filename);
-                        adder.movieToAdd(f);
+                        if(!adder.movieToAdd(f)){
+                            tmdbNotFound.add(f.getName());
+                        }
                         updateProgress(i++, fileNames.size() - 1);
                     }
                 }

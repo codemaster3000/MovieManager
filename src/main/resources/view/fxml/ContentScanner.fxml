@@ -15,6 +15,9 @@
       <Label fx:id="labelScanpath" layoutX="240.0" layoutY="87.0" prefHeight="17.0" prefWidth="256.0" text="Label" />
       <Button fx:id="buttonScan" layoutX="101.0" layoutY="141.0" mnemonicParsing="false" onAction="#scanFolders" prefHeight="25.0" prefWidth="126.0" text="Start filescan" />
       <Label fx:id="labelScaninfo" layoutX="240.0" layoutY="145.0" prefHeight="17.0" prefWidth="256.0" text="Label" />
-      <ListView fx:id="listFiles" layoutX="101.0" layoutY="251.0" prefHeight="334.0" prefWidth="397.0" />
+      <ListView fx:id="listFiles" layoutX="101.0" layoutY="251.0" prefHeight="285.0" prefWidth="397.0" />
+      <ListView fx:id="listNotFound" layoutX="516.0" layoutY="251.0" prefHeight="285.0" prefWidth="349.0" />
+      <Label fx:id="labelScaninfo1" layoutX="99.0" layoutY="234.0" prefHeight="17.0" prefWidth="256.0" text="Filescanner process list:" />
+      <Label fx:id="labelScaninfo11" layoutX="516.0" layoutY="234.0" prefHeight="17.0" prefWidth="256.0" text="Files not found on tmdb:" />
    </children>
 </AnchorPane>

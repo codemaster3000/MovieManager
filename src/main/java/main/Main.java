@@ -45,7 +45,7 @@ public class Main extends Application {
 
         // debug console outputs
         @SuppressWarnings("unused")
-        DebugStuff stuff = new DebugStuff(false);
+        DebugStuff stuff = new DebugStuff(true);
     }
 
     public static void main(String[] args) {

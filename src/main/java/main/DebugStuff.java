@@ -3,7 +3,8 @@ package main;
 
 import application.helpers.AppConfig;
 import com.omertron.themoviedbapi.MovieDbException;
-import database.domain.Tmdbinfo;
+import com.omertron.themoviedbapi.model.movie.MovieInfo;
+import com.omertron.themoviedbapi.results.ResultList;
 import java.io.File;
 import java.io.IOException;
 import services.mediainfo.MediaInfoGetter;
@@ -46,8 +47,13 @@ public class DebugStuff {
     }
     
     public void testTmdbInfo() throws MovieDbException{
-        Tmdbinfo tmdbinfo = new Tmdbinfo();
+        //Tmdbinfo tmdbinfo = new Tmdbinfo();
         TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
+        
+        
+        MovieInfo inf = tmdb.getMovieInfoByID(5548);
+        ResultList<MovieInfo> movieInfo = tmdb.getMovieSearchResultsList("armageddon", 1998);
+        System.out.println("Total results: " + movieInfo.getTotalResults());
     }
 
     public void testXRel() throws IOException, Exception {

@@ -22,9 +22,12 @@ import services.tmdbinfo.TmdbInfo;
  * @author fabian
  */
 public class MediaAdder {
+    TmdbInfo tmdb;
+    StringStuff strstuff;
     
-    public MediaAdder(){
-        //empty
+    public MediaAdder() throws MovieDbException{
+        tmdb = new TmdbInfo(cfg.API_KEY);
+        strstuff = new StringStuff();
     }
     
     private AppConfig cfg = AppConfig.getInstance();
@@ -44,19 +47,20 @@ public class MediaAdder {
     private Set genres = new HashSet(0);
     private Set audiolines = new HashSet(0);
     
-    public void movieToAdd(File file) throws IOException, MovieDbException {
-        //StringStuff strstuff = new StringStuff();
+    public boolean movieToAdd(File file) throws IOException, MovieDbException {
+        tmdbinfo = new Tmdbinfo();
+
+        boolean tmdbFound = false;
         
-        //String movieName = strstuff.getMovieNameOnly(file.getName());
-        //int movieYear = strstuff.getYearFromMovieFilename(file.getName());
+        String movieName = strstuff.getMovieNameOnly(file.getName());
+        int movieYear = strstuff.getYearFromMovieFilename(file.getName());
         
-        //tmdbinfo = new Tmdbinfo();
-        //TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
-        //ResultList<MovieInfo> movieInfo = tmdb.getMovieSearchResultsList(movieName, movieYear);
+        ResultList<MovieInfo> movieSearchResults = tmdb.getMovieSearchResultsList(movieName, movieYear);
+        
+        
         MediaInfoGetter inf = new MediaInfoGetter(file);
         MediaHandler medHand = new MediaHandler();
         
-        //System.out.print(movieInfo.getResults().size());
         
         active = 0;
         edition = getVersion(file.getName());
@@ -70,20 +74,21 @@ public class MediaAdder {
         audiolines = medHand.setAudiolines(inf);
 
         //TMDB Infos
-        //tmdbinfo.setOverview(movieInfo.getOverview());
-        //tmdbinfo.setRating((double) movieInfo.getUserRating());
-        //tmdbinfo.setReleasedYear(getYear(file.getName()));      -> ändern
-        //tmdbinfo.setTagline(medHand.setTagline(movieInfo));
-        //tmdbinfo.setTitle(movieInfo.getTitle());
-        //tmdbinfo.setTmdbId(movieInfo.getId());
-        //tmdbinfo.setCoverUrl(tmdb.getMovieCoverURL(movieInfo.getId()));
-
+        if (movieSearchResults.getTotalResults() > 0){
+            tmdbFound = true;
+            MovieInfo movieInfo = movieSearchResults.getResults().get(0);
+            
+            tmdbinfo.setOverview(movieInfo.getOverview());
+            tmdbinfo.setRating((double) movieInfo.getUserRating());
+            //tmdbinfo.setReleasedYear(movieInfo.getReleaseDate());      
+            tmdbinfo.setTagline(medHand.setTagline(movieInfo));
+            tmdbinfo.setTitle(movieInfo.getTitle());
+            tmdbinfo.setTmdbId(movieInfo.getId());
+            tmdbinfo.setCoverUrl(tmdb.getMovieCoverURL(movieInfo.getId()));
+        }
+        
         //genres = medHand.setGenres(movieInfo);
         owners = medHand.setOwner();
-
-        int year = getYear(file.getName());
-
-        String hdd = getHDD(file.getAbsolutePath());
 
         Movie movie = new Movie();
         movie.setActive((byte) 1);
@@ -105,7 +110,8 @@ public class MediaAdder {
         // Film speichern
         //DBFacade dbfacade = new DBFacade();
         //dbfacade.saveMovie(movie);
-
+        
+        return tmdbFound;
     }
     
     private String getVersion(String fileName) {

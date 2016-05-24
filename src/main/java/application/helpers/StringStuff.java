@@ -1,5 +1,9 @@
 package application.helpers;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -33,8 +37,8 @@ public class StringStuff {
         Pattern regex = Pattern.compile("\\((.*?)\\)");
         Matcher regexMatcher = regex.matcher(movieFilename);
         String year = "";
-        
-        if (movieFilename.contains("(") && movieFilename.contains(")")){
+
+        if (movieFilename.contains("(") && movieFilename.contains(")")) {
             while (regexMatcher.find()) {
                 matchList.add(regexMatcher.group(1));
             }
@@ -54,18 +58,18 @@ public class StringStuff {
             return 0;
         }
     }
-    
-    public String getMovieNameOnly(String filename){
+
+    public String getMovieNameOnly(String filename) {
         String result = "";
-        int pos = filename.indexOf( '(', 5 );
-        if (pos > 0){
+        int pos = filename.indexOf('(', 5);
+        if (pos > 0) {
             result = filename.substring(0, pos);
         } else {
             result = FilenameUtils.getBaseName(filename);
         }
         return result.trim();
     }
-    
+
     public List<String> getBracketInfosFromFilename(String movieFilename) {
         List<String> matchList = new ArrayList<String>();
         Pattern regex = Pattern.compile("\\((.*?)\\)");
@@ -74,7 +78,28 @@ public class StringStuff {
         while (regexMatcher.find()) {
             matchList.add(regexMatcher.group(1));
         }
-        
+
         return matchList;
+    }
+
+    public int getTmdbFromNfoFile(String nfopath) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(nfopath));
+        String ct = new String(encoded, Charset.defaultCharset());
+        int result = -1;
+        
+        if (ct.contains("www.themoviedb.org")){
+            int startpos = ct.indexOf("www.themoviedb.org");
+            int endpos = ct.indexOf("-", startpos);
+
+            String sub1 = ct.substring(startpos, endpos);
+
+            try{
+                result = Integer.parseInt(sub1.substring(sub1.lastIndexOf("/") + 1));
+            } catch (Exception ex){
+                result = -1;
+                System.out.println("Error: cannot parse tmdb id from nfo file " + nfopath);
+            }
+        }
+        return result;
     }
 }

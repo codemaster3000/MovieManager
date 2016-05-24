@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.commons.io.FilenameUtils;
 import services.mediainfo.MediaInfoGetter;
 import services.tmdbinfo.TmdbInfo;
 
@@ -24,10 +25,13 @@ import services.tmdbinfo.TmdbInfo;
 public class MediaAdder {
     TmdbInfo tmdb;
     StringStuff strstuff;
+    MediaInfoGetter inf;
+    MediaHandler medHand;
     
     public MediaAdder() throws MovieDbException{
         tmdb = new TmdbInfo(cfg.API_KEY);
         strstuff = new StringStuff();
+        medHand = new MediaHandler();
     }
     
     private AppConfig cfg = AppConfig.getInstance();
@@ -49,42 +53,44 @@ public class MediaAdder {
     
     public boolean movieToAdd(File file) throws IOException, MovieDbException {
         tmdbinfo = new Tmdbinfo();
-
+        inf = new MediaInfoGetter(file);
         boolean tmdbFound = false;
         
+        // search movietitle and year on TMDB, returns list of results
         String movieName = strstuff.getMovieNameOnly(file.getName());
         int movieYear = strstuff.getYearFromMovieFilename(file.getName());
-        
         ResultList<MovieInfo> movieSearchResults = tmdb.getMovieSearchResultsList(movieName, movieYear);
         
-        
-        MediaInfoGetter inf = new MediaInfoGetter(file);
-        MediaHandler medHand = new MediaHandler();
-        
-        
+        // add file information
         active = 0;
-        edition = getVersion(file.getName());
-        fileName = getName(file.getName());
-        fileFormat = getFileFormat(file.getName());
+        edition = "";//getVersion(file.getName());          // todo: check brackets
+        fileName = getName(file.getName());                 // mit oder ohne extension ?
         duration = (int) inf.getVideoDurationMinutes();
         fileSize = inf.getFileSize();
         fileFormat = inf.getFileFormat();
-        date = new Date(); //aktuelles Datum
+        date = new Date();                                  // aktuelles Datum (dateierstellungsdatum nehmen ?)
         videoline = medHand.setVideoline(inf);
         audiolines = medHand.setAudiolines(inf);
 
-        //TMDB Infos
+        // add TMDB Infos
+        MovieInfo movieInfo = new MovieInfo();
         if (movieSearchResults.getTotalResults() > 0){
+            // use first searchresult from list (should be the best result)
             tmdbFound = true;
-            MovieInfo movieInfo = movieSearchResults.getResults().get(0);
-            
-            tmdbinfo.setOverview(movieInfo.getOverview());
-            tmdbinfo.setRating((double) movieInfo.getUserRating());
-            //tmdbinfo.setReleasedYear(movieInfo.getReleaseDate());      
-            tmdbinfo.setTagline(medHand.setTagline(movieInfo));
-            tmdbinfo.setTitle(movieInfo.getTitle());
-            tmdbinfo.setTmdbId(movieInfo.getId());
-            tmdbinfo.setCoverUrl(tmdb.getMovieCoverURL(movieInfo.getId()));
+            movieInfo = movieSearchResults.getResults().get(0);
+            addTmdbData(movieInfo);
+        } else {
+            File nfofile = new File(file.getParent() + "/" + FilenameUtils.removeExtension(file.getName()) + ".nfo");
+            if (nfofile.exists()){
+                // if there are no tmdb results found with search then check for nfo file (with tmdb id)
+                int fetchTmdbId = strstuff.getTmdbFromNfoFile(nfofile.getPath());
+                System.out.println(fetchTmdbId);
+                if (fetchTmdbId != -1){
+                    tmdbFound = true;
+                    movieInfo = tmdb.getMovieInfoByID(strstuff.getTmdbFromNfoFile(nfofile.getPath()));
+                    addTmdbData(movieInfo);
+                }
+            }   
         }
         
         //genres = medHand.setGenres(movieInfo);
@@ -112,6 +118,16 @@ public class MediaAdder {
         //dbfacade.saveMovie(movie);
         
         return tmdbFound;
+    }
+    
+    private void addTmdbData(MovieInfo movieInfo) throws MovieDbException{
+            tmdbinfo.setOverview(movieInfo.getOverview());
+            tmdbinfo.setRating((double) movieInfo.getUserRating());
+            //tmdbinfo.setReleasedYear(movieInfo.getReleaseDate());      
+            tmdbinfo.setTagline(medHand.setTagline(movieInfo));
+            tmdbinfo.setTitle(movieInfo.getTitle());
+            tmdbinfo.setTmdbId(movieInfo.getId());
+            tmdbinfo.setCoverUrl(tmdb.getMovieCoverURL(movieInfo.getId()));
     }
     
     private String getVersion(String fileName) {

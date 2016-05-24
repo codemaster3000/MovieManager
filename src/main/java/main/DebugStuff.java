@@ -2,6 +2,7 @@ package main;
 
 
 import application.helpers.AppConfig;
+import application.helpers.StringStuff;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
@@ -29,7 +30,7 @@ public class DebugStuff {
         if (enabled) {
             //testXRel();
             //testMediaInfo();
-            testTmdbInfo();
+            //testTmdbInfo();
         }
     }
     
@@ -46,14 +47,17 @@ public class DebugStuff {
         System.out.println(inf.getFileFormat());
     }
     
-    public void testTmdbInfo() throws MovieDbException{
+    public void testTmdbInfo() throws MovieDbException, IOException{
         //Tmdbinfo tmdbinfo = new Tmdbinfo();
+        StringStuff strstuff = new StringStuff();
         TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
         
-        
-        MovieInfo inf = tmdb.getMovieInfoByID(5548);
         ResultList<MovieInfo> movieInfo = tmdb.getMovieSearchResultsList("armageddon", 1998);
         System.out.println("Total results: " + movieInfo.getTotalResults());
+        
+        String pf = "C:\\FABIAN\\_Serien\\London.Has.Fallen.2016.WEBRip.AC3LD.German.XviD-LoC\\LoC-london has fallen.nfo";
+        MovieInfo inf = tmdb.getMovieInfoByID(strstuff.getTmdbFromNfoFile(pf));
+        System.out.println(inf.getOriginalTitle());
     }
 
     public void testXRel() throws IOException, Exception {

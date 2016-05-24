@@ -39,7 +39,12 @@ public class TmdbInfo {
     }
 
     public ResultList<MovieInfo> getMovieSearchResultsList(String searchKeyword, int year) throws MovieDbException {
-        ResultList<MovieInfo> results = tmdb.searchMovie(searchKeyword, null, LANG, true, year, null, SearchType.PHRASE);
+        ResultList<MovieInfo> results = new ResultList<MovieInfo>();
+        if (year != 0){
+            results = tmdb.searchMovie(searchKeyword, null, LANG, true, year, null, SearchType.PHRASE);
+        } else {
+            results = tmdb.searchMovie(searchKeyword, null, LANG, true, null, null, SearchType.PHRASE);
+        }
         return results;
     }
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -31,13 +32,16 @@ public class StringStuff {
         List<String> matchList = new ArrayList<String>();
         Pattern regex = Pattern.compile("\\((.*?)\\)");
         Matcher regexMatcher = regex.matcher(movieFilename);
-
-        while (regexMatcher.find()) {
-            matchList.add(regexMatcher.group(1));
+        String year = "";
+        
+        if (movieFilename.contains("(") && movieFilename.contains(")")){
+            while (regexMatcher.find()) {
+                matchList.add(regexMatcher.group(1));
+            }
+            year = matchList.get(0);
+        } else {
+            year = "x";
         }
-
-        // first string should be year
-        String year = matchList.get(0);
 
         // check if its valid year (4 digits)
         if (checkStringIsInteger(year)) {
@@ -52,8 +56,13 @@ public class StringStuff {
     }
     
     public String getMovieNameOnly(String filename){
+        String result = "";
         int pos = filename.indexOf( '(', 5 );
-        String result = filename.substring(0, pos);
+        if (pos > 0){
+            result = filename.substring(0, pos);
+        } else {
+            result = FilenameUtils.getBaseName(filename);
+        }
         return result.trim();
     }
     

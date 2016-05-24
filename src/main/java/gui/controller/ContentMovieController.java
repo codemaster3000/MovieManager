@@ -129,7 +129,7 @@ public class ContentMovieController implements Initializable {
         tableColumnAudioLineDTSMod.setCellValueFactory(new PropertyValueFactory<Audiolinepos, Boolean>("dtsMod"));
 
 
-        initializeMovieTable();
+        //initializeMovieTable();
         tableMovies.getSelectionModel().selectFirst();
 
         try {

@@ -1,7 +1,9 @@
 package main;
 
 
+import java.io.File;
 import java.io.IOException;
+import services.mediainfo.MediaInfoGetter;
 import services.xrelinfo.XRelInfo;
 import services.xrelinfo.jsondata.latest.XRlatest;
 import services.xrelinfo.jsondata.results.XRresults;
@@ -16,8 +18,18 @@ public class DebugStuff {
 
     public DebugStuff(boolean enabled) throws Exception {
         if (enabled) {
-            testXRel();
+            //testXRel();
+            testMediaInfo();
         }
+    }
+    
+    public void testMediaInfo() throws IOException{
+        System.out.println("MediaInfo dll tests*");
+        File file = new File("C://FABIAN//example.mkv");
+        if(!file.exists()){
+            System.out.println("file not found: " + file.getPath());
+        }
+        MediaInfoGetter inf = new MediaInfoGetter(file);
     }
 
     public void testXRel() throws IOException, Exception {

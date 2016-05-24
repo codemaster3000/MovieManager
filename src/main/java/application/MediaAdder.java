@@ -43,13 +43,12 @@ public class MediaAdder {
     private Set audiolines = new HashSet(0);
     
     public void movieToAdd(File file) throws IOException, MovieDbException {
-
         tmdbinfo = new Tmdbinfo();
         MediaInfoGetter inf = new MediaInfoGetter(file);
         TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
         MovieInfo movieInfo = tmdb.getSearchMovieInfo(file.getName());
         MediaHandler medHand = new MediaHandler();
-
+        
         active = 0;
         edition = getVersion(file.getName());
         fileName = getName(file.getName());
@@ -95,8 +94,8 @@ public class MediaAdder {
         movie.setVideoline(videoline);
 
         // Film speichern
-        DBFacade dbfacade = new DBFacade();
-        dbfacade.saveMovie(movie);
+        //DBFacade dbfacade = new DBFacade();
+        //dbfacade.saveMovie(movie);
 
     }
     

@@ -18,6 +18,6 @@ public class SplashScreenController implements LoadStateCallbackHandler {
 	public void loadTaskFinished(LoadTask loadTask, double percent) {
 		System.out.println(percent);
 		currentlyLoadingLoading.setText(loadTask.getTaskId());
-		loadProcessIndicator.setProgress(percent);
+		//loadProcessIndicator.setProgress(percent);
 	}
 }

@@ -36,13 +36,13 @@ public class Main extends Application {
     	ApplicationController.instance.load(splashScreenController, new LoadFinishedCallbackHandler() {		
 			@Override
 			public void allLoadTaskFinished() {
-				try {
+				/*try {
 					_splashScreenStage.close();
 					showMainWindow(_primaryStage);
 					DebugHandler.show();
 				} catch (IOException | MovieDbException e) {
 					e.printStackTrace();
-				}  
+				} */ 
 			}
 		});
     }
@@ -79,8 +79,6 @@ public class Main extends Application {
         
         _splashScreenStage = new Stage(StageStyle.UNDECORATED);
         _splashScreenStage.setScene(scene);
-        _splashScreenStage.setMinHeight(200);
-        _splashScreenStage.setMinWidth(300);
         _splashScreenStage.centerOnScreen();     
         _splashScreenStage.show();
     }

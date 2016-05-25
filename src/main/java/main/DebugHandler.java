@@ -6,7 +6,6 @@ import application.helpers.StringStuff;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
-import com.sun.javafx.util.TempState;
 
 import java.io.File;
 import java.io.IOException;

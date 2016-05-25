@@ -2,9 +2,12 @@ package main;
 
 
 import application.helpers.AppConfig;
+import application.helpers.StringStuff;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
+import com.sun.javafx.util.TempState;
+
 import java.io.File;
 import java.io.IOException;
 import services.mediainfo.MediaInfoGetter;
@@ -24,12 +27,12 @@ public class DebugHandler {
 
     private static final ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
     private static AppConfig cfg = AppConfig.getInstance();
-    
-    public static void show() throws MovieDbException {
-    	//testXRel();
-        //testMediaInfo();
-        testTmdbInfo();
-    }
+
+    public static void show() throws Exception {
+		testMediaInfo();
+		testTmdbInfo();
+		testXRel();
+	}
     
     public static void testMediaInfo() throws IOException{
         System.setProperty("jna.library.path", classLoader.getResource("lib/").getPath());
@@ -43,23 +46,19 @@ public class DebugHandler {
         MediaInfoGetter inf = new MediaInfoGetter(file);
         System.out.println(inf.getFileFormat());
     }
-    
-    public static void testTmdbInfo(){
-        //Tmdbinfo tmdbinfo = new Tmdbinfo();
-        TmdbInfo tmdb;
-		try {
-			tmdb = new TmdbInfo(cfg.API_KEY);
 
-	        MovieInfo inf = tmdb.getMovieInfoByID(5548);
-	        ResultList<MovieInfo> movieInfo = tmdb.getMovieSearchResultsList("armageddon", 1998);
-	        System.out.println("Total results: " + movieInfo.getTotalResults());
-	    
-		} catch (MovieDbException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public static void testTmdbInfo() throws MovieDbException, IOException{
+        //Tmdbinfo tmdbinfo = new Tmdbinfo();
+        StringStuff strstuff = new StringStuff();
+        TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
         
-        }
+        ResultList<MovieInfo> movieInfo = tmdb.getMovieSearchResultsList("armageddon", 1998);
+        System.out.println("Total results: " + movieInfo.getTotalResults());
+        
+        String pf = "C:\\FABIAN\\_Serien\\London.Has.Fallen.2016.WEBRip.AC3LD.German.XviD-LoC\\LoC-london has fallen.nfo";
+        MovieInfo inf = tmdb.getMovieInfoByID(strstuff.getTmdbFromNfoFile(pf));
+        System.out.println(inf.getOriginalTitle());
+    }
 
     public static void testXRel() throws IOException, Exception {
         // for debug use only

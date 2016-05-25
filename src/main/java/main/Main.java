@@ -1,9 +1,6 @@
 package main;
 
 import java.io.IOException;
-
-import com.omertron.themoviedbapi.MovieDbException;
-
 import application.setup.ApplicationController;
 import application.setup.LoadFinishedCallbackHandler;
 import gui.controller.SplashScreenController;
@@ -36,13 +33,13 @@ public class Main extends Application {
     	ApplicationController.instance.load(splashScreenController, new LoadFinishedCallbackHandler() {		
 			@Override
 			public void allLoadTaskFinished() {
-				/*try {
+				try {
 					_splashScreenStage.close();
 					showMainWindow(_primaryStage);
-					DebugHandler.show();
-				} catch (IOException | MovieDbException e) {
+					//DebugHandler.show();
+				} catch (Exception e) {
 					e.printStackTrace();
-				} */ 
+				} 
 			}
 		});
     }
@@ -81,6 +78,7 @@ public class Main extends Application {
         _splashScreenStage.setScene(scene);
         _splashScreenStage.centerOnScreen();     
         _splashScreenStage.show();
+
     }
 
     public static void main(String[] args) {

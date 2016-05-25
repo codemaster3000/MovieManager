@@ -8,8 +8,6 @@ import database.domain.Audiolinepos;
 import database.domain.Genre;
 import database.domain.Movie;
 import database.domain.Owner;
-import database.domain.Ownerpos;
-import database.domain.Tmdbinfo;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,12 +18,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -33,7 +29,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import services.tmdbinfo.TmdbInfo;
 
@@ -113,6 +108,7 @@ public class ContentMovieController implements Initializable {
 
     private AppConfig cfg = AppConfig.getInstance();
     private TmdbInfo tminf;
+    private DataHandler dataHandler;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -129,7 +125,7 @@ public class ContentMovieController implements Initializable {
         tableColumnAudioLineDTSMod.setCellValueFactory(new PropertyValueFactory<Audiolinepos, Boolean>("dtsMod"));
 
 
-        //initializeMovieTable();
+        initializeMovieTable();
         tableMovies.getSelectionModel().selectFirst();
 
         try {
@@ -155,7 +151,7 @@ public class ContentMovieController implements Initializable {
 
     private void initializeMovieTable() {
 
-        DataHandler dataHandler = new DataHandler();
+        dataHandler = new DataHandler();
         List<Movie> movies = dataHandler.getAllMovies();
 
         ObservableList<Movie> masterData = FXCollections.observableList(movies);
@@ -194,7 +190,7 @@ public class ContentMovieController implements Initializable {
         labelEdition.setText(movie.getEdition());
         textareaNote.setText(movie.getNote());
         labelTMDBid.setText(String.valueOf(movie.getTmdbinfo().getTmdbId()));
-        labelDuration.setText(String.valueOf(movie.getDuration()));
+        labelDuration.setText(String.valueOf(movie.getDuration()) + " min");
         labelFileName.setText(movie.getFileName());
         labelFileSize.setText(String.valueOf(movie.getFileSize()));
         labelFormat.setText(movie.getFileFormat());
@@ -209,7 +205,7 @@ public class ContentMovieController implements Initializable {
         }
 
         labelOwner.setText(getOwnersToString(movie));
-        getGenresToString(movie);
+        labelGenre.setText(getGenresToString(movie));
         initializeAudioLineTable(movie);
 
     }
@@ -217,10 +213,11 @@ public class ContentMovieController implements Initializable {
     private String getGenresToString(Movie movie) {
         StringBuilder sb = new StringBuilder();
         int counter = 1;
+        int genres = movie.getGenres().size();
 
         for (Genre g : movie.getGenres()) {
             sb.append(g.getGenrepos().getType());
-            if (movie.getOwners().size() > counter) {
+            if (genres > counter) {
                 sb.append(", ");
             }
             counter++;
@@ -231,10 +228,11 @@ public class ContentMovieController implements Initializable {
     private String getOwnersToString(Movie movie) {
         StringBuilder sb = new StringBuilder();
         int counter = 1;
+        int owners = movie.getOwners().size();
 
         for (Owner o : movie.getOwners()) {
             sb.append(o.getOwnerpos().getOwnerName());
-            if (movie.getOwners().size() > counter) {
+            if (owners > counter) {
                 sb.append(", ");
             }
             counter++;

@@ -156,8 +156,7 @@
 }
 
 #text.text-area {
-    -mid-gray: rgb(216, 222, 227);
-    -fx-background-color: -mid-gray;
+    -fx-background-color: rgb(216, 222, 227);
 }
 
 #text.text-area .scroll-pane {
@@ -170,4 +169,29 @@
 
 #text.text-area .scroll-pane .content{
     -fx-background-color: transparent;
+}
+
+
+/* Headlines */
+#h1.label {
+    -fx-text-fill: rgb(74, 75, 78);
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+}
+
+#h2.label {
+    -fx-text-fill: rgb(74, 75, 78);
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
+#h3.label {
+    -fx-text-fill: rgb(74, 75, 78);
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+/* Backgrounds */
+#backgroundDarkBlack {
+    -fx-background-color: rgb(39, 40, 40);
 }

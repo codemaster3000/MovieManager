@@ -21,7 +21,7 @@
 
 <SplitPane id="background" fx:id="splitter" dividerPositions="0.29799666110183637" prefHeight="738.0" prefWidth="1200.0" stylesheets="@../style/theme_default.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <items>
-    <AnchorPane id="background" minHeight="0.0" minWidth="0.0" prefHeight="736.0" prefWidth="389.0">
+    <AnchorPane id="background" minHeight="0.0" minWidth="350.0" prefHeight="736.0" prefWidth="389.0">
          <children>
             <BorderPane prefHeight="736.0" prefWidth="354.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>
@@ -68,31 +68,46 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <HBox id="background" fx:id="hboxMovieContent" prefHeight="736.0" prefWidth="800.0" visible="false">
+      <HBox id="background" fx:id="hboxMovieContent" prefHeight="736.0" prefWidth="800.0">
          <children>
             <VBox prefHeight="726.0" prefWidth="385.0" HBox.hgrow="ALWAYS">
                <children>
-                  <BorderPane prefHeight="48.0" prefWidth="413.0">
+                  <BorderPane prefHeight="2.0" prefWidth="368.0">
                      <left>
-                        <Label fx:id="labelMovieHeadline" text="movietitel" BorderPane.alignment="CENTER" />
+                        <Label id="h1" fx:id="labelMovieHeadline" text="movietitel" BorderPane.alignment="CENTER" />
                      </left>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
                   </BorderPane>
-                  <BorderPane prefHeight="45.0" prefWidth="413.0">
+                  <BorderPane prefHeight="0.0" prefWidth="368.0">
                      <left>
-                        <Label fx:id="labelTagline" text="tagline" BorderPane.alignment="CENTER" />
+                        <Label id="h2" fx:id="labelTagline" text="tagline" BorderPane.alignment="CENTER" />
                      </left>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
                   </BorderPane>
                   <BorderPane VBox.vgrow="ALWAYS">
                      <top>
-                        <ImageView fx:id="imageCover" fitHeight="525.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT" />
-                     </top>
-                  </BorderPane>
-                  <BorderPane VBox.vgrow="ALWAYS">
-                     <top>
-                        <Label text="Overview" BorderPane.alignment="TOP_LEFT" />
+                        <ImageView fx:id="imageCover" fitHeight="525.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_CENTER" />
                      </top>
                      <center>
-                        <TextArea id="text" fx:id="textAreaOverview" editable="false" prefHeight="183.0" prefWidth="330.0" wrapText="true" BorderPane.alignment="CENTER" />
+                        <BorderPane BorderPane.alignment="CENTER">
+                           <top>
+                              <Label id="h3" text="Overview" BorderPane.alignment="TOP_LEFT" />
+                           </top>
+                           <center>
+                              <TextArea id="text" fx:id="textAreaOverview" editable="false" prefHeight="183.0" prefWidth="330.0" wrapText="true" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets left="-5.0" />
+                                 </BorderPane.margin>
+                              </TextArea>
+                           </center>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </BorderPane>
                      </center>
                   </BorderPane>
                </children>
@@ -104,7 +119,7 @@
                <children>
                   <AnchorPane VBox.vgrow="ALWAYS">
                      <children>
-                        <GridPane layoutX="-9.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                        <GridPane layoutX="-9.0" prefWidth="440.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="281.0" />
@@ -119,10 +134,10 @@
                               <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="70.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="Informationen" />
+                              <Label id="h3" text="Informationen" />
                               <Label text="TMDB-ID:" GridPane.rowIndex="1" />
                               <Label text="Filmtitel:" GridPane.rowIndex="2" />
                               <Label text="Jahr:" GridPane.rowIndex="3" />
@@ -135,7 +150,7 @@
                               <Label fx:id="labelRating" styleClass="labelText1" text="7.6" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <Label fx:id="labelEdition" styleClass="labelText1" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                               <CheckBox fx:id="labelRemux1" mnemonicParsing="false" styleClass="labelText1" text="Remux Version" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                              <TextArea id="text" fx:id="textareaNote" editable="false" prefHeight="66.0" prefWidth="329.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                              <TextArea id="text" fx:id="textareaNote" editable="false" prefHeight="32.0" prefWidth="315.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                  <GridPane.margin>
                                     <Insets top="7.0" />
                                  </GridPane.margin>
@@ -154,7 +169,7 @@
                   </AnchorPane>
                   <AnchorPane>
                      <children>
-                        <GridPane AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                        <GridPane AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="281.0" />
@@ -167,7 +182,7 @@
                               <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label styleClass="labelMovieTagline" text="Datei" />
+                              <Label id="h3" styleClass="labelMovieTagline" text="Datei" />
                               <Label styleClass="labelHeadline1" text="Dateiname:" GridPane.rowIndex="1" />
                               <Label styleClass="labelHeadline1" text="Dateigröße" GridPane.rowIndex="2" />
                               <Label styleClass="labelHeadline1" text="Format:" GridPane.rowIndex="3" />
@@ -200,7 +215,7 @@
                            </rowConstraints>
                            <children>
                               <Label styleClass="labelHeadline1" text="Bitrate:" GridPane.rowIndex="1" />
-                              <Label styleClass="labelMovieTagline" text="Videospur" />
+                              <Label id="h3" styleClass="labelMovieTagline" text="Videospur" />
                               <Label styleClass="labelHeadline1" text="Modus:" GridPane.rowIndex="2" />
                               <Label styleClass="labelHeadline1" text="Auflösung:" GridPane.rowIndex="4" />
                               <Label styleClass="labelHeadline1" text="Seitenverhältnis:" GridPane.rowIndex="3" />
@@ -226,19 +241,22 @@
                               <RowConstraints maxHeight="120.0" minHeight="120.0" prefHeight="120.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label styleClass="labelMovieTagline" text="Audiospur" />
+                              <Label id="h3" styleClass="labelMovieTagline" text="Audiospur" />
                               <TableView id="tablelist" fx:id="tableAudioLine" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                  <columns>
-                                    <TableColumn fx:id="tableColumnAudioLineLanguage" prefWidth="110.0" text="Sprache" />
-                                    <TableColumn fx:id="tableColumnAudioLineFormat" prefWidth="85.0" text="Format" />
-                                    <TableColumn fx:id="tableColumnAudioLineBitrate" prefWidth="70.0" text="Bitrate" />
-                                    <TableColumn fx:id="tableColumnAudioLineChannels" prefWidth="57.0" text="Kanäle" />
-                                    <TableColumn fx:id="tableColumnAudioLineDTSMod" prefWidth="79.0" text="DTS-Mod" />
+                                    <TableColumn fx:id="tableColumnAudioLineLanguage" prefWidth="117.0" text="Sprache" />
+                                    <TableColumn fx:id="tableColumnAudioLineFormat" prefWidth="83.0" text="Format" />
+                                    <TableColumn fx:id="tableColumnAudioLineBitrate" prefWidth="85.0" text="Bitrate" />
+                                    <TableColumn fx:id="tableColumnAudioLineChannels" prefWidth="63.0" text="Kanäle" />
+                                    <TableColumn fx:id="tableColumnAudioLineDTSMod" prefWidth="87.0" text="DTS-Mod" />
                                  </columns>
                               </TableView>
                            </children>
                         </GridPane>
                      </children>
+                     <padding>
+                        <Insets bottom="3.0" />
+                     </padding>
                   </AnchorPane>
                </children>
             </VBox>

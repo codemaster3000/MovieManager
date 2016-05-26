@@ -26,10 +26,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import services.tmdbinfo.TmdbInfo;
 
 /**
@@ -40,7 +42,7 @@ import services.tmdbinfo.TmdbInfo;
 public class ContentMovieController implements Initializable {
 
     @FXML
-    private TableView tableMovies;
+    private TableView<Movie> tableMovies;
     @FXML
     private TableColumn<Movie, String> tableColumnTitel;
     @FXML
@@ -105,6 +107,10 @@ public class ContentMovieController implements Initializable {
     private TableColumn<Audiolinepos, String> tableColumnAudioLineChannels;
     @FXML
     private TableColumn<Audiolinepos, Boolean> tableColumnAudioLineDTSMod;
+    @FXML
+    private TextField textfieldSearch;
+    @FXML HBox 
+    hboxMovieContent;
 
     private AppConfig cfg = AppConfig.getInstance();
     private TmdbInfo tminf;
@@ -113,20 +119,30 @@ public class ContentMovieController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        // Load data
+        dataHandler = new DataHandler();
+        List<Movie> movies = dataHandler.getAllMovies();
+        filterMovies(movies);
+
+        // Table movies
+        tableColumnTitel.setSortType(TableColumn.SortType.ASCENDING);
         tableColumnTitel.setCellValueFactory(new PropertyValueFactory<Movie, String>("fileName"));
         tableColumnYear.setCellValueFactory(new PropertyValueFactory<Movie, Integer>("year"));
         tableColumnSize.setCellValueFactory(new PropertyValueFactory<Movie, Double>("fileSize"));
-        
-        
+        tableMovies.getSortOrder().add(tableColumnTitel);
+
+        // Table audiolines
+        tableColumnAudioLineLanguage.setSortType(TableColumn.SortType.ASCENDING);
         tableColumnAudioLineLanguage.setCellValueFactory(new PropertyValueFactory<Audiolinepos, String>("audioLanguage"));
         tableColumnAudioLineFormat.setCellValueFactory(new PropertyValueFactory<Audiolinepos, String>("audioFormat"));
         tableColumnAudioLineBitrate.setCellValueFactory(new PropertyValueFactory<Audiolinepos, Integer>("audioBitrate"));
         tableColumnAudioLineChannels.setCellValueFactory(new PropertyValueFactory<Audiolinepos, String>("audioChannels"));
         tableColumnAudioLineDTSMod.setCellValueFactory(new PropertyValueFactory<Audiolinepos, Boolean>("dtsMod"));
 
-
-        initializeMovieTable();
-        tableMovies.getSelectionModel().selectFirst();
+        // add Filter 
+        textfieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterMovies(dataHandler.getFilteredMovies(textfieldSearch.getText()));
+        });
 
         try {
             tminf = new TmdbInfo(cfg.API_KEY);
@@ -149,19 +165,17 @@ public class ContentMovieController implements Initializable {
          */
     }
 
-    private void initializeMovieTable() {
-
-        dataHandler = new DataHandler();
-        List<Movie> movies = dataHandler.getAllMovies();
+    private void filterMovies(List<Movie> movies) {
 
         ObservableList<Movie> masterData = FXCollections.observableList(movies);
 
-        // 2. Set FilteredList and add Listeners to all TextFields
+        // 1. Set FilteredList and add Listeners to all TextFields
         FilteredList<Movie> filteredData = new FilteredList<>(masterData, p -> true);
-        // 3. Wrap the FilteredList in a SortedList.
+        // 2. Wrap the FilteredList in a SortedList.
         SortedList<Movie> sortedData = new SortedList<>(filteredData);
-        // 4. Bind the SortedList comparator to the TableView comparator.
+        // 3. Bind the SortedList comparator to the TableView comparator.
         sortedData.comparatorProperty().bind(tableMovies.comparatorProperty());
+        // 4. Add sorted (and filtered) data to the table.
         tableMovies.setItems(masterData);
 
         tableMovies.setRowFactory(tv -> {
@@ -208,8 +222,35 @@ public class ContentMovieController implements Initializable {
         labelGenre.setText(getGenresToString(movie));
         initializeAudioLineTable(movie);
 
+        // Order table audioline
+        tableAudioLine.getSortOrder().add(tableColumnAudioLineLanguage);
+        
+        hboxMovieContent.setVisible(true);
     }
-    
+
+    private void initializeAudioLineTable(Movie movie) {
+
+        List<Audiolinepos> audiolines = new LinkedList();
+
+        for (Audioline l : movie.getAudiolines()) {
+            audiolines.add(l.getAudiolinepos());
+        }
+
+        ObservableList<Audiolinepos> masterData = FXCollections.observableList(audiolines);
+
+        tableAudioLine.setItems(masterData);
+
+        tableAudioLine.setRowFactory(tv -> {
+            TableRow<Movie> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && (!row.isEmpty())) {
+                    //TODO:
+                }
+            });
+            return row;
+        });
+    }
+
     private String getGenresToString(Movie movie) {
         StringBuilder sb = new StringBuilder();
         int counter = 1;
@@ -238,34 +279,5 @@ public class ContentMovieController implements Initializable {
             counter++;
         }
         return sb.toString();
-    }
-
-    private void initializeAudioLineTable(Movie movie) {
-
-        List<Audiolinepos> audiolines = new LinkedList();
-        
-        for(Audioline l : movie.getAudiolines()) {
-            audiolines.add(l.getAudiolinepos());
-        }
-
-        ObservableList<Audiolinepos> masterData = FXCollections.observableList(audiolines);
-
-        // 2. Set FilteredList and add Listeners to all TextFields
-        FilteredList<Audiolinepos> filteredData = new FilteredList<>(masterData, p -> true);
-        // 3. Wrap the FilteredList in a SortedList.
-        SortedList<Audiolinepos> sortedData = new SortedList<>(filteredData);
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        sortedData.comparatorProperty().bind(tableAudioLine.comparatorProperty());
-        tableAudioLine.setItems(masterData);
-
-        tableAudioLine.setRowFactory(tv -> {
-            TableRow<Movie> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 1 && (!row.isEmpty())) {
-                    //TODO:
-                }
-            });
-            return row;
-        });
     }
 }

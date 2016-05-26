@@ -39,12 +39,12 @@
     -fx-background-insets: 0, 1, 2 1 1 1;
     -fx-background-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2;
 }
- 
+
 #topbar.segmented-button-bar .button.last {
     -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
     -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 2 2 0;
 }
- 
+
 #topbar.segmented-button-bar .button:pressed {
     -fx-background-color:
         -darkest-black,
@@ -71,10 +71,8 @@
     TABLEVIEW
 ------------------------------------------------------------------------------*/
 #tablelist.table-view {
-    /*
-    -fx-base: #1d1d1d;
-    -fx-control-inner-background: #1d1d1d;
-    */
+    -fx-base: rgb(216, 222, 227);
+    -fx-control-inner-background: rgb(216, 222, 227);
     -fx-background-color: white;
     -fx-background-radius: 3,2,1;
     -fx-background-insets: 0,1,1;
@@ -87,10 +85,34 @@
     -fx-border: black;
 }
 
+#tablelist.table-view .column-header-background {
+    -fx-background-color: rgb(74, 75, 78);
+}
+
+
+#tablelist.table-view .column-header, .table-view .filler {
+    -fx-size: 24;
+    -fx-border-width: 1 1 1 1;
+    -fx-background-color: transparent;
+    -fx-border-color: rgb(5, 5, 5), rgb(5, 5, 5), rgb(5, 5, 5), rgb(5, 5, 5);
+}
+
+#tablelist.table-view .column-header .label {
+    -fx-font-size: 10pt;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+
+
+
+
+
+
 
 /* Selected row */
 #tablelist.table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: lightsteelblue;
+    -fx-background-color: rgb(99, 100, 105);
     -fx-background-insets: 0, 1, 2;
     -fx-background: -fx-accent;
     -fx-text-fill: -fx-selection-bar-text;
@@ -106,7 +128,7 @@
 
 /* Row hovered */
 #tablelist.table-view:row-selection .table-row-cell:filled:hover {
-    -fx-background-color: lightskyblue;
+    -fx-background-color: rgb(137, 139, 144);
     -fx-background-insets: 0, 0 0 1 0;
     -fx-text-fill: -fx-text-inner-color;
 }
@@ -114,14 +136,38 @@
 /* Selected row hovered */
 #tablelist.table-view:focused .table-row-cell:filled:focused:selected:hover {
     -fx-background: -fx-accent;
-    -fx-background-color: lightslategray;
+    -fx-background-color: rgb(87, 88, 92);
     -fx-background-insets: 0, 1, 2;
     -fx-text-fill: -fx-selection-bar-text;
 }
 
 /* Selected row hovered when table not focused */
 #tablelist.table-view:row-selection .table-row-cell:filled:focused:hover {
-    -fx-background-color: lightslategrey;
+    -fx-background-color: rgb(137, 139, 144);
     -fx-background-insets: 0, 0 0 1 0, 1 1 2 1, 2 2 3 2, 3 3 4 3;
     -fx-text-fill: -fx-text-inner-color;
+}
+
+
+/* Textarea Selection Color */
+#text.text-field {
+    -dark-highlight: rgb(87, 89, 92);
+    -fx-accent: -dark-highlight;
+}
+
+#text.text-area {
+    -mid-gray: rgb(216, 222, 227);
+    -fx-background-color: -mid-gray;
+}
+
+#text.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#text.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+#text.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
 }

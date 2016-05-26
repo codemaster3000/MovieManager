@@ -9,7 +9,6 @@ import gui.controller.ContentSettingsController;
 import gui.controller.ContentStatisticsController;
 import gui.controller.ContentTVController;
 import gui.controller.MainViewController;
-import gui.controller.SplashScreenController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import util.ApplicationServices;

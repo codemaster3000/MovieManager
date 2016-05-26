@@ -3,7 +3,7 @@ package main;
 import java.io.IOException;
 import application.setup.ApplicationController;
 import application.setup.LoadFinishedCallbackHandler;
-import gui.controller.SplashScreenController;
+import gui.popup.splashscreen.SplashScreen;
 import gui.util.GuiServiceRegistry;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -26,17 +26,16 @@ public class Main extends Application {
 		_primaryStage = primaryStage;
 
 		ApplicationController.instance.init();
-
-		SplashScreenController splashScreenController = new SplashScreenController();
-
-		showSplashWindow(splashScreenController);
-		ApplicationController.instance.load(splashScreenController, new LoadFinishedCallbackHandler() {
+		SplashScreen splashScreen = new SplashScreen(themeFileName);
+		splashScreen.show();
+		
+		ApplicationController.instance.load(splashScreen, new LoadFinishedCallbackHandler() {
 			@Override
 			public void allLoadTaskFinished() {
 				try {
 					_splashScreenStage.close();
 					showMainWindow(_primaryStage);
-					// DebugHandler.show();
+					DebugHandler.show();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,6 +54,7 @@ public class Main extends Application {
 		return _primaryStage;
 	}
 
+	// TODO: refactor into own class
 	public void showMainWindow(Stage stage) throws IOException {
 		Scene scene = new Scene(GuiServiceRegistry.instance.getViewLoader().LoadMainViewController());
 		scene.getStylesheets().add(
@@ -70,19 +70,6 @@ public class Main extends Application {
 		stage.getIcons().add(new Image(ApplicationServices.instance.getResourcePathResolver()
 				.resovleIconPath(iconFile, ImageType.PNG).openStream()));
 		stage.show();
-	}
-
-	public void showSplashWindow(SplashScreenController splashScreenController) throws IOException {
-		Scene scene = new Scene(
-				GuiServiceRegistry.instance.getViewLoader().Load("SplashScreen", splashScreenController));
-		scene.getStylesheets().add(
-				ApplicationServices.instance.getResourcePathResolver().resolveCssStyle(themeFileName).toExternalForm());
-
-		_splashScreenStage = new Stage(StageStyle.UNDECORATED);
-		_splashScreenStage.setScene(scene);
-		_splashScreenStage.centerOnScreen();
-		_splashScreenStage.show();
-
 	}
 
 	public static void main(String[] args) {

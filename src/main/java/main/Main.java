@@ -19,7 +19,6 @@ public class Main extends Application {
 	private final static String iconFile = "black_folder-icon";
 
 	private static Stage _primaryStage;
-	private Stage _splashScreenStage;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -33,7 +32,7 @@ public class Main extends Application {
 			@Override
 			public void allLoadTaskFinished() {
 				try {
-					_splashScreenStage.close();
+					splashScreen.close();
 					showMainWindow(_primaryStage);
 					DebugHandler.show();
 				} catch (Exception e) {

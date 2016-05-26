@@ -45,4 +45,8 @@ public class SplashScreen implements LoadStateCallbackHandler{
 		_stage.centerOnScreen();
 		_stage.show();
 	}
+	
+	public void close() {
+		_stage.close();
+	}
 }

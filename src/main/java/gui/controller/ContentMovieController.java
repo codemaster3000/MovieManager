@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import com.omertron.themoviedbapi.MovieDbException;
 
-import application.controller.MovieDataController;
+import application.controller.ContentMovieAppController;
 import database.domain.Audioline;
 import database.domain.Audiolinepos;
 import database.domain.Movie;
@@ -111,13 +111,13 @@ public class ContentMovieController implements Initializable {
 	@FXML
 	HBox hboxMovieContent;
 
-	private MovieDataController dataHandler;
+	private ContentMovieAppController dataHandler;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
 		// Load data
-		dataHandler = new MovieDataController();
+		dataHandler = new ContentMovieAppController();
 		List<Movie> movies = dataHandler.getAllMovies();
 		setMoviesIntoTable(movies);
 

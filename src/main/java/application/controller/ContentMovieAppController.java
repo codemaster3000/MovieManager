@@ -14,7 +14,7 @@ import database.persistance.DBFacade;
  *         desription: gets the data from the DB
  *
  */
-public class MovieDataController {
+public class ContentMovieAppController {
 
 	// Methods
 	public List<Movie> getAllMovies() {

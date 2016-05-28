@@ -6,6 +6,7 @@ import application.setup.LoadFinishedCallbackHandler;
 import gui.popup.splashscreen.SplashScreen;
 import gui.util.GuiServiceRegistry;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -30,13 +31,18 @@ public class Main extends Application {
 		ApplicationController.instance.load(splashScreen, new LoadFinishedCallbackHandler() {
 			@Override
 			public void allLoadTaskFinished() {
-				try {
-					showMainWindow(_primaryStage);
-                                        splashScreen.close();
-					//DebugHandler.show();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				Platform.runLater(new Runnable() {	
+					@Override
+					public void run() {
+						try {
+							showMainWindow(_primaryStage);
+		                    splashScreen.close();
+							//DebugHandler.show();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 	}

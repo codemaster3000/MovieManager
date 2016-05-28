@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <ProgressIndicator fx:id="loadProcessIndicator" BorderPane.alignment="CENTER" prefHeight="100" prefWidth="150">
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </ProgressIndicator>
-   </center>
+<BorderPane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <Separator prefWidth="200.0" />
-            <Label fx:id="currentlyLoadingLable" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Currently Loading ..." textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Separator fx:id="splashSeparator" prefWidth="200.0" />
+            <Label fx:id="currentlyLoadingLable" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="590.0" text="Currently Loading ..." textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
@@ -28,11 +23,21 @@
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
-   <top>
-      <HBox BorderPane.alignment="CENTER">
+   <center>
+      <AnchorPane fx:id="paneBack" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label styleClass="label-header" text="Loading Resources ..." />
+            <ProgressIndicator fx:id="loadProcessIndicator" layoutX="256.0" layoutY="196.0" prefHeight="66.0" prefWidth="79.0" />
+            <ImageView fx:id="imgLogo" fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/Black-Folder-Videos-icon.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelTitle" layoutX="182.0" layoutY="68.0" prefHeight="107.0" prefWidth="394.0" text="Black Media Manager" textFill="#f5efef">
+               <font>
+                  <Font name="Calibri Bold" size="43.0" />
+               </font>
+            </Label>
          </children>
-      </HBox>
-   </top>
+      </AnchorPane>
+   </center>
 </BorderPane>

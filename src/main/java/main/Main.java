@@ -17,7 +17,6 @@ public class Main extends Application {
 	private final static String appName = "Black Movie Manager";
 	private final static String themeFileName = "theme_default";
 	private final static String iconFile = "black_folder-icon";
-
 	private static Stage _primaryStage;
 
 	@Override
@@ -32,9 +31,9 @@ public class Main extends Application {
 			@Override
 			public void allLoadTaskFinished() {
 				try {
-					splashScreen.close();
 					showMainWindow(_primaryStage);
-					DebugHandler.show();
+                                        splashScreen.close();
+					//DebugHandler.show();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

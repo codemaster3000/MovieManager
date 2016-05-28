@@ -20,9 +20,10 @@ public class ApplicationController {
 	
 	public void init() {
 		if(_applicationState == ApplicationState.Unitialized) {
-			_loadTasks.add(new DatabaseLoadTask());
-			_loadTasks.add(new XrelLoadTask());
-			
+			//_loadTasks.add(new TaskDatabaseLoad());
+			_loadTasks.add(new TaskXRel());
+			//_loadTasks.add(new TaskSleep());
+                                
 			// initialize dependencies
 			 ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
 			 System.setProperty("jna.library.path", classLoader.getResource("lib/").getPath());

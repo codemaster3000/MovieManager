@@ -6,9 +6,20 @@ import application.setup.LoadStateCallbackHandler;
 import application.setup.LoadTask;
 import gui.util.GuiServiceRegistry;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.Separator;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import util.ApplicationServices;
@@ -16,6 +27,14 @@ import util.ApplicationServices;
 public class SplashScreen implements LoadStateCallbackHandler{
     @FXML
     private Label currentlyLoadingLable;
+    @FXML
+    private Label labelTitle;
+    @FXML
+    private AnchorPane paneBack;
+    @FXML
+    private Separator splashSeparator;
+    @FXML
+    private BorderPane paneMain;
 
     @FXML
     private ProgressIndicator loadProcessIndicator;
@@ -43,8 +62,18 @@ public class SplashScreen implements LoadStateCallbackHandler{
 		_stage = new Stage(StageStyle.UNDECORATED);
 		_stage.setScene(scene);
 		_stage.centerOnScreen();
+                setupStyle();
 		_stage.show();
 	}
+        
+        private void setupStyle(){
+            paneMain.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+            splashSeparator.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, CornerRadii.EMPTY, Insets.EMPTY)));
+            //borderTop.setStyle("-fx-background-color: #black");
+            currentlyLoadingLable.setText("Loading...");
+            currentlyLoadingLable.setEffect(new Bloom());
+            splashSeparator.setEffect(new GaussianBlur());
+        }
 	
 	public void close() {
 		_stage.close();

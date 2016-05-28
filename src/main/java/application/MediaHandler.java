@@ -5,16 +5,19 @@
  */
 package application;
 
+import static java.lang.Math.toIntExact;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
+
 import database.domain.Audiolinepos;
 import database.domain.Genrepos;
 import database.domain.Ownerpos;
 import database.domain.Videoline;
 import database.persistance.DBFacade;
-import static java.lang.Math.toIntExact;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import services.mediainfo.MediaInfoGetter;
 
 /**
@@ -22,105 +25,104 @@ import services.mediainfo.MediaInfoGetter;
  * @author fabian
  */
 public class MediaHandler {
-    
-    public MediaHandler(){
-        // empty
-    }
-    
-    private Integer id;
-    private String audioLanguage;
-    private int audioBitrate;
-    private String audioFormat;
-    private String audioChannels;
-    private boolean dtsMod;
 
-    public Set<Audiolinepos> setAudiolines(MediaInfoGetter inf) {
+	public MediaHandler() {
+		// empty
+	}
 
-        Set<Audiolinepos> lines = new HashSet();
+	private Integer id;
+	private String audioLanguage;
+	private int audioBitrate;
+	private String audioFormat;
+	private String audioChannels;
+	private boolean dtsMod;
 
-        for (int i = 0; i < inf.getAudioStreamCount(); i++) {
-            Audiolinepos line = new Audiolinepos();
-            line.setAudioLanguage(inf.getAudioLanguages().get(i));
-            line.setAudioFormat(inf.getAudioFormats().get(i));
-            line.setAudioBitrate(toIntExact(inf.getAudioBitratesKbps().get(i)));
-            line.setAudioChannels(setAudioChannels(inf.getAudioChannels().get(i), line.getAudioFormat()));
-            line.setDtsMod(false);
+	public Set<Audiolinepos> setAudiolines(MediaInfoGetter inf) {
 
-            lines.add(line);
-        }
+		Set<Audiolinepos> lines = new HashSet();
 
-        return lines;
-    }
+		for (int i = 0; i < inf.getAudioStreamCount(); i++) {
+			Audiolinepos line = new Audiolinepos();
+			line.setAudioLanguage(inf.getAudioLanguages().get(i));
+			line.setAudioFormat(inf.getAudioFormats().get(i));
+			line.setAudioBitrate(toIntExact(inf.getAudioBitratesKbps().get(i)));
+			line.setAudioChannels(setAudioChannels(inf.getAudioChannels().get(i), line.getAudioFormat()));
+			line.setDtsMod(false);
 
-    public String setAudioChannels(int channels, String format) {
-        if (channels == 2) {
-            return "2.0";
-        } else if (channels == 3) {
-            return "2.1";
-        } else if (channels == 6) {
-            return "5.1";
-        } else if (channels == 8) {
-            if (format.equals("Dolby Atmos") || format.equals("DTS X")) {
-                return "5.1.2";
-            } else {
-                return "7.1";
-            }
-        } else if (channels == 10) {
-            return "7.1.2";
-        } else {
-            return null;
-        }
-    }
+			lines.add(line);
+		}
 
-    public Set<Genrepos> setGenres(MovieInfo movieInfo) {
+		return lines;
+	}
 
-        DBFacade dbfacade = new DBFacade();
-        List<Genrepos> allGenres = dbfacade.getAllGenrePoses();
+	public String setAudioChannels(int channels, String format) {
+		if (channels == 2) {
+			return "2.0";
+		} else if (channels == 3) {
+			return "2.1";
+		} else if (channels == 6) {
+			return "5.1";
+		} else if (channels == 8) {
+			if (format.equals("Dolby Atmos") || format.equals("DTS X")) {
+				return "5.1.2";
+			} else {
+				return "7.1";
+			}
+		} else if (channels == 10) {
+			return "7.1.2";
+		} else {
+			return null;
+		}
+	}
 
-        Set<Genrepos> genres = new HashSet();
+	public Set<Genrepos> setGenres(MovieInfo movieInfo) {
 
-        for (int i = 0; i < movieInfo.getGenreIds().size(); i++) {
-            for (Genrepos pos : allGenres) {
-                if (movieInfo.getGenreIds().get(i).equals(pos.getId())) {
-                    genres.add(pos);
-                    System.out.println(pos.getType());
-                }
-            }
-        }
-        
-        return genres;
-    }
+		List<Genrepos> allGenres = DBFacade.instance.getAllGenrePoses();
 
-    public Set<Ownerpos> setOwner() {
+		Set<Genrepos> genres = new HashSet();
 
-        Set<Ownerpos> owner = new HashSet();
+		for (int i = 0; i < movieInfo.getGenreIds().size(); i++) {
+			for (Genrepos pos : allGenres) {
+				if (movieInfo.getGenreIds().get(i).equals(pos.getId())) {
+					genres.add(pos);
+					System.out.println(pos.getType());
+				}
+			}
+		}
 
-        Ownerpos pos = new Ownerpos();
-        pos.setOwnerName("Ladurner");
+		return genres;
+	}
 
-        owner.add(pos);
+	public Set<Ownerpos> setOwner() {
 
-        return owner;
-    }
+		Set<Ownerpos> owner = new HashSet();
 
-    public String setTagline(MovieInfo movieInfo) {
-        if (movieInfo.getTagline() != null) {
-            return movieInfo.getTagline();
-        } else {
-            return "";
-        }
-    }
-    
-    public Videoline setVideoline(MediaInfoGetter inf) {
+		Ownerpos pos = new Ownerpos();
+		pos.setOwnerName("Ladurner");
 
-        Videoline line = new Videoline();
-        line.setAspectRatio(inf.getDisplayAspectRatio());
-        line.setResolutionHeight(inf.getVideoResolutionHeight());
-        line.setResolutionWidth(inf.getVideoResolutionWidth());
-        line.setVideoBitrate((int) inf.getVideoOverallBitrateKbps());
-        line.setVideoBitrateMode(inf.getVideoBitrateMode());
-        line.setFramerate(inf.getVideoFramerate());
+		owner.add(pos);
 
-        return line;
-    }
+		return owner;
+	}
+
+	public String setTagline(MovieInfo movieInfo) {
+		if (movieInfo.getTagline() != null) {
+			return movieInfo.getTagline();
+		} else {
+			return "";
+		}
+	}
+
+	public Videoline setVideoline(MediaInfoGetter inf) {
+
+		Videoline line = new Videoline();
+		line.setAspectRatio(inf.getDisplayAspectRatio());
+		line.setResolutionHeight(inf.getVideoResolutionHeight());
+		line.setResolutionWidth(inf.getVideoResolutionWidth());
+		line.setVideoBitrate((int) inf.getVideoOverallBitrateKbps());
+		line.setVideoBitrateMode(inf.getVideoBitrateMode());
+		line.setFramerate(inf.getVideoFramerate());
+
+		return line;
+	}
 }

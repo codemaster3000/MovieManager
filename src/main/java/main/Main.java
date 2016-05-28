@@ -1,7 +1,7 @@
 package main;
 
 import java.io.IOException;
-import application.setup.ApplicationController;
+import application.setup.ApplicationSetup;
 import application.setup.LoadFinishedCallbackHandler;
 import gui.popup.splashscreen.SplashScreen;
 import gui.util.GuiServiceRegistry;
@@ -24,11 +24,11 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		_primaryStage = primaryStage;
 
-		ApplicationController.instance.init();
+		ApplicationSetup.instance.init();
 		SplashScreen splashScreen = new SplashScreen(themeFileName);
 		splashScreen.show();
 		
-		ApplicationController.instance.load(splashScreen, new LoadFinishedCallbackHandler() {
+		ApplicationSetup.instance.load(splashScreen, new LoadFinishedCallbackHandler() {
 			@Override
 			public void allLoadTaskFinished() {
 				Platform.runLater(new Runnable() {	
@@ -49,7 +49,7 @@ public class Main extends Application {
 
 	@Override
 	public void stop() throws Exception {
-		ApplicationController.instance.tearDown();
+		ApplicationSetup.instance.tearDown();
 		super.stop();
 	}
 

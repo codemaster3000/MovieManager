@@ -2,16 +2,20 @@ package application.setup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.omertron.themoviedbapi.MovieDbException;
+
+import services.tmdbinfo.TmdbInfo;
 import util.ResourcePathResolver;
 
-public class ApplicationController {
+public class ApplicationSetup {
 	private ApplicationState _applicationState;
 
 	private List<LoadTask> _loadTasks;
 
-	public static final ApplicationController instance = new ApplicationController();
+	public static final ApplicationSetup instance = new ApplicationSetup();
 
-	private ApplicationController() {
+	private ApplicationSetup() {
 		_applicationState = ApplicationState.Unitialized;
 		_loadTasks = new ArrayList<>();
 	}
@@ -26,6 +30,14 @@ public class ApplicationController {
 			// initialize dependencies
 			ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
 			System.setProperty("jna.library.path", classLoader.getResource("lib/").getPath());
+
+			// initialize api wrapper
+			try {
+				TmdbInfo.instance.init();
+			} catch (MovieDbException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			_applicationState = ApplicationState.Initialized;
 		}

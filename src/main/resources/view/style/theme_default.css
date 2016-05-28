@@ -1,3 +1,14 @@
+.label-header {
+    -fx-font-size: 32.0pt;
+    -fx-font-family: "Arial";
+    -fx-text-fill: black;
+}
+
+#labelTitle {
+   -fx-fill: white;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
 /*------------------------------------------------------------------------------
     TOP MENUBAR
 ------------------------------------------------------------------------------*/

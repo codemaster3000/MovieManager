@@ -6,6 +6,7 @@ import application.helpers.StringStuff;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
+
 import java.io.File;
 import java.io.IOException;
 import services.mediainfo.MediaInfoGetter;
@@ -21,20 +22,18 @@ import util.ResourcePathResolver;
  *
  * @author fabian
  */
-public class DebugStuff {
+public class DebugHandler {
 
     private static final ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
-    private AppConfig cfg = AppConfig.getInstance();
+    private static AppConfig cfg = AppConfig.getInstance();
+
+    public static void show() throws Exception {
+		testMediaInfo();
+		testTmdbInfo();
+		testXRel();
+	}
     
-    public DebugStuff(boolean enabled) throws Exception {
-        if (enabled) {
-            //testXRel();
-            //testMediaInfo();
-            //testTmdbInfo();
-        }
-    }
-    
-    public void testMediaInfo() throws IOException{
+    public static void testMediaInfo() throws IOException{
         System.setProperty("jna.library.path", classLoader.getResource("lib/").getPath());
         System.out.println("JVM Bit version: " + System.getProperty("sun.arch.data.model"));
         System.out.println("Java library path: " + System.getProperty("jna.library.path"));
@@ -46,8 +45,8 @@ public class DebugStuff {
         MediaInfoGetter inf = new MediaInfoGetter(file);
         System.out.println(inf.getFileFormat());
     }
-    
-    public void testTmdbInfo() throws MovieDbException, IOException{
+
+    public static void testTmdbInfo() throws MovieDbException, IOException{
         //Tmdbinfo tmdbinfo = new Tmdbinfo();
         StringStuff strstuff = new StringStuff();
         TmdbInfo tmdb = new TmdbInfo(cfg.API_KEY);
@@ -60,7 +59,7 @@ public class DebugStuff {
         System.out.println(inf.getOriginalTitle());
     }
 
-    public void testXRel() throws IOException, Exception {
+    public static void testXRel() throws IOException, Exception {
         // for debug use only
         XRelInfo xrel = new XRelInfo();
 

@@ -1,12 +1,11 @@
 package application;
 
+import database.domain.Genrepos;
 import database.domain.Movie;
 import database.persistance.DBFacade;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-
 
 /**
  *
@@ -17,18 +16,33 @@ import java.util.stream.Collectors;
  */
 public class DataHandler {
 
-    public DataHandler() {
+    private DBFacade dBFacade;
 
+    public DataHandler() {
+        if (dBFacade == null) {
+            dBFacade = new DBFacade();
+        }
     }
 
     // Methods
     public List<Movie> getAllMovies() {
-        DBFacade db = new DBFacade();
-        return db.getAllMovies();
+        return dBFacade.getAllMovies();
+    }
+
+    public List<Movie> getAllMoviesOrderByFileSize() {
+        return dBFacade.getAllMoviesOrderByFileSize();
+    }
+
+    public List<Movie> getAllMoviesOrderByOldest() {
+        return dBFacade.getAllMoviesOrderByOldest();
+    }
+    
+
+    public List<Genrepos> getAllGenrePoses() {
+        return dBFacade.getAllGenrePoses();
     }
 
     public List<Movie> getFilteredMovies(final String movie) {
-        DBFacade db = new DBFacade();
         Predicate<Movie> filter = new Predicate<Movie>() {
             @Override
             public boolean test(Movie mov) {
@@ -36,6 +50,6 @@ public class DataHandler {
                 return (mov.getFileName().toLowerCase().contains(m.toLowerCase()) || m.isEmpty());
             }
         };
-        return db.getAllMovies().parallelStream().filter(filter).collect(Collectors.<Movie>toList()); 
+        return dBFacade.getAllMovies().parallelStream().filter(filter).collect(Collectors.<Movie>toList());
     }
 }

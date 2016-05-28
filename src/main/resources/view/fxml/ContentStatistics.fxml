@@ -2,7 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,37 +12,105 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="615" prefWidth="1000" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="background" prefHeight="615" prefWidth="1000" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane id="background" prefHeight="615.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="Genre">
+            <Tab id="background" text="Top 10">
                <content>
-                  <HBox>
-                     <children>
-                        <VBox fx:id="vboxForLabels" maxWidth="200.0" minWidth="200.0" prefWidth="200.0">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label id="h2" text="Statistic">
-                                 <padding>
-                                    <Insets bottom="10.0" left="20.0" top="15.0" />
-                                 </padding>
-                              </Label>
+                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Movies">
+                                       <padding>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox fx:id="comboBoxMovies" onAction="#setListviewMovies" prefHeight="25.0" prefWidth="220.0">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                    <ListView fx:id="listViewMovies" prefHeight="220.0" prefWidth="180.0">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                       </VBox.margin>
+                                    </ListView>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Documentaries">
+                                       <padding>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <ComboBox fx:id="comboBoxDocumentaries" prefHeight="25.0" prefWidth="220.0">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                    <ListView fx:id="listViewDocumentaries" prefHeight="220.0" prefWidth="180.0">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                       </VBox.margin>
+                                    </ListView>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="TV-Shows">
+                                       <padding>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <ComboBox fx:id="comboBoxTVshows" prefHeight="25.0" prefWidth="220.0">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                    <ListView fx:id="listViewTVshows" prefHeight="220.0" prefWidth="180.0">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                       </VBox.margin>
+                                    </ListView>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                                 </HBox.margin>
+                              </VBox>
                            </children>
-                        </VBox>
-                        <BorderPane id="background" HBox.hgrow="ALWAYS">
-                           <center>
-                              <PieChart fx:id="chartMovies" maxHeight="600.0" maxWidth="600.0" title="Genre Statistics" BorderPane.alignment="CENTER">
-                                 <padding>
-                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                                 </padding>
-                              </PieChart>
-                           </center>
-                        </BorderPane>
-                     </children>
-                  </HBox>
+                        </HBox>
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
+          <Tab text="Movies">
+               <content>
+                  <BorderPane id="background">
+                     <center>
+                        <PieChart fx:id="pieChartMovies" maxHeight="600.0" maxWidth="600.0" title="Genre Statistics" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </PieChart>
+                     </center>
+                  </BorderPane>
                </content>
           </Tab>
-          <Tab text="Movie">
+          <Tab text="Documentaries">
                <content>
                   <BorderPane id="background" />
                </content>

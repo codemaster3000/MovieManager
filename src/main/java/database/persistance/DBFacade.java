@@ -1,4 +1,3 @@
-
 package database.persistance;
 
 import database.domain.Genrepos;
@@ -13,9 +12,9 @@ import org.hibernate.Session;
 public class DBFacade {
 
     public DBFacade() {
-        
+
     }
-   
+
     // gibt nur die aktiven zurück, inaktive und doppelte werden nicht zurückgegeben
     public List<Movie> getAllMovies() {
         Session session = DBSession.getInstance();
@@ -29,7 +28,33 @@ public class DBFacade {
         }
         return results;
     }
-    
+
+    public List<Movie> getAllMoviesOrderByFileSize() {
+        Session session = DBSession.getInstance();
+        List<Movie> results;
+        try {
+            Query query = session.createQuery("FROM Movie WHERE active = 1 ORDER BY fileSize DESC");
+            results = query.list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return results;
+    }
+
+    public List<Movie> getAllMoviesOrderByOldest() {
+        Session session = DBSession.getInstance();
+        List<Movie> results;
+        try {
+            Query query = session.createQuery("FROM Movie WHERE active = 1 ORDER BY year ASC");
+            results = query.list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return results;
+    }
+
     public List<Genrepos> getAllGenrePoses() {
         Session session = DBSession.getInstance();
         List<Genrepos> results;
@@ -42,7 +67,7 @@ public class DBFacade {
         }
         return results;
     }
-    
+
     public List<Ownerpos> getAllOwnerPoses() {
         Session session = DBSession.getInstance();
         List<Ownerpos> results;
@@ -55,8 +80,7 @@ public class DBFacade {
         }
         return results;
     }
-    
-    
+
     public void saveMovie(Movie movie) {
         Session session = DBSession.getInstance();
         try {
@@ -67,7 +91,7 @@ public class DBFacade {
             ex.printStackTrace();
         }
     }
-    
+
     public void saveVideoline(Videoline line) {
         Session session = DBSession.getInstance();
         try {
@@ -78,7 +102,7 @@ public class DBFacade {
             ex.printStackTrace();
         }
     }
-    
+
     public void saveTMDBinfo(Tmdbinfo info) {
         Session session = DBSession.getInstance();
         try {
@@ -89,7 +113,7 @@ public class DBFacade {
             ex.printStackTrace();
         }
     }
-    
+
     // setzt inaktiv auf 0.. macht eg gleiche wia save ?!
     public void deleteMovie(Movie movie) {
         Session session = DBSession.getInstance();
@@ -101,7 +125,7 @@ public class DBFacade {
             ex.printStackTrace();
         }
     }
-    
+
     // gibt nur die aktiven zurück, inaktive und doppelte werden nicht zurückgegeben
     public int countMovies() {
         Session session = DBSession.getInstance();
@@ -113,9 +137,9 @@ public class DBFacade {
             ex.printStackTrace();
             return -1;
         }
-        return result;  
+        return result;
     }
-    
+
     // gibt nur die aktiven zurück, inaktive und doppelte werden nicht zurückgegeben
     public double countMoviesSize() {
         Session session = DBSession.getInstance();
@@ -127,7 +151,7 @@ public class DBFacade {
             ex.printStackTrace();
             return -1;
         }
-        return result;  
+        return result;
     }
-    
+
 }

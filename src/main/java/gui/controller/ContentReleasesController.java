@@ -65,6 +65,7 @@ public class ContentReleasesController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		contentReleaseAppController = new ContentReleaseAppController();
 		showNewReleases();
 	}
 

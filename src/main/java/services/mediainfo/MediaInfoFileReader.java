@@ -15,11 +15,11 @@ import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 
-public class MediaInfo implements Closeable {
+public class MediaInfoFileReader implements Closeable {
 
 	private Pointer handle;
 
-	public MediaInfo() {
+	public MediaInfoFileReader() {
 		try {
 			handle = MediaInfoLibrary.INSTANCE.New();
 		} catch (LinkageError e) {
@@ -27,7 +27,7 @@ public class MediaInfo implements Closeable {
 		}
 	}
 
-	public synchronized MediaInfo open(File file) throws IOException, IllegalArgumentException {
+	public synchronized MediaInfoFileReader open(File file) throws IOException, IllegalArgumentException {
 		if (!file.isFile() || file.length() < 64 * 1024) {
 			throw new IllegalArgumentException("Invalid media file: " + file);
 		}
@@ -251,7 +251,7 @@ public class MediaInfo implements Closeable {
 	 * Helper for easy usage
 	 */
 	public static Map<StreamKind, List<Map<String, String>>> snapshot(File file) throws IOException {
-		try (MediaInfo mi = new MediaInfo()) {
+		try (MediaInfoFileReader mi = new MediaInfoFileReader()) {
 			return mi.open(file).snapshot();
 		}
 	}

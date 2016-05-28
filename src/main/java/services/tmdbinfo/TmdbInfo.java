@@ -16,7 +16,7 @@ import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
 
 import application.helpers.AppConfig;
-import application.helpers.StringStuff;
+import application.helpers.StringHelper;
 
 /**
  *
@@ -26,7 +26,6 @@ public class TmdbInfo {
 
 	private TheMovieDbApi tmdb;
 	private AppConfig cfg = AppConfig.getInstance();
-	private StringStuff chk;
 	private String LANG; // langage setting
 
 	public final static TmdbInfo instance = new TmdbInfo();
@@ -41,7 +40,6 @@ public class TmdbInfo {
 		if (!isInitialized) {
 			isInitialized = true;
 			tmdb = new TheMovieDbApi(cfg.API_KEY);
-			chk = new StringStuff();
 			LANG = cfg.TMDB_LANGUAGE;
 		}
 	}
@@ -63,7 +61,7 @@ public class TmdbInfo {
 
 	public MovieInfo getSearchMovieInfo(String movieFilename) throws MovieDbException {
 		// returns 0 if no year available in filename
-		int year = chk.getYearFromMovieFilename(movieFilename);
+		int year = StringHelper.getYearFromMovieFilename(movieFilename);
 		int posBracket = movieFilename.indexOf('(');
 
 		// extract moviename from filename without bracket content and file

@@ -9,47 +9,47 @@ import java.util.concurrent.TimeUnit;
  *
  * @author fabian
  */
-public class MediaInfoGetter {
+public class MediaInfoFile {
 
-    private MediaInfo info = new MediaInfo();
+    private MediaInfoFileReader info = new MediaInfoFileReader();
     private int currentStream = 0;   //default is 0
     private int streamAudioCount;
     private int streamVideoCount;
     private int streamSubCount;
 
-    public MediaInfoGetter(File videofile) throws IOException {
+    public MediaInfoFile(File videofile) throws IOException {
         info.open(videofile);
-        streamAudioCount = info.streamCount(MediaInfo.StreamKind.Audio);
-        streamVideoCount = info.streamCount(MediaInfo.StreamKind.Video);
-        streamSubCount = info.streamCount(MediaInfo.StreamKind.Text);
+        streamAudioCount = info.streamCount(MediaInfoFileReader.StreamKind.Audio);
+        streamVideoCount = info.streamCount(MediaInfoFileReader.StreamKind.Video);
+        streamSubCount = info.streamCount(MediaInfoFileReader.StreamKind.Text);
     }
 
     // -------------------------------------------------------------------------
     // FILE STUFF
     // -------------------------------------------------------------------------
     public double getFileSize() {
-        String vidFileSize = info.get(MediaInfo.StreamKind.General, currentStream, "FileSize",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidFileSize = info.get(MediaInfoFileReader.StreamKind.General, currentStream, "FileSize",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         double vidSize = ((Double.parseDouble(vidFileSize) / 1024) / 1024);  // convert to megabyte
         vidSize = round(vidSize, 2);
         return vidSize;
     }
 
     public String getFileFormat() {
-        String vidFileFormat = info.get(MediaInfo.StreamKind.General, currentStream, "Format",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidFileFormat = info.get(MediaInfoFileReader.StreamKind.General, currentStream, "Format",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return vidFileFormat;
     }
 
     public String getFileEncodedAppInfo() {
-        String vidInfo = info.get(MediaInfo.StreamKind.General, currentStream, "Encoded_Application",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidInfo = info.get(MediaInfoFileReader.StreamKind.General, currentStream, "Encoded_Application",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return vidInfo;
     }
 
     public String getFileLibraryAppInfo() {
-        String vidInfo = info.get(MediaInfo.StreamKind.General, currentStream, "Encoded_Library",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidInfo = info.get(MediaInfoFileReader.StreamKind.General, currentStream, "Encoded_Library",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return vidInfo;
     }
 
@@ -61,40 +61,40 @@ public class MediaInfoGetter {
         return streamVideoCount;
     }
     public long getVideoBitrateKbps() {
-        String vidVideoBitrate = info.get(MediaInfo.StreamKind.Video, currentStream, "BitRate",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidVideoBitrate = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "BitRate",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         long vidKbps = parseLongFromString(vidVideoBitrate) / 100;  // convert to kbps
         return vidKbps;
     }
     
     public long getVideoOverallBitrateKbps() {
-        String vidOverallBitrate = info.get(MediaInfo.StreamKind.General, currentStream, "OverallBitRate",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidOverallBitrate = info.get(MediaInfoFileReader.StreamKind.General, currentStream, "OverallBitRate",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         long vidOverallKbps = parseLongFromString(vidOverallBitrate) / 100;   // convert to kbps
         return vidOverallKbps;
     }
 
     public String getDisplayAspectRatio() {
-        String vidInfo = info.get(MediaInfo.StreamKind.Video, currentStream, "DisplayAspectRatio/String",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidInfo = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "DisplayAspectRatio/String",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return vidInfo;
     }
 
     public int getVideoResolutionWidth() {
-        String vidWidth = info.get(MediaInfo.StreamKind.Video, currentStream, "Width",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidWidth = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "Width",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return parseIntFromString(vidWidth);
     }
 
     public int getVideoResolutionHeight() {
-        String vidHeight = info.get(MediaInfo.StreamKind.Video, currentStream, "Height",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidHeight = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "Height",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return parseIntFromString(vidHeight);
     }
     
     public String getVideoResolutionVerticalFormat() {
-        String vidHeight = info.get(MediaInfo.StreamKind.Video, currentStream, "Height",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidHeight = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "Height",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         int vert = parseIntFromString(vidHeight);
         String vertReturn = "";
         
@@ -108,51 +108,51 @@ public class MediaInfoGetter {
     }
 
     public long getVideoDurationMilliseconds() {
-        String vidDuration = info.get(MediaInfo.StreamKind.Video, currentStream, "Duration",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidDuration = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "Duration",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return parseLongFromString(vidDuration);
     }
 
     public long getVideoDurationMinutes() {
-        String vidDuration = info.get(MediaInfo.StreamKind.Video, currentStream, "Duration",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidDuration = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "Duration",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         long vidDurationMinutes = parseLongFromString(vidDuration);
         return TimeUnit.MILLISECONDS.toMinutes(vidDurationMinutes);
     }
 
     public String getVideoDurationFormatted() {
-        String vidDuration = info.get(MediaInfo.StreamKind.Video, currentStream, "Duration/String3",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidDuration = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "Duration/String3",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return vidDuration;
     }
 
     public double getVideoFramerate() {
-        String vidFramerate = info.get(MediaInfo.StreamKind.Video, currentStream, "FrameRate",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidFramerate = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "FrameRate",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return Double.parseDouble(vidFramerate);
     }
 
     public String getVideoSourceLanguage() {
-        String vidInfo = info.get(MediaInfo.StreamKind.Video, currentStream, "Language/String",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidInfo = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "Language/String",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return vidInfo;
     }
     
     public String getVideoFormat() {
-        String vidInfo = info.get(MediaInfo.StreamKind.Video, currentStream, "Format",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidInfo = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "Format",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return vidInfo;
     }
     
     public String getVideoBitrateMode() {
-        String vidInfo = info.get(MediaInfo.StreamKind.Video, currentStream, "BitRate_Mode/String",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidInfo = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "BitRate_Mode/String",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return vidInfo;
     }
     
     public String getVideoTest() {
-        String vidInfo = info.get(MediaInfo.StreamKind.Video, currentStream, "BitRate_Nominal",
-                MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+        String vidInfo = info.get(MediaInfoFileReader.StreamKind.Video, currentStream, "BitRate_Nominal",
+                MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
         return vidInfo;
     }
 
@@ -166,8 +166,8 @@ public class MediaInfoGetter {
     public ArrayList<String> getAudioFormats() {
         ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < streamAudioCount; i++) {
-            String audioInf = info.get(MediaInfo.StreamKind.Audio, i, "Format",
-                    MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+            String audioInf = info.get(MediaInfoFileReader.StreamKind.Audio, i, "Format",
+                    MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
             list.add(audioInf);
         }
         return list;
@@ -176,8 +176,8 @@ public class MediaInfoGetter {
     public ArrayList<String> getAudioLanguages() {
         ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < streamAudioCount; i++) {
-            String audioInf = info.get(MediaInfo.StreamKind.Audio, i, "Language/String",
-                    MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+            String audioInf = info.get(MediaInfoFileReader.StreamKind.Audio, i, "Language/String",
+                    MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
             list.add(audioInf);
         }
         return list;
@@ -186,8 +186,8 @@ public class MediaInfoGetter {
     public ArrayList<Long> getAudioBitratesKbps() {
         ArrayList<Long> list = new ArrayList<Long>();
         for (int i = 0; i < streamAudioCount; i++) {
-            String audioInf = info.get(MediaInfo.StreamKind.Audio, i, "BitRate",
-                    MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+            String audioInf = info.get(MediaInfoFileReader.StreamKind.Audio, i, "BitRate",
+                    MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
             list.add((parseLongFromString(audioInf) / 1000));  // kbps
         }
         return list;
@@ -196,8 +196,8 @@ public class MediaInfoGetter {
     public ArrayList<Integer> getAudioChannels() {
         ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = 0; i < streamAudioCount; i++) {
-            String audioInf = info.get(MediaInfo.StreamKind.Audio, i, "Channel(s)",
-                    MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+            String audioInf = info.get(MediaInfoFileReader.StreamKind.Audio, i, "Channel(s)",
+                    MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
             list.add(parseIntFromString(audioInf));
         }
         return list;
@@ -213,8 +213,8 @@ public class MediaInfoGetter {
     public ArrayList<String> getSubLanguages() {
         ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < streamSubCount; i++) {
-            String subInf = info.get(MediaInfo.StreamKind.Text, i, "Language/String",
-                    MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+            String subInf = info.get(MediaInfoFileReader.StreamKind.Text, i, "Language/String",
+                    MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
             list.add(subInf);
         }
         return list;
@@ -223,8 +223,8 @@ public class MediaInfoGetter {
     public ArrayList<String> getSubForced() {
         ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < streamSubCount; i++) {
-            String subInf = info.get(MediaInfo.StreamKind.Text, i, "Forced",
-                    MediaInfo.InfoKind.Text, MediaInfo.InfoKind.Name);
+            String subInf = info.get(MediaInfoFileReader.StreamKind.Text, i, "Forced",
+                    MediaInfoFileReader.InfoKind.Text, MediaInfoFileReader.InfoKind.Name);
             list.add(subInf);
         }
         return list;

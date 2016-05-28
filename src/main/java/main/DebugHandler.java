@@ -8,8 +8,8 @@ import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
 
 import application.helpers.AppConfig;
-import application.helpers.StringStuff;
-import services.mediainfo.MediaInfoGetter;
+import application.helpers.StringHelper;
+import services.mediainfo.MediaInfoFile;
 import services.tmdbinfo.TmdbInfo;
 import services.xrelinfo.XRelInfo;
 import services.xrelinfo.jsondata.latest.XRlatest;
@@ -42,19 +42,18 @@ public class DebugHandler {
 			System.out.println("file not found: " + file.getPath());
 		}
 
-		MediaInfoGetter inf = new MediaInfoGetter(file);
+		MediaInfoFile inf = new MediaInfoFile(file);
 		System.out.println(inf.getFileFormat());
 	}
 
 	public static void testTmdbInfo() throws MovieDbException, IOException {
 		// Tmdbinfo tmdbinfo = new Tmdbinfo();
-		StringStuff strstuff = new StringStuff();
 
 		ResultList<MovieInfo> movieInfo = TmdbInfo.instance.getMovieSearchResultsList("armageddon", 1998);
 		System.out.println("Total results: " + movieInfo.getTotalResults());
 
 		String pf = "C:\\FABIAN\\_Serien\\London.Has.Fallen.2016.WEBRip.AC3LD.German.XviD-LoC\\LoC-london has fallen.nfo";
-		MovieInfo inf = TmdbInfo.instance.getMovieInfoByID(strstuff.getTmdbFromNfoFile(pf));
+		MovieInfo inf = TmdbInfo.instance.getMovieInfoByID(StringHelper.getTmdbFromNfoFile(pf));
 		System.out.println(inf.getOriginalTitle());
 	}
 

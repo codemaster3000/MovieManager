@@ -18,35 +18,28 @@ import database.domain.Genrepos;
 import database.domain.Ownerpos;
 import database.domain.Videoline;
 import database.persistance.DBFacade;
-import services.mediainfo.MediaInfoGetter;
+import services.mediainfo.MediaInfoFile;
 
 /**
  *
  * @author fabian
  */
-public class MediaHandler {
+public class MediaInfoConverterHelper {
 
-	public MediaHandler() {
-		// empty
+	private MediaInfoConverterHelper() {
+
 	}
 
-	private Integer id;
-	private String audioLanguage;
-	private int audioBitrate;
-	private String audioFormat;
-	private String audioChannels;
-	private boolean dtsMod;
+	public static Set<Audiolinepos> setAudiolines(MediaInfoFile inf) {
 
-	public Set<Audiolinepos> setAudiolines(MediaInfoGetter inf) {
-
-		Set<Audiolinepos> lines = new HashSet();
+		Set<Audiolinepos> lines = new HashSet<>();
 
 		for (int i = 0; i < inf.getAudioStreamCount(); i++) {
 			Audiolinepos line = new Audiolinepos();
 			line.setAudioLanguage(inf.getAudioLanguages().get(i));
 			line.setAudioFormat(inf.getAudioFormats().get(i));
 			line.setAudioBitrate(toIntExact(inf.getAudioBitratesKbps().get(i)));
-			line.setAudioChannels(setAudioChannels(inf.getAudioChannels().get(i), line.getAudioFormat()));
+			line.setAudioChannels(getAudioChannels(inf.getAudioChannels().get(i), line.getAudioFormat()));
 			line.setDtsMod(false);
 
 			lines.add(line);
@@ -55,7 +48,7 @@ public class MediaHandler {
 		return lines;
 	}
 
-	public String setAudioChannels(int channels, String format) {
+	private static String getAudioChannels(int channels, String format) {
 		if (channels == 2) {
 			return "2.0";
 		} else if (channels == 3) {
@@ -75,11 +68,9 @@ public class MediaHandler {
 		}
 	}
 
-	public Set<Genrepos> setGenres(MovieInfo movieInfo) {
-
+	public static Set<Genrepos> getGenres(MovieInfo movieInfo) {
 		List<Genrepos> allGenres = DBFacade.instance.getAllGenrePoses();
-
-		Set<Genrepos> genres = new HashSet();
+		Set<Genrepos> genres = new HashSet<>();
 
 		for (int i = 0; i < movieInfo.getGenreIds().size(); i++) {
 			for (Genrepos pos : allGenres) {
@@ -93,9 +84,9 @@ public class MediaHandler {
 		return genres;
 	}
 
-	public Set<Ownerpos> setOwner() {
-
-		Set<Ownerpos> owner = new HashSet();
+	public static Set<Ownerpos> getOwner() {
+		// TODO: read from some sort of property or current user
+		Set<Ownerpos> owner = new HashSet<>();
 
 		Ownerpos pos = new Ownerpos();
 		pos.setOwnerName("Ladurner");
@@ -105,7 +96,7 @@ public class MediaHandler {
 		return owner;
 	}
 
-	public String setTagline(MovieInfo movieInfo) {
+	public static String getTagline(MovieInfo movieInfo) {
 		if (movieInfo.getTagline() != null) {
 			return movieInfo.getTagline();
 		} else {
@@ -113,7 +104,7 @@ public class MediaHandler {
 		}
 	}
 
-	public Videoline setVideoline(MediaInfoGetter inf) {
+	public static Videoline getVideoline(MediaInfoFile inf) {
 
 		Videoline line = new Videoline();
 		line.setAspectRatio(inf.getDisplayAspectRatio());
@@ -125,4 +116,5 @@ public class MediaHandler {
 
 		return line;
 	}
+
 }

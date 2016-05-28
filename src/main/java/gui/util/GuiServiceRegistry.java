@@ -10,12 +10,8 @@ package gui.util;
 public class GuiServiceRegistry {
 	public static GuiServiceRegistry instance = new GuiServiceRegistry();
 	
-	private ViewLoader viewLoader;
-	public ViewLoader getViewLoader() {
-		if(viewLoader == null) {
-			viewLoader = new ViewLoader();
-		}
-		
+	private final ViewLoader viewLoader = new ViewLoader();
+	public ViewLoader getViewLoader() {		
 		return viewLoader;
 	}
 }

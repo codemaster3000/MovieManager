@@ -27,6 +27,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import services.xrelinfo.XRelDataHandler;
 import services.xrelinfo.XRelInfo;
 import services.xrelinfo.jsondata.latest.XRlatest;
 
@@ -69,12 +70,21 @@ public class ContentReleasesController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            initCoverFlow();
-            showNewReleases();
-        } catch (IOException ex) {
-            Logger.getLogger(ContentReleasesController.class.getName()).log(Level.SEVERE, null, ex);
+        showNewReleases();
+    }
+
+    private void showNewReleases() {
+        xrelList = FXCollections.observableArrayList();
+
+        XRlatest latest = XRelDataHandler.getInstance().getXlistHDMoviesLatest();
+        for (int i = 0; i < latest.getList().size(); i++) {
+            xrelList.add(latest.getList().get(i).getDirname());
         }
+        
+        System.out.print(XRelDataHandler.getInstance().getXlistHDMoviesLatest().getTotalCount());
+        
+        listNewReleases.setItems(xrelList);
+        listNewReleases.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     private void initCoverFlow() {
@@ -116,42 +126,7 @@ public class ContentReleasesController implements Initializable {
         }
     }
 
-    private void showNewReleases() throws IOException {
-        Task xrelservice = doFetchNewReleases();
-        
-        xrelservice.stateProperty().addListener(new ChangeListener<Worker.State>() {
-            @Override
-            public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldState, Worker.State newState) {
-                if (newState == Worker.State.SUCCEEDED) {
-                    listNewReleases.setItems(xrelList);
-                    listNewReleases.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-                    System.out.println("xrelxervice task done");
-                    // task done
-                }
-            }
-        });
-
-        new Thread(xrelservice).start();
-    }
-
-    public Task doFetchNewReleases() {
-        return new Task() {
-            @Override
-            protected Object call() throws Exception {
-                xrelList = FXCollections.observableArrayList();
-                XRelInfo xrel = new XRelInfo();
-
-                XRlatest latest = xrel.getLatestHDMovieReleases("HDTV", "movie", 5);
-                for (int i = 0; i < latest.getList().size(); i++) {
-                    xrelList.add(latest.getList().get(i).getDirname());
-                }
-
-                return true;
-            }
-        };
-    }
-    
-    public Task doFetchCovers(){
+    public Task doFetchCovers() {
         return new Task() {
             @Override
             protected Object call() throws Exception {

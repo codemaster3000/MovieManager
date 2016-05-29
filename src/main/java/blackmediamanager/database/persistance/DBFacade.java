@@ -1,4 +1,3 @@
-
 package blackmediamanager.database.persistance;
 
 import java.util.List;
@@ -14,11 +13,11 @@ import blackmediamanager.database.domain.Videoline;
 
 public class DBFacade {
 
+	public static DBFacade instance = new DBFacade();
+
 	private DBFacade() {
 
 	}
-
-	public static DBFacade instance = new DBFacade();
 
 	// gibt nur die aktiven zurück, inaktive und doppelte werden nicht
 	// zurückgegeben
@@ -27,6 +26,32 @@ public class DBFacade {
 		List<Movie> results;
 		try {
 			Query query = session.createQuery("FROM Movie WHERE active = 1");
+			results = query.list();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		return results;
+	}
+
+	public List<Movie> getAllMoviesOrderByFileSize() {
+		Session session = DBSession.getInstance();
+		List<Movie> results;
+		try {
+			Query query = session.createQuery("FROM Movie WHERE active = 1 ORDER BY fileSize DESC");
+			results = query.list();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		return results;
+	}
+
+	public List<Movie> getAllMoviesOrderByOldest() {
+		Session session = DBSession.getInstance();
+		List<Movie> results;
+		try {
+			Query query = session.createQuery("FROM Movie WHERE active = 1 ORDER BY year ASC");
 			results = query.list();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -135,5 +160,4 @@ public class DBFacade {
 		}
 		return result;
 	}
-
 }

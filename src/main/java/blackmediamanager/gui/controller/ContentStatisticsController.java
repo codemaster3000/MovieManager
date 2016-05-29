@@ -3,21 +3,18 @@ package blackmediamanager.gui.controller;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
-import blackmediamanager.database.domain.Genre;
+import blackmediamanager.application.controller.StatisticsCalculator;
+import blackmediamanager.database.dao.DataHandler;
 import blackmediamanager.database.domain.Genrepos;
 import blackmediamanager.database.domain.Movie;
-import blackmediamanager.database.persistance.DBFacade;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
+import blackmediamanager.gui.controller.helper.StatisticsControllerHelperPieChart;
+import blackmediamanager.gui.controller.helper.StatisticsControllerHelperTop10;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
 /**
@@ -28,68 +25,79 @@ import javafx.scene.layout.VBox;
 public class ContentStatisticsController implements Initializable {
 
 	@FXML
-	private PieChart chartMovies;
+	private PieChart pieChartMovies;
 	@FXML
 	private VBox vboxForLabels;
+	@FXML
+	private ComboBox comboBoxMovies;
+	@FXML
+	private ListView listViewMovies;
+	@FXML
+	private ComboBox comboBoxDocumentaries;
+	@FXML
+	private ListView listViewDocumentaries;
+	@FXML
+	private ComboBox comboBoxTVshows;
+	@FXML
+	private ListView listViewTVshows;
+
+	private final int TOP10 = 10;
+
+	private DataHandler dataHandler;
+	private StatisticsControllerHelperTop10 helperTop10;
+	private StatisticsControllerHelperPieChart helperPieChart;
+	private StatisticsCalculator statisticsCalculator;
+
+	private List<Movie> movies;
+	private List<Genrepos> genres;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		List<Movie> movies = DBFacade.instance.getAllMovies();
-		List<Genrepos> genres = DBFacade.instance.getAllGenrePoses();
 
-		// pie chart test
-		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-		for (int i = 0; i < genres.size(); i++) {
-			String genre = genres.get(i).getType();
-			int counter = calcGenresFromAllMovies(genre, movies);
-			if (counter > 0) {
-				pieChartData.add(new PieChart.Data(genre, counter));
+		dataHandler = new DataHandler();
+		movies = dataHandler.getAllMovies();
+		genres = dataHandler.getAllGenrePoses();
+		helperTop10 = new StatisticsControllerHelperTop10();
+		statisticsCalculator = new StatisticsCalculator();
+		statisticsCalculator.setDataHandler(dataHandler);
+		helperPieChart = new StatisticsControllerHelperPieChart();
 
-				// create Label
-				Label l = new Label();
-				l.setPadding(new Insets(5, 0, 0, 20));
-				l.setStyle("-fx-font: 13 arial; -fx-text-fill: rgb(74, 75, 78);");
-				l.setText(genre + ": " + counter);
-				vboxForLabels.getChildren().add(l);
-			}
-		}
+		// ----------------------------------------------------------------------------------------------------------------
+		// TOP 10
+		// ----------------------------------------------------------------------------------------------------------------
 
-		PieChart chart = new PieChart(pieChartData);
-		setMouseEvent(chart);
-		chartMovies.setData(pieChartData);
+		// Create Comboboxes
+		comboBoxMovies.getItems().addAll(helperTop10.createListComboBoxMovies());
+		comboBoxMovies.setValue(comboBoxMovies.getItems().get(0));
+
+		comboBoxDocumentaries.getItems().addAll(helperTop10.createListComboBoxDocumentaries());
+		comboBoxDocumentaries.setValue(comboBoxDocumentaries.getItems().get(0));
+
+		comboBoxTVshows.getItems().addAll(helperTop10.createListComboBoxTVshows());
+		comboBoxTVshows.setValue(comboBoxTVshows.getItems().get(0));
+
+		// Default Selected
+		listViewMovies.setItems(statisticsCalculator.calcTop10MovieBiggestSize());
+
+		// ----------------------------------------------------------------------------------------------------------------
+		// Movies
+		// ----------------------------------------------------------------------------------------------------------------
+
+		// Genre PieChart
+		pieChartMovies.setData(helperPieChart.createPieChartMovieGenres(movies, genres));
 
 	}
 
-	private int calcGenresFromAllMovies(String genre, List<Movie> movies) {
+	@FXML
+	public void setListviewMovies() {
 
-		int counter = 0;
-
-		for (int i = 0; i < movies.size(); i++) {
-			Set<Genre> set = movies.get(i).getGenres();
-			for (Genre g : set) {
-				if (g.getGenrepos().getType().equals(genre)) {
-					counter++;
-				}
-			}
-
+		if (comboBoxMovies.getSelectionModel().getSelectedItem().equals("Top 10 - Biggest Size")) {
+			listViewMovies.getItems().clear();
+			listViewMovies.setItems(statisticsCalculator.calcTop10MovieBiggestSize());
+		} else if (comboBoxMovies.getSelectionModel().getSelectedItem().equals("Top 10 - Oldest Movies")) {
+			listViewMovies.getItems().clear();
+			listViewMovies.setItems(statisticsCalculator.calcTop10MovieOldestMovies());
 		}
-		return counter;
-	}
 
-	public void setMouseEvent(PieChart chart) {
-		final Label caption = new Label("");
-		caption.setStyle("-fx-font: 15 arial; -fx-text-fill: rgb(74, 75, 78); -fx-font-weight: bold;");
-		for (final PieChart.Data data : chart.getData()) {
-			data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) {
-					caption.setTranslateX(e.getSceneX());
-					caption.setTranslateY(e.getSceneY());
-					System.out.println(data.getPieValue());
-					caption.setText(String.valueOf(data.getPieValue()) + "%");
-				}
-			});
-		}
 	}
-
 }

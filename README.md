@@ -6,30 +6,18 @@ Build Status
 -------------------------
 [![Build Status](https://travis-ci.org/codemaster3000/MovieManager.svg?branch=enhancement%2Ftravis)](https://travis-ci.org/codemaster3000/MovieManager)
 
-Maven
------
-not yet available on repo
-
-```xml
-<dependency>
-    <groupId>de.blackmediamanger</groupId>
-    <artifactId>blackmediamanager</artifactId>
-    <version>0.1</version>
-</dependency>
-```
-
 Features (ToDo-List)
 -------------------
 
 ###### ToDo:
 - [ ] Scan & add media files
-    - [ ] scan all folders including subfolder for movie filetypes (mkv, avi,..)
+    - [x] scan all folders including subfolder for movie filetypes (mkv, avi,..)
     - [x] read mkv media informations (MediaInfo.dll api)
     - [x] fetch TMDB movie infos (tmdb api)
     - [ ] add all available as new database entry
     	- [ ] check if movie already exist in database (quality replace dialog)
 - [ ] movie statistics view (longest runtime toplist, oldest movie, biggest movie, genre charts, etc)
-- [ ] XREL release infos: show newest BlueRay scene releases
+- [x] XREL release infos: show newest BlueRay scene releases
 - [ ] movie database view
     - [ ] list all movies (read MySQL database)
     - [ ] show data for selected movie (cover, movieinfos, ...)

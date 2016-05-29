@@ -1,23 +1,18 @@
 package gui.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
+import application.controller.ContentReleaseAppController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
@@ -27,7 +22,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import services.xrelinfo.XRelInfo;
 import services.xrelinfo.jsondata.latest.XRlatest;
 
 /**
@@ -37,128 +31,105 @@ import services.xrelinfo.jsondata.latest.XRlatest;
  */
 public class ContentReleasesController implements Initializable {
 
-    @FXML
-    public AnchorPane anchorPaneContent;
-    @FXML
-    public ImageView imageCover;
-    @FXML
-    public AnchorPane paneMovieMenu;
-    @FXML
-    public BorderPane borderPaneForContent;
-    @FXML
-    public FlowPane flowpane;
-    @FXML
-    public ScrollPane scrollPane;
-    @FXML
-    public ListView listNewReleases;
+	@FXML
+	public AnchorPane anchorPaneContent;
+	@FXML
+	public ImageView imageCover;
+	@FXML
+	public AnchorPane paneMovieMenu;
+	@FXML
+	public BorderPane borderPaneForContent;
+	@FXML
+	public FlowPane flowpane;
+	@FXML
+	public ScrollPane scrollPane;
+	@FXML
+	public ListView<String> listNewReleases;
 
-    private ObservableList<String> xrelList;
+	private int pos = 0;
+	private final int minPos = 0;
+	private final int maxPos = (50 * 160);
 
-    @FXML
-    public void setPaneSelected(Event e) {
-        ((Pane) e.getSource()).getChildren().get(0).getStyleClass().add("labelSelected");
-    }
+	private ObservableList<String> xrelList;
 
-    public void setPaneUnselected(Event e) {
-        ((Pane) e.getSource()).getChildren().get(0).getStyleClass().remove("labelSelected");
-    }
+	private ContentReleaseAppController contentReleaseAppController;
 
-    int pos = 0;
-    final int minPos = 0;
-    final int maxPos = (50 * 160);
+	@FXML
+	public void setPaneSelected(Event e) {
+		((Pane) e.getSource()).getChildren().get(0).getStyleClass().add("labelSelected");
+	}
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        try {
-            initCoverFlow();
-            showNewReleases();
-        } catch (IOException ex) {
-            Logger.getLogger(ContentReleasesController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	public void setPaneUnselected(Event e) {
+		((Pane) e.getSource()).getChildren().get(0).getStyleClass().remove("labelSelected");
+	}
 
-    private void initCoverFlow() {
-        ImageView imageCover;
-        Pane pane;
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		contentReleaseAppController = new ContentReleaseAppController();
+		showNewReleases();
+	}
 
-        borderPaneForContent.setOnScroll(new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event) {
+	private void showNewReleases() {
+		xrelList = FXCollections.observableArrayList();
 
-                if (event.getDeltaY() > 0) {
-                    scrollPane.setHvalue(pos == minPos ? minPos : pos--);
-                } else {
-                    scrollPane.setHvalue(pos == maxPos ? maxPos : pos++);
-                }
+		XRlatest latest = contentReleaseAppController.getNewReleases();
+		for (int i = 0; i < latest.getList().size(); i++) {
+			xrelList.add(latest.getList().get(i).getDirname());
+		}
 
-            }
-        });
+		System.out.print(latest.getTotalCount());
 
-        scrollPane.setHmin(minPos);
-        scrollPane.setHmax(maxPos / 25);
-        scrollPane.setPannable(true);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setContent(flowpane);
+		listNewReleases.setItems(xrelList);
+		listNewReleases.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+	}
 
-        for (int i = 0; i < 10; i++) {
-            imageCover = new ImageView();
-            pane = new Pane();
-            pane.setPadding(new Insets(0, 5, 0, 5));
-            String imageSource = "https://image.tmdb.org/t/p/w396/vMlVYL15WMlvnkuGdnuEb5uEck7.jpg";
-            imageCover.setImage(new Image(imageSource));
-            imageCover.setFitWidth(140);
-            imageCover.setFitHeight(210);
+	private void initCoverFlow() {
+		ImageView imageCover;
+		Pane pane;
 
-            pane.getChildren().add(imageCover);
+		borderPaneForContent.setOnScroll(new EventHandler<ScrollEvent>() {
+			@Override
+			public void handle(ScrollEvent event) {
 
-            flowpane.setPrefWidth(50 * 150);
-            flowpane.getChildren().add(pane);
-        }
-    }
+				if (event.getDeltaY() > 0) {
+					scrollPane.setHvalue(pos == minPos ? minPos : pos--);
+				} else {
+					scrollPane.setHvalue(pos == maxPos ? maxPos : pos++);
+				}
 
-    private void showNewReleases() throws IOException {
-        Task xrelservice = doFetchNewReleases();
-        
-        xrelservice.stateProperty().addListener(new ChangeListener<Worker.State>() {
-            @Override
-            public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldState, Worker.State newState) {
-                if (newState == Worker.State.SUCCEEDED) {
-                    listNewReleases.setItems(xrelList);
-                    listNewReleases.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-                    System.out.println("xrelxervice task done");
-                    // task done
-                }
-            }
-        });
+			}
+		});
 
-        new Thread(xrelservice).start();
-    }
+		scrollPane.setHmin(minPos);
+		scrollPane.setHmax(maxPos / 25);
+		scrollPane.setPannable(true);
+		scrollPane.setFitToHeight(true);
+		scrollPane.setContent(flowpane);
 
-    public Task doFetchNewReleases() {
-        return new Task() {
-            @Override
-            protected Object call() throws Exception {
-                xrelList = FXCollections.observableArrayList();
-                XRelInfo xrel = new XRelInfo();
+		for (int i = 0; i < 10; i++) {
+			imageCover = new ImageView();
+			pane = new Pane();
+			pane.setPadding(new Insets(0, 5, 0, 5));
+			String imageSource = "https://image.tmdb.org/t/p/w396/vMlVYL15WMlvnkuGdnuEb5uEck7.jpg";
+			imageCover.setImage(new Image(imageSource));
+			imageCover.setFitWidth(140);
+			imageCover.setFitHeight(210);
 
-                XRlatest latest = xrel.getLatestHDMovieReleases("HDTV", "movie", 5);
-                for (int i = 0; i < latest.getList().size(); i++) {
-                    xrelList.add(latest.getList().get(i).getDirname());
-                }
+			pane.getChildren().add(imageCover);
 
-                return true;
-            }
-        };
-    }
-    
-    public Task doFetchCovers(){
-        return new Task() {
-            @Override
-            protected Object call() throws Exception {
-                // cover code here
-                return true;
-            }
-        };
-    }
+			flowpane.setPrefWidth(50 * 150);
+			flowpane.getChildren().add(pane);
+		}
+	}
+
+	public Task<?> createFetchCoversTask() {
+		return new Task<Object>() {
+			@Override
+			protected Object call() throws Exception {
+				// cover code here
+				return true;
+			}
+		};
+	}
 
 }

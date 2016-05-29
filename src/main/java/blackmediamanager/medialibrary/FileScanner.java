@@ -6,12 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.StringTokenizer;
 
 import org.apache.commons.io.FilenameUtils;
 
 import blackmediamanager.application.helpers.AppConfig;
+import blackmediamanager.medialibrary.util.StringHelper;
 
 public class FileScanner {
 
@@ -28,14 +27,14 @@ public class FileScanner {
 	 * 
 	 * 
 	 */
-	private Collection<String> videoExtensions = new HashSet<>();
 
-	public FileScanner() {
-		videoExtensions = stringTokenize(AppConfig.instance.EXTENSIONS_VIDEO, ",");
+	private FileScanner() {
+
 	}
 
-	// schnellerer filescan mit java 7 nio library (rekursiv)
-	public ArrayList<String> getScannedFileList(ArrayList<String> fileNames, Path dir) throws IOException {
+	public static ArrayList<String> getScannedFileList(ArrayList<String> fileNames, Path dir) throws IOException {
+		Collection<String> videoExtensions = StringHelper.stringTokenize(AppConfig.instance.EXTENSIONS_VIDEO, ",");
+
 		String ext = "";
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
 			for (Path path : stream) {
@@ -52,15 +51,5 @@ public class FileScanner {
 			e.printStackTrace();
 		}
 		return fileNames;
-	}
-
-	// convert string list to collection
-	private Collection<String> stringTokenize(String sourceString, String delimiter) {
-		StringTokenizer st = new StringTokenizer(sourceString, delimiter);
-		Collection<String> keywords = new HashSet<>();
-		while (st.hasMoreTokens()) {
-			keywords.add(st.nextToken());
-		}
-		return keywords;
 	}
 }

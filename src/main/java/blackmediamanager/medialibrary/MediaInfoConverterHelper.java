@@ -48,7 +48,6 @@ public final class MediaInfoConverterHelper {
 		return lines;
 	}
 
-	// TODO(refactor): convert strings to constants
 	private static String getAudioChannels(int channels, String format) {
 		if (channels == 2) {
 			return "2.0";

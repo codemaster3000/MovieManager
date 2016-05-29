@@ -5,7 +5,10 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -101,5 +104,14 @@ public class StringHelper {
 			}
 		}
 		return result;
+	}
+
+	public static Set<String> stringTokenize(String sourceString, String delimiter) {
+		StringTokenizer st = new StringTokenizer(sourceString, delimiter);
+		Set<String> keywords = new HashSet<>();
+		while (st.hasMoreTokens()) {
+			keywords.add(st.nextToken());
+		}
+		return keywords;
 	}
 }

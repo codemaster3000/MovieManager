@@ -29,6 +29,8 @@ import javafx.scene.layout.Pane;
  *
  * @author Fabian Ladurner
  */
+// TODO(refactor): create ContentReleaseAppController and refector application
+// logic into it
 public class ContentReleasesController implements Initializable {
 
 	@FXML

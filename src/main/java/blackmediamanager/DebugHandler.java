@@ -7,7 +7,6 @@ import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
 
-import blackmediamanager.application.helpers.AppConfig;
 import blackmediamanager.medialibrary.mediainfo.MediaInfoFile;
 import blackmediamanager.medialibrary.tmdbinfo.TmdbInfo;
 import blackmediamanager.medialibrary.util.StringHelper;
@@ -25,7 +24,6 @@ import blackmediamanager.util.ResourcePathResolver;
 public class DebugHandler {
 
 	private static final ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
-	private static AppConfig cfg = AppConfig.getInstance();
 
 	public static void show() throws Exception {
 		testMediaInfo();

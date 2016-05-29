@@ -28,17 +28,17 @@ public class Main extends Application {
 		ApplicationSetup.instance.init();
 		SplashScreen splashScreen = new SplashScreen(themeFileName);
 		splashScreen.show();
-		
+
 		ApplicationSetup.instance.load(splashScreen, new LoadFinishedCallbackHandler() {
 			@Override
 			public void allLoadTaskFinished() {
-				Platform.runLater(new Runnable() {	
+				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
 						try {
 							showMainWindow(_primaryStage);
-		                    splashScreen.close();
-							//DebugHandler.show();
+							splashScreen.close();
+							// DebugHandler.show();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -59,7 +59,7 @@ public class Main extends Application {
 		return _primaryStage;
 	}
 
-	// TODO: refactor into own class
+	// TODO(refactor): into own class
 	public void showMainWindow(Stage stage) throws IOException {
 		Scene scene = new Scene(GuiServiceRegistry.instance.getViewLoader().LoadMainViewController());
 		scene.getStylesheets().add(

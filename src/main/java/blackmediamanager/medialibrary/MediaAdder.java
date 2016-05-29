@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.omertron.themoviedbapi.MovieDbException;
 
 import blackmediamanager.database.domain.Movie;
+import blackmediamanager.database.persistance.DBFacade;
 
 /**
  *
@@ -13,12 +14,12 @@ import blackmediamanager.database.domain.Movie;
  */
 public class MediaAdder {
 
+	// TODO(refactor): change input parameter from file to MediaInfo
 	public boolean movieToAdd(File file) throws IOException, MovieDbException {
 		Movie movie = MediaInfoToMovieConverter.convert(file);
 
-		// Film speichern
-		// DBFacade dbfacade = new DBFacade();
-		// dbfacade.saveMovie(movie);
+		DBFacade.instance.saveMovie(movie);
+
 		if (movie != null) {
 			return true;
 		} else {

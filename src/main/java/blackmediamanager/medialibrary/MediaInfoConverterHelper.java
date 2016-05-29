@@ -24,13 +24,13 @@ import blackmediamanager.medialibrary.mediainfo.MediaInfoFile;
  *
  * @author fabian
  */
-public class MediaInfoConverterHelper {
+public final class MediaInfoConverterHelper {
 
 	private MediaInfoConverterHelper() {
 
 	}
 
-	public static Set<Audiolinepos> setAudiolines(MediaInfoFile inf) {
+	public static Set<Audiolinepos> getAudiolines(MediaInfoFile inf) {
 
 		Set<Audiolinepos> lines = new HashSet<>();
 
@@ -48,6 +48,7 @@ public class MediaInfoConverterHelper {
 		return lines;
 	}
 
+	// TODO(refactor): convert strings to constants
 	private static String getAudioChannels(int channels, String format) {
 		if (channels == 2) {
 			return "2.0";

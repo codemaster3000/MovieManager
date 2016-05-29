@@ -25,7 +25,6 @@ import blackmediamanager.medialibrary.util.StringHelper;
 public class TmdbInfo {
 
 	private TheMovieDbApi tmdb;
-	private AppConfig cfg = AppConfig.getInstance();
 	private String LANG; // langage setting
 
 	public final static TmdbInfo instance = new TmdbInfo();
@@ -39,8 +38,8 @@ public class TmdbInfo {
 	public void init() throws MovieDbException {
 		if (!isInitialized) {
 			isInitialized = true;
-			tmdb = new TheMovieDbApi(cfg.API_KEY);
-			LANG = cfg.TMDB_LANGUAGE;
+			tmdb = new TheMovieDbApi(AppConfig.instance.API_KEY);
+			LANG = AppConfig.instance.TMDB_LANGUAGE;
 		}
 	}
 
@@ -88,7 +87,7 @@ public class TmdbInfo {
 		if (imgs.isEmpty()) {
 			return null;
 		} else {
-			return cfg.TMDB_IMAGEROOTPATH + imgs.getResults().get(0).getFilePath();
+			return AppConfig.instance.TMDB_IMAGEROOTPATH + imgs.getResults().get(0).getFilePath();
 		}
 	}
 
@@ -96,7 +95,7 @@ public class TmdbInfo {
 		ResultList<Artwork> imgs = tmdb.getMovieImages(movieId, "en");
 
 		try {
-			String path = cfg.TMDB_IMAGEROOTPATH + imgs.getResults().get(0).getFilePath();
+			String path = AppConfig.instance.TMDB_IMAGEROOTPATH + imgs.getResults().get(0).getFilePath();
 			URL url = new URL(path);
 			BufferedImage image = ImageIO.read(url);
 			JLabel label = new JLabel(new ImageIcon(image));

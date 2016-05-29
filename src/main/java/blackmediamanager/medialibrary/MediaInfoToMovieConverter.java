@@ -31,7 +31,7 @@ public class MediaInfoToMovieConverter {
 		// create actual movie instance and fill it with values
 		Movie movie = new Movie();
 		movie.setActive((byte) 1);
-		movie.setAudiolines(MediaInfoConverterHelper.setAudiolines(mediaInfoFile));
+		movie.setAudiolines(MediaInfoConverterHelper.getAudiolines(mediaInfoFile));
 		movie.setDateAdded(date);
 		movie.setDateModified(date);
 		movie.setDuration((int) mediaInfoFile.getVideoDurationMinutes());

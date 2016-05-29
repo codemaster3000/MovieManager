@@ -35,9 +35,11 @@ public class FileScanner {
 	}
 
 	private static List<String> scanForMovieFilesRec(List<String> fileNames, Path dir,
-			Collection<String> videoExtensions) {
+			Collection<String> videoExtensions) throws IOException {
 		String ext = "";
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
+		DirectoryStream<Path> stream = null;
+		try {
+			stream = Files.newDirectoryStream(dir);
 			for (Path path : stream) {
 				if (path.toFile().isDirectory()) {
 					scanForMovieFilesRec(fileNames, path, videoExtensions);
@@ -48,9 +50,10 @@ public class FileScanner {
 					}
 				}
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		} finally {
+			stream.close();
 		}
+
 		return fileNames;
 	}
 }

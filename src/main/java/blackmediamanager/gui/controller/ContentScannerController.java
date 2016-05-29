@@ -5,22 +5,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import blackmediamanager.Main;
-import blackmediamanager.application.converter.MediaInfoToMovieConverter;
+import blackmediamanager.application.controller.ContentScannerAppController;
+import blackmediamanager.application.controller.ContentScannerAppController.UpdateProgressCallback;
 import blackmediamanager.application.helpers.AppConfig;
-import blackmediamanager.database.dao.MovieDao;
-import blackmediamanager.database.domain.Movie;
-import blackmediamanager.medialibrary.FileScanner;
 import blackmediamanager.medialibrary.util.StringHelper;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
@@ -37,10 +32,7 @@ import javafx.stage.DirectoryChooser;
  *
  * @author fabian salzgeber
  */
-// TODO(refactor): create ContentScannerAppController and refector application
-// logic into it
 // TODO(refactor): sysout into log
-// TODO(refactor): tasks
 public class ContentScannerController implements Initializable {
 
 	@FXML
@@ -58,11 +50,23 @@ public class ContentScannerController implements Initializable {
 	@FXML
 	ListView<String> listNotFound;
 
+	private ContentScannerAppController contentScannerAppController;
+
+	public ContentScannerController() {
+		contentScannerAppController = new ContentScannerAppController();
+	}
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		labelScanpath.setText("no scanpath selected");
 		labelScaninfo.setText("");
 		buttonScan.setDisable(true);
+
+		listFiles.itemsProperty().bind(new SimpleListProperty<>(contentScannerAppController.getScannedFiles()));
+		listFiles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+		listNotFound.itemsProperty().bind(new SimpleListProperty<>(contentScannerAppController.getTmdbNotFoundFiles()));
+		listNotFound.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 
 	public void chooseScanpath() {
@@ -82,7 +86,7 @@ public class ContentScannerController implements Initializable {
 		buttonScan.setDisable(true);
 		labelScaninfo.setText("Scanning files...");
 
-		Task<List<String>> fileScannerTask = createFileScannerTask();
+		Task<Boolean> fileScannerTask = createFileScannerTask();
 
 		progressScan.setProgress(0);
 		progressScan.progressProperty().unbind();
@@ -96,22 +100,18 @@ public class ContentScannerController implements Initializable {
 					progressScan.progressProperty().unbind();
 					progressScan.setProgress(0);
 
-					List<String> fileNames = fileScannerTask.getValue();
+					System.out.println("filescanner task done " + contentScannerAppController.getScannedFiles().size());
 
-					listFiles.setItems(FXCollections.observableList(fileNames));
-					listFiles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-					System.out.println("filescanner task done " + fileNames.size());
-
-					addFileData(fileNames);
+					addFileData();
 				}
 			}
 		});
 
-		new Thread(fileScannerTask).start();
+		Platform.runLater(fileScannerTask);
 	}
 
-	public void addFileData(Collection<String> fileNames) {
-		Task<List<String>> adddata = createAddFilesToDatabaseTask(fileNames);
+	private void addFileData() {
+		Task<Boolean> adddata = createAddFilesToDatabaseTask();
 
 		labelScaninfo.setText("Extract data and add files to database...");
 		progressScan.setProgress(0);
@@ -123,57 +123,62 @@ public class ContentScannerController implements Initializable {
 			public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldState,
 					Worker.State newState) {
 				if (newState == Worker.State.SUCCEEDED) {
-					labelScaninfo.setText("Scan done [added files]: " + fileNames.size());
+					labelScaninfo.setText(
+							"Scan done [added files]: " + contentScannerAppController.getScannedFiles().size());
 					buttonScan.setDisable(false);
 
-					listNotFound.setItems(FXCollections.observableArrayList(adddata.getValue()));
-					listNotFound.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-					System.out.println("adding files to database done " + fileNames.size());
+					// TODO(logging)
+					System.out.println(
+							"adding files to database done " + contentScannerAppController.getScannedFiles().size());
 				}
 			}
 		});
 
-		new Thread(adddata).start();
+		Platform.runLater(adddata);
 	}
 
-	public Task<List<String>> createFileScannerTask() {
-		return new Task<List<String>>() {
+	public Task<Boolean> createFileScannerTask() {
+		return new Task<Boolean>() {
+
 			@Override
-			protected List<String> call() throws Exception {
+			protected Boolean call() throws Exception {
+				System.out.println("Scann files");
 				Path dir = Paths.get(labelScanpath.getText());
-				return scanDirectory(dir, StringHelper.stringTokenize(AppConfig.instance.EXTENSIONS_VIDEO, ","));
+				try {
+					contentScannerAppController.scanDirectory(dir,
+							StringHelper.stringTokenize(AppConfig.instance.EXTENSIONS_VIDEO, ","));
+				} catch (Exception e) {
+					// TODO(logging)
+					e.printStackTrace();
+					return false;
+				}
+
+				return true;
 			}
+
 		};
 	}
 
-	private List<String> scanDirectory(Path dir, Set<String> extensions) throws IOException {
-		return FileScanner.scanForMovieFiles(dir, extensions);
-	}
-
-	public Task<List<String>> createAddFilesToDatabaseTask(Collection<String> fileNames) {
-		return new Task<List<String>>() {
+	public Task<Boolean> createAddFilesToDatabaseTask() {
+		return new Task<Boolean>() {
 			@Override
-			protected List<String> call() throws Exception {
-				MovieDao movieDao = new MovieDao();
-				List<String> tmdbNotFound = new LinkedList<>();
-				if (fileNames.size() > 0) {
-					int i = 0;
-					for (String filename : fileNames) {
-						File file = new File(filename);
+			protected Boolean call() throws Exception {
+				try {
+					contentScannerAppController.addFilesToDatabase(new UpdateProgressCallback() {
 
-						Movie foundMovie = MediaInfoToMovieConverter.convert(file);
-
-						if (foundMovie == null) {
-							tmdbNotFound.add(file.getName());
-						} else {
-							movieDao.save(foundMovie);
+						@Override
+						public void invoke(int workDone, int maxWork) {
+							updateProgress(workDone, maxWork);
 						}
 
-						updateProgress(i++, fileNames.size() - 1);
-					}
-				}
+					});
 
-				return tmdbNotFound;
+				} catch (Exception e) {
+					// TODO(logging)
+					e.printStackTrace();
+					return false;
+				}
+				return true;
 			}
 		};
 	}

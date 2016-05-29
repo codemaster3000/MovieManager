@@ -1,20 +1,20 @@
 package database.persistance;
 
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import database.domain.Genrepos;
 import database.domain.Movie;
 import database.domain.Ownerpos;
 import database.domain.Tmdbinfo;
 import database.domain.Videoline;
-import java.util.List;
-import org.hibernate.Query;
-import org.hibernate.Session;
 
 public class DBFacade {
-
-    public DBFacade() {
-
-    }
-
+    
+    public static DBFacade instance = new DBFacade();
+    
     // gibt nur die aktiven zurück, inaktive und doppelte werden nicht zurückgegeben
     public List<Movie> getAllMovies() {
         Session session = DBSession.getInstance();
@@ -153,5 +153,4 @@ public class DBFacade {
         }
         return result;
     }
-
 }

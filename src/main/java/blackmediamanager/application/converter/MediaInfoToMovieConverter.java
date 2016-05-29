@@ -1,8 +1,13 @@
-package blackmediamanager.medialibrary;
+package blackmediamanager.application.converter;
+
+import static java.lang.Math.toIntExact;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -10,8 +15,13 @@ import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
 
+import blackmediamanager.database.domain.Audiolinepos;
+import blackmediamanager.database.domain.Genrepos;
 import blackmediamanager.database.domain.Movie;
+import blackmediamanager.database.domain.Ownerpos;
 import blackmediamanager.database.domain.Tmdbinfo;
+import blackmediamanager.database.domain.Videoline;
+import blackmediamanager.database.persistance.DBFacade;
 import blackmediamanager.medialibrary.mediainfo.MediaInfoFile;
 import blackmediamanager.medialibrary.tmdbinfo.TmdbInfo;
 import blackmediamanager.medialibrary.util.StringHelper;
@@ -31,7 +41,7 @@ public class MediaInfoToMovieConverter {
 		// create actual movie instance and fill it with values
 		Movie movie = new Movie();
 		movie.setActive((byte) 1);
-		movie.setAudiolines(MediaInfoConverterHelper.getAudiolines(mediaInfoFile));
+		movie.setAudiolines(getAudiolines(mediaInfoFile));
 		movie.setDateAdded(date);
 		movie.setDateModified(date);
 		movie.setDuration((int) mediaInfoFile.getVideoDurationMinutes());
@@ -41,12 +51,12 @@ public class MediaInfoToMovieConverter {
 		movie.setFileName(getName(file.getName())); // with or without
 													// extensions?
 		movie.setFileSize(mediaInfoFile.getFileSize());
-		movie.setGenres(MediaInfoConverterHelper.getGenres(movieInfo));
+		movie.setGenres(getGenres(movieInfo));
 		movie.setNote("");//
-		movie.setOwners(MediaInfoConverterHelper.getOwner());
+		movie.setOwners(getOwner());
 		movie.setRemux(false);
 		movie.setTmdbinfo(readTmdbData(movieInfo));
-		movie.setVideoline(MediaInfoConverterHelper.getVideoline(mediaInfoFile));
+		movie.setVideoline(getVideoline(mediaInfoFile));
 
 		return movie;
 	}
@@ -82,7 +92,7 @@ public class MediaInfoToMovieConverter {
 		tmdbinfo.setOverview(movieInfo.getOverview());
 		tmdbinfo.setRating((double) movieInfo.getUserRating());
 		// tmdbinfo.setReleasedYear(movieInfo.getReleaseDate());
-		tmdbinfo.setTagline(MediaInfoConverterHelper.getTagline(movieInfo));
+		tmdbinfo.setTagline(getTagline(movieInfo));
 		tmdbinfo.setTitle(movieInfo.getTitle());
 		tmdbinfo.setTmdbId(movieInfo.getId());
 		tmdbinfo.setCoverUrl(TmdbInfo.instance.getMovieCoverURL(movieInfo.getId()));
@@ -90,6 +100,7 @@ public class MediaInfoToMovieConverter {
 		return tmdbinfo;
 	}
 
+	@SuppressWarnings("unused")
 	private static String getVersion(String fileName) {
 
 		StringBuilder sb = new StringBuilder(fileName);
@@ -137,6 +148,7 @@ public class MediaInfoToMovieConverter {
 		return sb.substring(0, endPos);
 	}
 
+	@SuppressWarnings("unused")
 	private static int getYear(String fileName) {
 
 		StringBuilder sb = new StringBuilder(fileName);
@@ -172,6 +184,7 @@ public class MediaInfoToMovieConverter {
 		return false;
 	}
 
+	@SuppressWarnings("unused")
 	private static String getFileFormat(String fileName) {
 
 		StringBuilder sb = new StringBuilder(fileName);
@@ -194,6 +207,7 @@ public class MediaInfoToMovieConverter {
 	}
 
 	// Pfad auslesen und infos herausnehmen
+	@SuppressWarnings("unused")
 	private static String getHDD(String filePath) {
 
 		String hdd = "";
@@ -207,5 +221,92 @@ public class MediaInfoToMovieConverter {
 		}
 
 		return hdd;
+	}
+
+	private static Set<Audiolinepos> getAudiolines(MediaInfoFile inf) {
+
+		Set<Audiolinepos> lines = new HashSet<>();
+
+		for (int i = 0; i < inf.getAudioStreamCount(); i++) {
+			Audiolinepos line = new Audiolinepos();
+			line.setAudioLanguage(inf.getAudioLanguages().get(i));
+			line.setAudioFormat(inf.getAudioFormats().get(i));
+			line.setAudioBitrate(toIntExact(inf.getAudioBitratesKbps().get(i)));
+			line.setAudioChannels(getAudioChannels(inf.getAudioChannels().get(i), line.getAudioFormat()));
+			line.setDtsMod(false);
+
+			lines.add(line);
+		}
+
+		return lines;
+	}
+
+	private static String getAudioChannels(int channels, String format) {
+		if (channels == 2) {
+			return "2.0";
+		} else if (channels == 3) {
+			return "2.1";
+		} else if (channels == 6) {
+			return "5.1";
+		} else if (channels == 8) {
+			if (format.equals("Dolby Atmos") || format.equals("DTS X")) {
+				return "5.1.2";
+			} else {
+				return "7.1";
+			}
+		} else if (channels == 10) {
+			return "7.1.2";
+		} else {
+			return null;
+		}
+	}
+
+	private static Set<Genrepos> getGenres(MovieInfo movieInfo) {
+		List<Genrepos> allGenres = DBFacade.instance.getAllGenrePoses();
+		Set<Genrepos> genres = new HashSet<>();
+
+		for (int i = 0; i < movieInfo.getGenreIds().size(); i++) {
+			for (Genrepos pos : allGenres) {
+				if (movieInfo.getGenreIds().get(i).equals(pos.getId())) {
+					genres.add(pos);
+					System.out.println(pos.getType());
+				}
+			}
+		}
+
+		return genres;
+	}
+
+	private static Set<Ownerpos> getOwner() {
+		// TODO: read from some sort of property or current user
+		Set<Ownerpos> owner = new HashSet<>();
+
+		Ownerpos pos = new Ownerpos();
+		pos.setOwnerName("Ladurner");
+
+		owner.add(pos);
+
+		return owner;
+	}
+
+	public static String getTagline(MovieInfo movieInfo) {
+		if (movieInfo.getTagline() != null) {
+			return movieInfo.getTagline();
+		} else {
+			return "";
+		}
+	}
+
+	private static Videoline getVideoline(MediaInfoFile inf) {
+
+		Videoline line = new Videoline();
+		line.setAspectRatio(inf.getDisplayAspectRatio());
+		line.setResolutionHeight(inf.getVideoResolutionHeight());
+		line.setResolutionWidth(inf.getVideoResolutionWidth());
+		line.setVideoBitrate((int) inf.getVideoOverallBitrateKbps());
+		line.setVideoBitrateMode(inf.getVideoBitrateMode());
+		line.setFramerate(inf.getVideoFramerate());
+
+		return line;
 	}
 }

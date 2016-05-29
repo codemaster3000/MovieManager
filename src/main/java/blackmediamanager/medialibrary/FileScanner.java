@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
-
-import blackmediamanager.application.helpers.AppConfig;
-import blackmediamanager.medialibrary.util.StringHelper;
 
 public class FileScanner {
 
@@ -32,14 +30,17 @@ public class FileScanner {
 
 	}
 
-	public static ArrayList<String> getScannedFileList(ArrayList<String> fileNames, Path dir) throws IOException {
-		Collection<String> videoExtensions = StringHelper.stringTokenize(AppConfig.instance.EXTENSIONS_VIDEO, ",");
+	public static List<String> scanForMovieFiles(Path dir, Collection<String> videoExtensions) throws IOException {
+		return scanForMovieFilesRec(new LinkedList<>(), dir, videoExtensions);
+	}
 
+	private static List<String> scanForMovieFilesRec(List<String> fileNames, Path dir,
+			Collection<String> videoExtensions) {
 		String ext = "";
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
 			for (Path path : stream) {
 				if (path.toFile().isDirectory()) {
-					getScannedFileList(fileNames, path);
+					scanForMovieFilesRec(fileNames, path, videoExtensions);
 				} else {
 					ext = FilenameUtils.getExtension(path.getFileName().toString());
 					if (videoExtensions.contains(ext)) {

@@ -5,14 +5,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import blackmediamanager.Main;
+import blackmediamanager.application.converter.MediaInfoToMovieConverter;
+import blackmediamanager.application.helpers.AppConfig;
 import blackmediamanager.database.dao.MovieDao;
 import blackmediamanager.database.domain.Movie;
 import blackmediamanager.medialibrary.FileScanner;
-import blackmediamanager.medialibrary.MediaInfoToMovieConverter;
+import blackmediamanager.medialibrary.util.StringHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,6 +39,8 @@ import javafx.stage.DirectoryChooser;
  */
 // TODO(refactor): create ContentScannerAppController and refector application
 // logic into it
+// TODO(refactor): sysout into log
+// TODO(refactor): tasks
 public class ContentScannerController implements Initializable {
 
 	@FXML
@@ -47,17 +54,12 @@ public class ContentScannerController implements Initializable {
 	@FXML
 	ProgressBar progressScan;
 	@FXML
-	ListView listFiles;
+	ListView<String> listFiles;
 	@FXML
-	ListView listNotFound;
-
-	ArrayList<String> fileNames;
-	ArrayList<String> tmdbNotFound;
+	ListView<String> listNotFound;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		fileNames = new ArrayList<String>();
-		tmdbNotFound = new ArrayList<String>();
 		labelScanpath.setText("no scanpath selected");
 		labelScaninfo.setText("");
 		buttonScan.setDisable(true);
@@ -80,13 +82,13 @@ public class ContentScannerController implements Initializable {
 		buttonScan.setDisable(true);
 		labelScaninfo.setText("Scanning files...");
 
-		Task scanner = creatFilescanningTask();
+		Task<List<String>> fileScannerTask = createFileScannerTask();
 
 		progressScan.setProgress(0);
 		progressScan.progressProperty().unbind();
-		progressScan.progressProperty().bind(scanner.progressProperty());
+		progressScan.progressProperty().bind(fileScannerTask.progressProperty());
 
-		scanner.stateProperty().addListener(new ChangeListener<Worker.State>() {
+		fileScannerTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
 			@Override
 			public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldState,
 					Worker.State newState) {
@@ -94,20 +96,22 @@ public class ContentScannerController implements Initializable {
 					progressScan.progressProperty().unbind();
 					progressScan.setProgress(0);
 
-					listFiles.setItems(FXCollections.observableArrayList(fileNames));
+					List<String> fileNames = fileScannerTask.getValue();
+
+					listFiles.setItems(FXCollections.observableList(fileNames));
 					listFiles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 					System.out.println("filescanner task done " + fileNames.size());
-					// task done
-					addFileData();
+
+					addFileData(fileNames);
 				}
 			}
 		});
 
-		new Thread(scanner).start();
+		new Thread(fileScannerTask).start();
 	}
 
-	public void addFileData() {
-		Task adddata = createAddFilesToDatabaseTask();
+	public void addFileData(Collection<String> fileNames) {
+		Task<List<String>> adddata = createAddFilesToDatabaseTask(fileNames);
 
 		labelScaninfo.setText("Extract data and add files to database...");
 		progressScan.setProgress(0);
@@ -121,13 +125,10 @@ public class ContentScannerController implements Initializable {
 				if (newState == Worker.State.SUCCEEDED) {
 					labelScaninfo.setText("Scan done [added files]: " + fileNames.size());
 					buttonScan.setDisable(false);
-					// progressScan.progressProperty().unbind();
-					// progressScan.setProgress(0);
 
-					listNotFound.setItems(FXCollections.observableArrayList(tmdbNotFound));
+					listNotFound.setItems(FXCollections.observableArrayList(adddata.getValue()));
 					listNotFound.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 					System.out.println("adding files to database done " + fileNames.size());
-					// task done
 				}
 			}
 		});
@@ -135,23 +136,26 @@ public class ContentScannerController implements Initializable {
 		new Thread(adddata).start();
 	}
 
-	public Task creatFilescanningTask() {
-		return new Task() {
+	public Task<List<String>> createFileScannerTask() {
+		return new Task<List<String>>() {
 			@Override
-			protected Object call() throws Exception {
+			protected List<String> call() throws Exception {
 				Path dir = Paths.get(labelScanpath.getText());
-				fileNames = FileScanner.getScannedFileList(fileNames, dir);
-				return true;
+				return scanDirectory(dir, StringHelper.stringTokenize(AppConfig.instance.EXTENSIONS_VIDEO, ","));
 			}
 		};
 	}
 
-	public Task createAddFilesToDatabaseTask() {
-		return new Task() {
-			@Override
-			protected Object call() throws Exception {
-				MovieDao movieDao = new MovieDao();
+	private List<String> scanDirectory(Path dir, Set<String> extensions) throws IOException {
+		return FileScanner.scanForMovieFiles(dir, extensions);
+	}
 
+	public Task<List<String>> createAddFilesToDatabaseTask(Collection<String> fileNames) {
+		return new Task<List<String>>() {
+			@Override
+			protected List<String> call() throws Exception {
+				MovieDao movieDao = new MovieDao();
+				List<String> tmdbNotFound = new LinkedList<>();
 				if (fileNames.size() > 0) {
 					int i = 0;
 					for (String filename : fileNames) {
@@ -169,7 +173,7 @@ public class ContentScannerController implements Initializable {
 					}
 				}
 
-				return true;
+				return tmdbNotFound;
 			}
 		};
 	}

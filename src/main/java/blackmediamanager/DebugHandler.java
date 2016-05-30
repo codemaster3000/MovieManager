@@ -7,12 +7,12 @@ import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
 
-import blackmediamanager.medialibrary.mediainfo.MediaInfoFile;
-import blackmediamanager.medialibrary.tmdbinfo.TmdbInfo;
-import blackmediamanager.medialibrary.util.StringHelper;
-import blackmediamanager.medialibrary.xrelinfo.XRelInfo;
-import blackmediamanager.medialibrary.xrelinfo.jsondata.latest.XRlatest;
-import blackmediamanager.medialibrary.xrelinfo.jsondata.result.XRresults;
+import blackmediamanager.mediascanner.util.StringHelper;
+import blackmediamanager.scrapers.mediainfo.MediaInfoFile;
+import blackmediamanager.scrapers.tmdbinfo.TmdbInfo;
+import blackmediamanager.scrapers.xrelinfo.XRelInfo;
+import blackmediamanager.scrapers.xrelinfo.jsondata.latest.XRlatest;
+import blackmediamanager.scrapers.xrelinfo.jsondata.result.XRresults;
 import blackmediamanager.util.ResourcePathResolver;
 
 /**

@@ -5,7 +5,11 @@ import java.util.List;
 
 import com.omertron.themoviedbapi.MovieDbException;
 
-import blackmediamanager.medialibrary.tmdbinfo.TmdbInfo;
+import blackmediamanager.application.setup.task.LoadTask;
+import blackmediamanager.application.setup.task.TaskDatabaseLoad;
+import blackmediamanager.application.setup.task.TaskSleep;
+import blackmediamanager.application.setup.task.TaskXRel;
+import blackmediamanager.scrapers.tmdbinfo.TmdbInfo;
 import blackmediamanager.util.ResourcePathResolver;
 
 public class ApplicationSetup {

@@ -3,7 +3,7 @@ package blackmediamanager.gui.popup.splashscreen;
 import java.io.IOException;
 
 import blackmediamanager.application.setup.LoadStateCallbackHandler;
-import blackmediamanager.application.setup.LoadTask;
+import blackmediamanager.application.setup.task.LoadTask;
 import blackmediamanager.gui.util.GuiServiceRegistry;
 import blackmediamanager.util.ApplicationServices;
 import javafx.application.Platform;

@@ -8,10 +8,10 @@ import java.util.Set;
 
 import com.omertron.themoviedbapi.MovieDbException;
 
-import blackmediamanager.application.converter.MediaInfoToMovieConverter;
+import blackmediamanager.application.converter.MovieReader;
 import blackmediamanager.database.dao.MovieDao;
 import blackmediamanager.database.domain.Movie;
-import blackmediamanager.medialibrary.FileScanner;
+import blackmediamanager.mediascanner.FileScanner;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -43,7 +43,7 @@ public class ContentScannerAppController {
 			for (String filename : _scannedFiles) {
 				File file = new File(filename);
 
-				Movie foundMovie = MediaInfoToMovieConverter.convert(file);
+				Movie foundMovie = MovieReader.convert(file);
 
 				if (foundMovie == null) {
 					_tmdbNotFoundFiles.add(file.getName());

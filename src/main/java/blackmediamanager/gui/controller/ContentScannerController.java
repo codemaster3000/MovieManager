@@ -11,7 +11,7 @@ import blackmediamanager.Main;
 import blackmediamanager.application.controller.ContentScannerAppController;
 import blackmediamanager.application.controller.ContentScannerAppController.UpdateProgressCallback;
 import blackmediamanager.application.helpers.AppConfig;
-import blackmediamanager.medialibrary.util.StringHelper;
+import blackmediamanager.mediascanner.util.StringHelper;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.value.ChangeListener;

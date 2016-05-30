@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import blackmediamanager.application.controller.ContentReleaseAppController;
-import blackmediamanager.medialibrary.xrelinfo.jsondata.latest.XRlatest;
+import blackmediamanager.scrapers.xrelinfo.jsondata.latest.XRlatest;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;

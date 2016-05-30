@@ -1,7 +1,7 @@
 package blackmediamanager.application.controller;
 
-import blackmediamanager.medialibrary.xrelinfo.XRelDataHandler;
-import blackmediamanager.medialibrary.xrelinfo.jsondata.latest.XRlatest;
+import blackmediamanager.scrapers.xrelinfo.XRelDataHandler;
+import blackmediamanager.scrapers.xrelinfo.jsondata.latest.XRlatest;
 
 public class ContentReleaseAppController {
 

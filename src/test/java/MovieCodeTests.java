@@ -1,7 +1,7 @@
 import com.omertron.themoviedbapi.MovieDbException;
 
 import blackmediamanager.application.helpers.AppConfig;
-import blackmediamanager.medialibrary.tmdbinfo.TmdbInfo;
+import blackmediamanager.scrapers.tmdbinfo.TmdbInfo;
 
 import static org.junit.Assert.assertNotNull;
 

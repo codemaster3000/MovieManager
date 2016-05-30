@@ -68,7 +68,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <HBox id="background" fx:id="hboxMovieContent" prefHeight="736.0" prefWidth="800.0">
+      <HBox id="background" fx:id="hboxMovieContent" prefHeight="736.0" prefWidth="800.0" visible="false">
          <children>
             <VBox prefHeight="726.0" prefWidth="385.0" HBox.hgrow="ALWAYS">
                <children>
@@ -137,14 +137,14 @@
                               <RowConstraints maxHeight="70.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label id="h3" text="Informationen" />
+                              <Label id="h3" text="Information" />
                               <Label text="TMDB-ID:" GridPane.rowIndex="1" />
-                              <Label text="Filmtitel:" GridPane.rowIndex="2" />
-                              <Label text="Jahr:" GridPane.rowIndex="3" />
+                              <Label text="Movie Title:" GridPane.rowIndex="2" />
+                              <Label text="Year:" GridPane.rowIndex="3" />
                               <Label styleClass="labelHeadline1" text="Rating:" GridPane.rowIndex="6" />
                               <Label styleClass="labelHeadline1" text="Edition::" GridPane.rowIndex="7" />
                               <Label styleClass="labelHeadline1" text="Remux:" GridPane.rowIndex="8" />
-                              <Label styleClass="labelHeadline1" text="Notiz:" GridPane.rowIndex="9" GridPane.valignment="TOP" />
+                              <Label styleClass="labelHeadline1" text="Notice:" GridPane.rowIndex="9" GridPane.valignment="TOP" />
                               <Label fx:id="labelMovieTitel" styleClass="labelText1" text="Mad Max" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label fx:id="labelYear" styleClass="labelText1" text="2015" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label fx:id="labelRating" styleClass="labelText1" text="7.6" GridPane.columnIndex="1" GridPane.rowIndex="6" />
@@ -156,7 +156,7 @@
                                  </GridPane.margin>
                               </TextArea>
                               <Label fx:id="labelTMDBid" styleClass="labelText1" text="236548" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label styleClass="labelHeadline1" text="Dauer:" GridPane.rowIndex="4" />
+                              <Label styleClass="labelHeadline1" text="Duration:" GridPane.rowIndex="4" />
                               <Label fx:id="labelDuration" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Label styleClass="labelHeadline1" text="Genre:" GridPane.rowIndex="5" />
                               <Label fx:id="labelGenre" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="5" />
@@ -182,11 +182,11 @@
                               <RowConstraints maxHeight="24.0" minHeight="24.0" prefHeight="24.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label id="h3" styleClass="labelMovieTagline" text="Datei" />
-                              <Label styleClass="labelHeadline1" text="Dateiname:" GridPane.rowIndex="1" />
-                              <Label styleClass="labelHeadline1" text="Dateigröße" GridPane.rowIndex="2" />
-                              <Label styleClass="labelHeadline1" text="Format:" GridPane.rowIndex="3" />
-                              <Label styleClass="labelHeadline1" text="Besitzer:" GridPane.rowIndex="4" />
+                              <Label id="h3" styleClass="labelMovieTagline" text="File" />
+                              <Label styleClass="labelHeadline1" text="File name:" GridPane.rowIndex="1" />
+                              <Label styleClass="labelHeadline1" text="File size:" GridPane.rowIndex="2" />
+                              <Label styleClass="labelHeadline1" text="file format:" GridPane.rowIndex="3" />
+                              <Label styleClass="labelHeadline1" text="Owner(s):" GridPane.rowIndex="4" />
                               <Label fx:id="labelFileName" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label fx:id="labelFileSize" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label fx:id="labelFormat" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -215,10 +215,10 @@
                            </rowConstraints>
                            <children>
                               <Label styleClass="labelHeadline1" text="Bitrate:" GridPane.rowIndex="1" />
-                              <Label id="h3" styleClass="labelMovieTagline" text="Videospur" />
-                              <Label styleClass="labelHeadline1" text="Modus:" GridPane.rowIndex="2" />
-                              <Label styleClass="labelHeadline1" text="Auflösung:" GridPane.rowIndex="4" />
-                              <Label styleClass="labelHeadline1" text="Seitenverhältnis:" GridPane.rowIndex="3" />
+                              <Label id="h3" styleClass="labelMovieTagline" text="Videoline" />
+                              <Label styleClass="labelHeadline1" text="Mode::" GridPane.rowIndex="2" />
+                              <Label styleClass="labelHeadline1" text="Resolution:" GridPane.rowIndex="4" />
+                              <Label styleClass="labelHeadline1" text="Aspect ratio:" GridPane.rowIndex="3" />
                               <Label styleClass="labelHeadline1" text="Frame-Rate:" GridPane.rowIndex="5" />
                               <Label fx:id="labelBitrate" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label fx:id="labelMode" styleClass="labelText1" text="123 min" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -241,13 +241,13 @@
                               <RowConstraints maxHeight="120.0" minHeight="120.0" prefHeight="120.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label id="h3" styleClass="labelMovieTagline" text="Audiospur" />
+                              <Label id="h3" styleClass="labelMovieTagline" text="Audioline" />
                               <TableView id="tablelist" fx:id="tableAudioLine" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                  <columns>
-                                    <TableColumn fx:id="tableColumnAudioLineLanguage" prefWidth="117.0" text="Sprache" />
+                                    <TableColumn fx:id="tableColumnAudioLineLanguage" prefWidth="117.0" text="Language" />
                                     <TableColumn fx:id="tableColumnAudioLineFormat" prefWidth="83.0" text="Format" />
-                                    <TableColumn fx:id="tableColumnAudioLineBitrate" prefWidth="85.0" text="Bitrate" />
-                                    <TableColumn fx:id="tableColumnAudioLineChannels" prefWidth="63.0" text="Kanäle" />
+                                    <TableColumn fx:id="tableColumnAudioLineBitrate" prefWidth="76.0" text="Bitrate" />
+                                    <TableColumn fx:id="tableColumnAudioLineChannels" prefWidth="72.0" text="Channels" />
                                     <TableColumn fx:id="tableColumnAudioLineDTSMod" prefWidth="87.0" text="DTS-Mod" />
                                  </columns>
                               </TableView>

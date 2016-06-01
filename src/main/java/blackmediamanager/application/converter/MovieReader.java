@@ -27,7 +27,7 @@ import blackmediamanager.scrapers.mediainfo.MediaInfoFile;
 import blackmediamanager.scrapers.tmdbinfo.TmdbInfo;
 
 public class MovieReader {
-	public static Movie convert(File file) throws MovieDbException, IOException {
+	public static Movie read(File file) throws MovieDbException, IOException {
 
 		MediaInfoFile mediaInfoFile = new MediaInfoFile(file);
 		MovieInfo movieInfo = readMovieInfo(file);

@@ -43,7 +43,7 @@ public class ContentScannerAppController {
 			for (String filename : _scannedFiles) {
 				File file = new File(filename);
 
-				Movie foundMovie = MovieReader.convert(file);
+				Movie foundMovie = MovieReader.read(file);
 
 				if (foundMovie == null) {
 					_tmdbNotFoundFiles.add(file.getName());

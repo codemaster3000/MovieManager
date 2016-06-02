@@ -2,7 +2,6 @@ package blackmediamanager.application.setup;
 
 import blackmediamanager.application.setup.task.LoadTask;
 
-public interface LoadStateCallbackHandler {
-	void loadTaskFinished(LoadTask loadTask, double percent);
+public interface StartNextLoadTaskCallback {
+	void invoke(LoadTask nextTask);
 }
-

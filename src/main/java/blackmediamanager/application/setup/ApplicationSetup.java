@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.omertron.themoviedbapi.MovieDbException;
 
+import blackmediamanager.application.setup.task.DebugHandleLoadTask;
 import blackmediamanager.application.setup.task.LoadTask;
 import blackmediamanager.application.setup.task.TaskDatabaseLoad;
 import blackmediamanager.application.setup.task.TaskXRel;
@@ -28,7 +29,7 @@ public class ApplicationSetup {
 			// initialize load tasks
 			_loadTasks.add(new TaskDatabaseLoad());
 			_loadTasks.add(new TaskXRel());
-			// _loadTasks.add(new TaskSleep());
+			_loadTasks.add(new DebugHandleLoadTask());
 
 			// initialize dependencies
 			ClassLoader classLoader = ResourcePathResolver.class.getClassLoader();
@@ -46,27 +47,24 @@ public class ApplicationSetup {
 		}
 	}
 
-	public void load(LoadStateCallbackHandler loadStateCallback, LoadFinishedCallbackHandler loadFinishedCallback) {
+	public void load(StartNextLoadTaskCallback startedNextLoadTaskCallback,
+			LoadFinishedCallbackHandler loadFinishedCallback) {
 		if (_applicationState == ApplicationState.Initialized) {
 			Thread loadThread = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					int loadTaskExecutedCount = 0;
 					for (LoadTask currentLoadTask : _loadTasks) {
+						startedNextLoadTaskCallback.invoke(currentLoadTask);
+
 						try {
 							currentLoadTask.run();
 						} catch (Exception e) {
 							// TODO(logging)
 							e.printStackTrace();
 						}
-						++loadTaskExecutedCount;
-
-						double percentageLoaded = (1.0 / _loadTasks.size()) * loadTaskExecutedCount;
-
-						loadStateCallback.loadTaskFinished(currentLoadTask, percentageLoaded);
 					}
 
-					loadFinishedCallback.allLoadTaskFinished();
+					loadFinishedCallback.invoke();
 
 					_applicationState = ApplicationState.Loaded;
 				}

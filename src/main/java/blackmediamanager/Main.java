@@ -31,14 +31,13 @@ public class Main extends Application {
 
 		ApplicationSetup.instance.load(splashScreen, new LoadFinishedCallbackHandler() {
 			@Override
-			public void allLoadTaskFinished() {
+			public void invoke() {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
 						try {
-							showMainWindow(_primaryStage);
 							splashScreen.close();
-							// DebugHandler.show();
+							showMainWindow(_primaryStage);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

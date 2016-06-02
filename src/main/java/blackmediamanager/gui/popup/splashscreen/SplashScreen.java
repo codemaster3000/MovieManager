@@ -2,7 +2,7 @@ package blackmediamanager.gui.popup.splashscreen;
 
 import java.io.IOException;
 
-import blackmediamanager.application.setup.LoadStateCallbackHandler;
+import blackmediamanager.application.setup.StartNextLoadTaskCallback;
 import blackmediamanager.application.setup.task.LoadTask;
 import blackmediamanager.gui.util.GuiServiceRegistry;
 import blackmediamanager.util.ApplicationServices;
@@ -24,7 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class SplashScreen implements LoadStateCallbackHandler {
+public class SplashScreen implements StartNextLoadTaskCallback {
 	@FXML
 	private Label currentlyLoadingLable;
 	@FXML
@@ -42,17 +42,6 @@ public class SplashScreen implements LoadStateCallbackHandler {
 	private Stage _stage;
 	private String _styleFileName;
 
-	@Override
-	public void loadTaskFinished(LoadTask loadTask, double percent) {
-		Platform.runLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				currentlyLoadingLable.setText(loadTask.getTaskId());
-			}
-		});
-	}
-
 	public SplashScreen(String styleFileName) {
 		_stage = new Stage();
 		_styleFileName = styleFileName;
@@ -66,7 +55,7 @@ public class SplashScreen implements LoadStateCallbackHandler {
 		_stage = new Stage(StageStyle.UNDECORATED);
 		_stage.setScene(scene);
 		_stage.centerOnScreen();
-		
+
 		setupStyle();
 		_stage.show();
 	}
@@ -83,4 +72,16 @@ public class SplashScreen implements LoadStateCallbackHandler {
 	public void close() {
 		_stage.close();
 	}
+
+	@Override
+	public void invoke(LoadTask nextTask) {
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				currentlyLoadingLable.setText(nextTask.getTaskId());
+			}
+		});
+	}
+
 }

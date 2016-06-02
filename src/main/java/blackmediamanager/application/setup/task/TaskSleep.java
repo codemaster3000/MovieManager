@@ -11,12 +11,12 @@ public class TaskSleep extends LoadTask {
 
 	@Override
 	public void run() {
-            try {
-                System.out.println("Setup: Sleep 3 seconds");
-                Thread.sleep(3000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(TaskSleep.class.getName()).log(Level.SEVERE, null, ex);
-            }
+		try {
+			System.out.println("Setup: Sleep 3 seconds");
+			Thread.sleep(3000);
+		} catch (InterruptedException ex) {
+			Logger.getLogger(TaskSleep.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 }

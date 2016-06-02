@@ -1,5 +1,7 @@
 package blackmediamanager.application.setup.task;
 
+import blackmediamanager.database.persistance.DBFacade;
+
 public class TaskDatabaseLoad extends LoadTask {
 
 	public TaskDatabaseLoad() {
@@ -8,7 +10,7 @@ public class TaskDatabaseLoad extends LoadTask {
 
 	@Override
 	public void run() {
-		// replace with actual action
+		DBFacade.instance.load();
 	}
 
 }

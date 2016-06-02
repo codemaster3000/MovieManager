@@ -19,6 +19,10 @@ public class DBFacade {
 
 	}
 
+	public void load() {
+		Session session = DBSession.getInstance();
+	}
+
 	// gibt nur die aktiven zurück, inaktive und doppelte werden nicht
 	// zurückgegeben
 	public List<Movie> getAllMovies() {

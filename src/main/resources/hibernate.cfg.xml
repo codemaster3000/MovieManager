@@ -18,9 +18,9 @@
     <mapping resource="blackmediamanager/database/domain/Movie.hbm.xml"/>
     <mapping resource="blackmediamanager/database/domain/TvshowHasGenre.hbm.xml"/>
     <mapping resource="blackmediamanager/database/domain/MovieHasOwner.hbm.xml"/>
-    <mapping resource="blackmediamanager/database/domain/Genre.hbm.xml"/>
     <mapping resource="blackmediamanager/database/domain/Tmdbinfo.hbm.xml"/>
     <mapping resource="blackmediamanager/database/domain/Tvshow.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/Genre.hbm.xml"/>
     <mapping resource="blackmediamanager/database/domain/MovieCollection.hbm.xml"/>
     <mapping resource="blackmediamanager/database/domain/Owner.hbm.xml"/>
     <mapping resource="blackmediamanager/database/domain/Videoline.hbm.xml"/>

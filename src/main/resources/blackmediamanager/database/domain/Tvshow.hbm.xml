@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 03.06.2016 20:33:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="blackmediamanager.database.domain.Tvshow" table="tvshow" catalog="moviedb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="active" type="java.lang.Byte">
+            <column name="active" />
+        </property>
+        <property name="dateAdded" type="timestamp">
+            <column name="dateAdded" length="19" />
+        </property>
+        <property name="dateModified" type="timestamp">
+            <column name="dateModified" length="19" />
+        </property>
+        <set name="tvshowHasGenres" table="tvshow_has_genre" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tvshow_id" not-null="true" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.TvshowHasGenre" />
+        </set>
+        <set name="tvshowHasSeasons" table="tvshow_has_season" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sitcom_id" not-null="true" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.TvshowHasSeason" />
+        </set>
+    </class>
+</hibernate-mapping>

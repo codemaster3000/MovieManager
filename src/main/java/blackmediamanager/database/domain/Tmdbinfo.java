@@ -1,5 +1,5 @@
 package blackmediamanager.database.domain;
-// Generated 03.06.2016 19:51:40 by Hibernate Tools 4.3.1
+// Generated 03.06.2016 20:33:52 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;

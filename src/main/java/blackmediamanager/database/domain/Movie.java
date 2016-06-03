@@ -1,5 +1,5 @@
 package blackmediamanager.database.domain;
-// Generated 03.06.2016 19:51:40 by Hibernate Tools 4.3.1
+// Generated 03.06.2016 20:33:52 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -24,15 +24,15 @@ public class Movie  implements java.io.Serializable {
      private String fileFormat;
      private Date dateAdded;
      private Date dateModified;
-     private Set<Edition> movieHasEditions = new HashSet(0);
-     private Set<Genre> movieHasGenres = new HashSet(0);
-     private Set<Owner> movieHasOwners = new HashSet(0);
-     private Set<Audioline> movieHasAudiolines = new HashSet(0);
+     private Set movieHasEditions = new HashSet(0);
+     private Set movieHasGenres = new HashSet(0);
+     private Set movieHasOwners = new HashSet(0);
+     private Set movieHasAudiolines = new HashSet(0);
 
     public Movie() {
     }
 
-    public Movie(MovieCollection movieCollection, Tmdbinfo tmdbinfo, Videoline videoline, Byte active, String note, Boolean remux, String fileName, Double fileSize, String fileFormat, Date dateAdded, Date dateModified, Set<Edition> movieHasEditions, Set<Genre> movieHasGenres, Set<Owner> movieHasOwners, Set<Audioline> movieHasAudiolines) {
+    public Movie(MovieCollection movieCollection, Tmdbinfo tmdbinfo, Videoline videoline, Byte active, String note, Boolean remux, String fileName, Double fileSize, String fileFormat, Date dateAdded, Date dateModified, Set movieHasEditions, Set movieHasGenres, Set movieHasOwners, Set movieHasAudiolines) {
        this.movieCollection = movieCollection;
        this.tmdbinfo = tmdbinfo;
        this.videoline = videoline;
@@ -134,28 +134,28 @@ public class Movie  implements java.io.Serializable {
     public void setDateModified(Date dateModified) {
         this.dateModified = dateModified;
     }
-    public Set<Edition> getMovieHasEditions() {
+    public Set getMovieHasEditions() {
         return this.movieHasEditions;
     }
     
     public void setMovieHasEditions(Set movieHasEditions) {
         this.movieHasEditions = movieHasEditions;
     }
-    public Set<Genre> getMovieHasGenres() {
+    public Set getMovieHasGenres() {
         return this.movieHasGenres;
     }
     
     public void setMovieHasGenres(Set movieHasGenres) {
         this.movieHasGenres = movieHasGenres;
     }
-    public Set<Owner> getMovieHasOwners() {
+    public Set getMovieHasOwners() {
         return this.movieHasOwners;
     }
     
     public void setMovieHasOwners(Set movieHasOwners) {
         this.movieHasOwners = movieHasOwners;
     }
-    public Set<Audioline> getMovieHasAudiolines() {
+    public Set getMovieHasAudiolines() {
         return this.movieHasAudiolines;
     }
     

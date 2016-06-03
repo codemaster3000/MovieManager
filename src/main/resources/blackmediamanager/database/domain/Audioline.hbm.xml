@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 03.06.2016 20:33:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="blackmediamanager.database.domain.Audioline" table="audioline" catalog="moviedb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="audioLanguage" type="string">
+            <column name="audioLanguage" length="45" />
+        </property>
+        <property name="audioBitrate" type="java.lang.Integer">
+            <column name="audioBitrate" />
+        </property>
+        <property name="audioFormat" type="string">
+            <column name="audioFormat" length="45" />
+        </property>
+        <property name="audioChannels" type="string">
+            <column name="audioChannels" length="45" />
+        </property>
+        <property name="dtsMod" type="java.lang.Boolean">
+            <column name="dtsMod" />
+        </property>
+        <set name="seasonHasAudiolines" table="season_has_audioline" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="audioLine_id" not-null="true" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.SeasonHasAudioline" />
+        </set>
+        <set name="movieHasAudiolines" table="movie_has_audioline" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="audioLine_id" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.MovieHasAudioline" />
+        </set>
+    </class>
+</hibernate-mapping>

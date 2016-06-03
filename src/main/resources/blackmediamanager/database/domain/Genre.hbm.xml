@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 03.06.2016 20:33:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="blackmediamanager.database.domain.Genre" table="genre" catalog="moviedb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="type" type="string">
+            <column name="type" />
+        </property>
+        <set name="tvshowHasGenres" table="tvshow_has_genre" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="genre_id" not-null="true" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.TvshowHasGenre" />
+        </set>
+        <set name="movieHasGenres" table="movie_has_genre" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="genre_id" not-null="true" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.MovieHasGenre" />
+        </set>
+    </class>
+</hibernate-mapping>

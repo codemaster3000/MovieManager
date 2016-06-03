@@ -56,7 +56,7 @@ public class StatisticsCalculator {
 		}
 		for (int i = 0; i < count; i++) {
 			top10List.add(
-					(i + 1) + ".\t" + movies.get(i).getTmdbinfo().getTitle() + " (" + movies.get(i).getYear() + ")");
+					(i + 1) + ".\t" + movies.get(i).getTmdbinfo().getTitle() + " (" + movies.get(i).getTmdbinfo().getReleaseDate() + ")");
 		}
 		return FXCollections.observableArrayList(top10List);
 	}

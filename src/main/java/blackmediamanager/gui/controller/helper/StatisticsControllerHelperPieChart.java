@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import blackmediamanager.database.domain.Genre;
-import blackmediamanager.database.domain.Genrepos;
 import blackmediamanager.database.domain.Movie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +23,7 @@ public class StatisticsControllerHelperPieChart {
 	public StatisticsControllerHelperPieChart() {
 	}
 
-	public ObservableList<PieChart.Data> createPieChartMovieGenres(List<Movie> movies, List<Genrepos> genres) {
+	public ObservableList<PieChart.Data> createPieChartMovieGenres(List<Movie> movies, List<Genre> genres) {
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 		for (int i = 0; i < genres.size(); i++) {
 			String genre = genres.get(i).getType();
@@ -40,9 +39,9 @@ public class StatisticsControllerHelperPieChart {
 	private int calcGenresFromAllMovies(String genre, List<Movie> movies) {
 		int counter = 0;
 		for (int i = 0; i < movies.size(); i++) {
-			Set<Genre> set = movies.get(i).getGenres();
+			Set<Genre> set = movies.get(i).getMovieHasGenres();
 			for (Genre g : set) {
-				if (g.getGenrepos().getType().equals(genre)) {
+				if (g.getType().equals(genre)) {
 					counter++;
 				}
 			}
@@ -55,7 +54,7 @@ public class StatisticsControllerHelperPieChart {
 		// Count all
 		int counter = 0;
 		for (int i = 0; i < movies.size(); i++) {
-			Set<Genre> set = movies.get(i).getGenres();
+			Set<Genre> set = movies.get(i).getMovieHasGenres();
 			for (Genre g : set) {
 				counter++;
 			}

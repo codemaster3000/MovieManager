@@ -1,5 +1,5 @@
 package blackmediamanager.database.domain;
-// Generated 23.05.2016 22:31:28 by Hibernate Tools 4.3.1
+// Generated 03.06.2016 19:51:40 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,11 +12,12 @@ import java.util.Set;
 public class Tmdbinfo  implements java.io.Serializable {
 
 
-     private Integer id;
      private Integer tmdbId;
      private String title;
-     private Date releasedDate;
+     private String orginalTitel;
+     private Date releaseDate;
      private Double rating;
+     private Integer duration;
      private String overview;
      private String tagline;
      private String coverUrl;
@@ -25,24 +26,18 @@ public class Tmdbinfo  implements java.io.Serializable {
     public Tmdbinfo() {
     }
 
-    public Tmdbinfo(Integer tmdbId, String title, Date releasedDate, Double rating, String overview, String tagline, String coverUrl, Set movies) {
-       this.tmdbId = tmdbId;
+    public Tmdbinfo(String title, String orginalTitel, Date releaseDate, Double rating, Integer duration, String overview, String tagline, String coverUrl, Set movies) {
        this.title = title;
-       this.releasedDate = releasedDate;
+       this.orginalTitel = orginalTitel;
+       this.releaseDate = releaseDate;
        this.rating = rating;
+       this.duration = duration;
        this.overview = overview;
        this.tagline = tagline;
        this.coverUrl = coverUrl;
        this.movies = movies;
     }
    
-    public Integer getId() {
-        return this.id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
     public Integer getTmdbId() {
         return this.tmdbId;
     }
@@ -57,12 +52,19 @@ public class Tmdbinfo  implements java.io.Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    public Date getReleasedDate() {
-        return this.releasedDate;
+    public String getOrginalTitel() {
+        return this.orginalTitel;
     }
     
-    public void setReleasedDate(Date releasedDate) {
-        this.releasedDate = releasedDate;
+    public void setOrginalTitel(String orginalTitel) {
+        this.orginalTitel = orginalTitel;
+    }
+    public Date getReleaseDate() {
+        return this.releaseDate;
+    }
+    
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
     public Double getRating() {
         return this.rating;
@@ -70,6 +72,13 @@ public class Tmdbinfo  implements java.io.Serializable {
     
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+    public Integer getDuration() {
+        return this.duration;
+    }
+    
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
     public String getOverview() {
         return this.overview;

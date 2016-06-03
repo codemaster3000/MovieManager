@@ -7,13 +7,13 @@ import blackmediamanager.database.domain.Owner;
 
 public class CollectionConverter {
 
-	public static String getGenresToString(Collection<Genre> genres) {
+	public static String getGenresToString(Collection<Genre> genres) {    
 		StringBuilder sb = new StringBuilder();
 		int counter = 1;
 		int genreCount = genres.size();
 
 		for (Genre g : genres) {
-			sb.append(g.getGenrepos().getType());
+			sb.append(g.getType());
 			if (genreCount > counter) {
 				sb.append(", ");
 			}
@@ -28,7 +28,7 @@ public class CollectionConverter {
 		int ownersCount = owners.size();
 
 		for (Owner o : owners) {
-			sb.append(o.getOwnerpos().getOwnerName());
+			sb.append(o.getOwnerName());
 			if (ownersCount > counter) {
 				sb.append(", ");
 			}

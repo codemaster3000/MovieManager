@@ -1,5 +1,5 @@
 package blackmediamanager.database.domain;
-// Generated 23.05.2016 22:31:28 by Hibernate Tools 4.3.1
+// Generated 03.06.2016 19:51:40 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,58 +12,57 @@ import java.util.Set;
 public class Movie  implements java.io.Serializable {
 
 
-     private int id;
+     private Integer id;
+     private MovieCollection movieCollection;
      private Tmdbinfo tmdbinfo;
      private Videoline videoline;
      private Byte active;
      private String note;
      private Boolean remux;
-     private String edition;
-     private Integer duration;
      private String fileName;
-     private Integer year;
      private Double fileSize;
      private String fileFormat;
      private Date dateAdded;
      private Date dateModified;
-     private Set<Genre> genres = new HashSet(0);
-     private Set<Audioline> audiolines = new HashSet(0);
-     private Set<Owner> owners = new HashSet(0);
+     private Set<Edition> movieHasEditions = new HashSet(0);
+     private Set<Genre> movieHasGenres = new HashSet(0);
+     private Set<Owner> movieHasOwners = new HashSet(0);
+     private Set<Audioline> movieHasAudiolines = new HashSet(0);
 
     public Movie() {
     }
 
-	
-    public Movie(int id, Date dateModified) {
-        this.id = id;
-        this.dateModified = dateModified;
-    }
-    public Movie(int id, Tmdbinfo tmdbinfo, Videoline videoline, Byte active, String note, Boolean remux, String edition, Integer duration, String fileName, Integer year, Double fileSize, String fileFormat, Date dateAdded, Date dateModified, Set genres, Set audiolines, Set owners) {
-       this.id = id;
+    public Movie(MovieCollection movieCollection, Tmdbinfo tmdbinfo, Videoline videoline, Byte active, String note, Boolean remux, String fileName, Double fileSize, String fileFormat, Date dateAdded, Date dateModified, Set<Edition> movieHasEditions, Set<Genre> movieHasGenres, Set<Owner> movieHasOwners, Set<Audioline> movieHasAudiolines) {
+       this.movieCollection = movieCollection;
        this.tmdbinfo = tmdbinfo;
        this.videoline = videoline;
        this.active = active;
        this.note = note;
        this.remux = remux;
-       this.edition = edition;
-       this.duration = duration;
        this.fileName = fileName;
-       this.year = year;
        this.fileSize = fileSize;
        this.fileFormat = fileFormat;
        this.dateAdded = dateAdded;
        this.dateModified = dateModified;
-       this.genres = genres;
-       this.audiolines = audiolines;
-       this.owners = owners;
+       this.movieHasEditions = movieHasEditions;
+       this.movieHasGenres = movieHasGenres;
+       this.movieHasOwners = movieHasOwners;
+       this.movieHasAudiolines = movieHasAudiolines;
     }
    
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+    public MovieCollection getMovieCollection() {
+        return this.movieCollection;
+    }
+    
+    public void setMovieCollection(MovieCollection movieCollection) {
+        this.movieCollection = movieCollection;
     }
     public Tmdbinfo getTmdbinfo() {
         return this.tmdbinfo;
@@ -100,33 +99,12 @@ public class Movie  implements java.io.Serializable {
     public void setRemux(Boolean remux) {
         this.remux = remux;
     }
-    public String getEdition() {
-        return this.edition;
-    }
-    
-    public void setEdition(String edition) {
-        this.edition = edition;
-    }
-    public Integer getDuration() {
-        return this.duration;
-    }
-    
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
     public String getFileName() {
         return this.fileName;
     }
     
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-    public Integer getYear() {
-        return this.year;
-    }
-    
-    public void setYear(Integer year) {
-        this.year = year;
     }
     public Double getFileSize() {
         return this.fileSize;
@@ -156,26 +134,33 @@ public class Movie  implements java.io.Serializable {
     public void setDateModified(Date dateModified) {
         this.dateModified = dateModified;
     }
-    public Set<Genre> getGenres() {
-        return this.genres;
+    public Set<Edition> getMovieHasEditions() {
+        return this.movieHasEditions;
     }
     
-    public void setGenres(Set genres) {
-        this.genres = genres;
+    public void setMovieHasEditions(Set movieHasEditions) {
+        this.movieHasEditions = movieHasEditions;
     }
-    public Set<Audioline> getAudiolines() {
-        return this.audiolines;
-    }
-    
-    public void setAudiolines(Set audiolines) {
-        this.audiolines = audiolines;
-    }
-    public Set<Owner> getOwners() {
-        return this.owners;
+    public Set<Genre> getMovieHasGenres() {
+        return this.movieHasGenres;
     }
     
-    public void setOwners(Set owners) {
-        this.owners = owners;
+    public void setMovieHasGenres(Set movieHasGenres) {
+        this.movieHasGenres = movieHasGenres;
+    }
+    public Set<Owner> getMovieHasOwners() {
+        return this.movieHasOwners;
+    }
+    
+    public void setMovieHasOwners(Set movieHasOwners) {
+        this.movieHasOwners = movieHasOwners;
+    }
+    public Set<Audioline> getMovieHasAudiolines() {
+        return this.movieHasAudiolines;
+    }
+    
+    public void setMovieHasAudiolines(Set movieHasAudiolines) {
+        this.movieHasAudiolines = movieHasAudiolines;
     }
 
 

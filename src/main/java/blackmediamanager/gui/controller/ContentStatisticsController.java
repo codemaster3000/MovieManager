@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import blackmediamanager.application.controller.StatisticsCalculator;
 import blackmediamanager.database.dao.DataHandler;
-import blackmediamanager.database.domain.Genrepos;
+import blackmediamanager.database.domain.Genre;
 import blackmediamanager.database.domain.Movie;
 import blackmediamanager.gui.controller.helper.StatisticsControllerHelperPieChart;
 import blackmediamanager.gui.controller.helper.StatisticsControllerHelperTop10;
@@ -49,7 +49,7 @@ public class ContentStatisticsController implements Initializable {
 	private StatisticsCalculator statisticsCalculator;
 
 	private List<Movie> movies;
-	private List<Genrepos> genres;
+	private List<Genre> genres;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {

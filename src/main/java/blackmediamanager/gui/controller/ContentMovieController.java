@@ -11,7 +11,6 @@ import com.omertron.themoviedbapi.MovieDbException;
 
 import blackmediamanager.application.controller.ContentMovieAppController;
 import blackmediamanager.database.domain.Audioline;
-import blackmediamanager.database.domain.Audiolinepos;
 import blackmediamanager.database.domain.Movie;
 import blackmediamanager.gui.util.converter.CollectionConverter;
 import javafx.collections.FXCollections;
@@ -97,15 +96,15 @@ public class ContentMovieController implements Initializable {
 	@FXML
 	private TableView tableAudioLine;
 	@FXML
-	private TableColumn<Audiolinepos, String> tableColumnAudioLineLanguage;
+	private TableColumn<Audioline, String> tableColumnAudioLineLanguage;
 	@FXML
-	private TableColumn<Audiolinepos, String> tableColumnAudioLineFormat;
+	private TableColumn<Audioline, String> tableColumnAudioLineFormat;
 	@FXML
-	private TableColumn<Audiolinepos, Integer> tableColumnAudioLineBitrate;
+	private TableColumn<Audioline, Integer> tableColumnAudioLineBitrate;
 	@FXML
-	private TableColumn<Audiolinepos, String> tableColumnAudioLineChannels;
+	private TableColumn<Audioline, String> tableColumnAudioLineChannels;
 	@FXML
-	private TableColumn<Audiolinepos, Boolean> tableColumnAudioLineDTSMod;
+	private TableColumn<Audioline, Boolean> tableColumnAudioLineDTSMod;
 	@FXML
 	private TextField textfieldSearch;
 	@FXML
@@ -131,13 +130,13 @@ public class ContentMovieController implements Initializable {
 		// Table audiolines
 		tableColumnAudioLineLanguage.setSortType(TableColumn.SortType.ASCENDING);
 		tableColumnAudioLineLanguage
-				.setCellValueFactory(new PropertyValueFactory<Audiolinepos, String>("audioLanguage"));
-		tableColumnAudioLineFormat.setCellValueFactory(new PropertyValueFactory<Audiolinepos, String>("audioFormat"));
+				.setCellValueFactory(new PropertyValueFactory<Audioline, String>("audioLanguage"));
+		tableColumnAudioLineFormat.setCellValueFactory(new PropertyValueFactory<Audioline, String>("audioFormat"));
 		tableColumnAudioLineBitrate
-				.setCellValueFactory(new PropertyValueFactory<Audiolinepos, Integer>("audioBitrate"));
+				.setCellValueFactory(new PropertyValueFactory<Audioline, Integer>("audioBitrate"));
 		tableColumnAudioLineChannels
-				.setCellValueFactory(new PropertyValueFactory<Audiolinepos, String>("audioChannels"));
-		tableColumnAudioLineDTSMod.setCellValueFactory(new PropertyValueFactory<Audiolinepos, Boolean>("dtsMod"));
+				.setCellValueFactory(new PropertyValueFactory<Audioline, String>("audioChannels"));
+		tableColumnAudioLineDTSMod.setCellValueFactory(new PropertyValueFactory<Audioline, Boolean>("dtsMod"));
 
 		// add Filter
 		textfieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -190,12 +189,12 @@ public class ContentMovieController implements Initializable {
 		imageCover.setImage(new Image(movie.getTmdbinfo().getCoverUrl()));
 		textAreaOverview.setText(movie.getTmdbinfo().getOverview());
 		labelMovieTitel.setText(movie.getTmdbinfo().getTitle());
-		labelYear.setText(String.valueOf(movie.getYear()));
+		labelYear.setText(String.valueOf(movie.getTmdbinfo().getReleaseDate().toString()));
 		labelRating.setText(String.valueOf(movie.getTmdbinfo().getRating()));
-		labelEdition.setText(movie.getEdition());
+		//labelEdition.setText(movie.getEdition());
 		textareaNote.setText(movie.getNote());
 		labelTMDBid.setText(String.valueOf(movie.getTmdbinfo().getTmdbId()));
-		labelDuration.setText(String.valueOf(movie.getDuration()) + " min");
+		labelDuration.setText(String.valueOf(movie.getTmdbinfo().getDuration()) + " min");
 		labelFileName.setText(movie.getFileName());
 		labelFileSize.setText(String.valueOf(movie.getFileSize()));
 		labelFormat.setText(movie.getFileFormat());
@@ -210,8 +209,8 @@ public class ContentMovieController implements Initializable {
 			labelRemux.setSelected(true);
 		}
 
-		labelOwner.setText(CollectionConverter.getGenresToString(movie.getGenres()));
-		labelGenre.setText(CollectionConverter.getGenresToString(movie.getGenres()));
+		//labelOwner.setText(CollectionConverter.getOwnersToString(movie.getMovieHasOwners()));
+		//labelGenre.setText(CollectionConverter.getGenresToString(movie.getMovieHasGenres()));
 		initializeAudioLineTable(movie);
 
 		// Order table audioline
@@ -222,10 +221,10 @@ public class ContentMovieController implements Initializable {
 
 	private void initializeAudioLineTable(Movie movie) {
 
-		List<Audiolinepos> audiolines = new LinkedList();
-
-		for (Audioline l : movie.getAudiolines()) {
-			audiolines.add(l.getAudiolinepos());
+		List<Audioline> audiolines = new LinkedList();
+/*
+		for (Audioline l : movie.getMovieHasAudiolines()) {
+			audiolines.add(l);
 		}
 
 		ObservableList<Audiolinepos> masterData = FXCollections.observableList(audiolines);
@@ -241,6 +240,7 @@ public class ContentMovieController implements Initializable {
 			});
 			return row;
 		});
+`*/
 	}
 
 }

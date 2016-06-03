@@ -1,10 +1,10 @@
 package blackmediamanager.database.dao;
 
+import blackmediamanager.database.domain.Genre;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import blackmediamanager.database.domain.Genrepos;
 import blackmediamanager.database.domain.Movie;
 import blackmediamanager.database.persistance.DBFacade;
 
@@ -32,7 +32,7 @@ public class DataHandler {
 		return DBFacade.instance.getAllMoviesOrderByOldest();
 	}
 
-	public List<Genrepos> getAllGenrePoses() {
+	public List<Genre> getAllGenrePoses() {
 		return DBFacade.instance.getAllGenrePoses();
 	}
 

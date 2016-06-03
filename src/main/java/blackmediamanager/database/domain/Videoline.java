@@ -1,5 +1,5 @@
 package blackmediamanager.database.domain;
-// Generated 23.05.2016 22:31:28 by Hibernate Tools 4.3.1
+// Generated 03.06.2016 19:51:40 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -19,11 +19,12 @@ public class Videoline  implements java.io.Serializable {
      private Integer resolutionHeight;
      private Double framerate;
      private Set movies = new HashSet(0);
+     private Set seasons = new HashSet(0);
 
     public Videoline() {
     }
 
-    public Videoline(Integer videoBitrate, String videoBitrateMode, String aspectRatio, Integer resolutionWidth, Integer resolutionHeight, Double framerate, Set movies) {
+    public Videoline(Integer videoBitrate, String videoBitrateMode, String aspectRatio, Integer resolutionWidth, Integer resolutionHeight, Double framerate, Set movies, Set seasons) {
        this.videoBitrate = videoBitrate;
        this.videoBitrateMode = videoBitrateMode;
        this.aspectRatio = aspectRatio;
@@ -31,6 +32,7 @@ public class Videoline  implements java.io.Serializable {
        this.resolutionHeight = resolutionHeight;
        this.framerate = framerate;
        this.movies = movies;
+       this.seasons = seasons;
     }
    
     public Integer getId() {
@@ -88,6 +90,13 @@ public class Videoline  implements java.io.Serializable {
     
     public void setMovies(Set movies) {
         this.movies = movies;
+    }
+    public Set getSeasons() {
+        return this.seasons;
+    }
+    
+    public void setSeasons(Set seasons) {
+        this.seasons = seasons;
     }
 
 

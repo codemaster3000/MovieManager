@@ -1,13 +1,13 @@
 package blackmediamanager.database.persistance;
 
+import blackmediamanager.database.domain.Genre;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import blackmediamanager.database.domain.Genrepos;
 import blackmediamanager.database.domain.Movie;
-import blackmediamanager.database.domain.Ownerpos;
+import blackmediamanager.database.domain.Owner;
 import blackmediamanager.database.domain.Tmdbinfo;
 import blackmediamanager.database.domain.Videoline;
 
@@ -64,9 +64,9 @@ public class DBFacade {
 		return results;
 	}
 
-	public List<Genrepos> getAllGenrePoses() {
+	public List<Genre> getAllGenrePoses() {
 		Session session = DBSession.getInstance();
-		List<Genrepos> results;
+		List<Genre> results;
 		try {
 			Query query = session.createQuery("FROM Genrepos");
 			results = query.list();
@@ -77,9 +77,9 @@ public class DBFacade {
 		return results;
 	}
 
-	public List<Ownerpos> getAllOwnerPoses() {
+	public List<Owner> getAllOwnerPoses() {
 		Session session = DBSession.getInstance();
-		List<Ownerpos> results;
+		List<Owner> results;
 		try {
 			Query query = session.createQuery("FROM Ownerpos");
 			results = query.list();

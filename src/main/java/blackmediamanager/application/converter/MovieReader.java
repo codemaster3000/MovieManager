@@ -1,5 +1,7 @@
 package blackmediamanager.application.converter;
 
+import blackmediamanager.database.domain.Audioline;
+import blackmediamanager.database.domain.Genre;
 import static java.lang.Math.toIntExact;
 
 import java.io.File;
@@ -15,10 +17,8 @@ import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
 
-import blackmediamanager.database.domain.Audiolinepos;
-import blackmediamanager.database.domain.Genrepos;
 import blackmediamanager.database.domain.Movie;
-import blackmediamanager.database.domain.Ownerpos;
+import blackmediamanager.database.domain.Owner;
 import blackmediamanager.database.domain.Tmdbinfo;
 import blackmediamanager.database.domain.Videoline;
 import blackmediamanager.database.persistance.DBFacade;
@@ -41,19 +41,17 @@ public class MovieReader {
 		// create actual movie instance and fill it with values
 		Movie movie = new Movie();
 		movie.setActive((byte) 1);
-		movie.setAudiolines(getAudiolines(mediaInfoFile));
+		movie.setMovieHasAudiolines(getAudiolines(mediaInfoFile));
 		movie.setDateAdded(date);
 		movie.setDateModified(date);
-		movie.setDuration((int) mediaInfoFile.getVideoDurationMinutes());
-		movie.setEdition("");
 		// getVersion(file.getName()); // todo: check brackets
 		movie.setFileFormat(mediaInfoFile.getFileFormat());
 		movie.setFileName(getName(file.getName())); // with or without
 													// extensions?
 		movie.setFileSize(mediaInfoFile.getFileSize());
-		movie.setGenres(getGenres(movieInfo));
+		movie.setMovieHasGenres(getGenres(movieInfo));
 		movie.setNote("");//
-		movie.setOwners(getOwner());
+		movie.setMovieHasOwners(getOwner());
 		movie.setRemux(false);
 		movie.setTmdbinfo(readTmdbData(movieInfo));
 		movie.setVideoline(getVideoline(mediaInfoFile));
@@ -95,6 +93,7 @@ public class MovieReader {
 		tmdbinfo.setTagline(getTagline(movieInfo));
 		tmdbinfo.setTitle(movieInfo.getTitle());
 		tmdbinfo.setTmdbId(movieInfo.getId());
+                tmdbinfo.setDuration(movieInfo.getRuntime());
 		tmdbinfo.setCoverUrl(TmdbInfo.instance.getMovieCoverURL(movieInfo.getId()));
 
 		return tmdbinfo;
@@ -223,12 +222,12 @@ public class MovieReader {
 		return hdd;
 	}
 
-	private static Set<Audiolinepos> getAudiolines(MediaInfoFile inf) {
+	private static Set<Audioline> getAudiolines(MediaInfoFile inf) {
 
-		Set<Audiolinepos> lines = new HashSet<>();
+		Set<Audioline> lines = new HashSet<>();
 
 		for (int i = 0; i < inf.getAudioStreamCount(); i++) {
-			Audiolinepos line = new Audiolinepos();
+			Audioline line = new Audioline();
 			line.setAudioLanguage(inf.getAudioLanguages().get(i));
 			line.setAudioFormat(inf.getAudioFormats().get(i));
 			line.setAudioBitrate(toIntExact(inf.getAudioBitratesKbps().get(i)));
@@ -261,12 +260,12 @@ public class MovieReader {
 		}
 	}
 
-	private static Set<Genrepos> getGenres(MovieInfo movieInfo) {
-		List<Genrepos> allGenres = DBFacade.instance.getAllGenrePoses();
-		Set<Genrepos> genres = new HashSet<>();
+	private static Set<Genre> getGenres(MovieInfo movieInfo) {
+		List<Genre> allGenres = DBFacade.instance.getAllGenrePoses();
+		Set<Genre> genres = new HashSet<>();
 
 		for (int i = 0; i < movieInfo.getGenreIds().size(); i++) {
-			for (Genrepos pos : allGenres) {
+			for (Genre pos : allGenres) {
 				if (movieInfo.getGenreIds().get(i).equals(pos.getId())) {
 					genres.add(pos);
 					System.out.println(pos.getType());
@@ -277,11 +276,11 @@ public class MovieReader {
 		return genres;
 	}
 
-	private static Set<Ownerpos> getOwner() {
+	private static Set<Owner> getOwner() {
 		// TODO: read from some sort of property or current user
-		Set<Ownerpos> owner = new HashSet<>();
+		Set<Owner> owner = new HashSet<>();
 
-		Ownerpos pos = new Ownerpos();
+		Owner pos = new Owner();
 		pos.setOwnerName("Ladurner");
 
 		owner.add(pos);

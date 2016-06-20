@@ -1,4 +1,4 @@
-package blackmediamanager.application.converter;
+package blackmediamanager.application.reader;
 
 import static java.lang.Math.toIntExact;
 
@@ -15,19 +15,20 @@ import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
 
+import blackmediamanager.database.dao.DataAccessException;
 import blackmediamanager.database.domain.Audiolinepos;
 import blackmediamanager.database.domain.Genrepos;
 import blackmediamanager.database.domain.Movie;
 import blackmediamanager.database.domain.Ownerpos;
 import blackmediamanager.database.domain.Tmdbinfo;
 import blackmediamanager.database.domain.Videoline;
-import blackmediamanager.database.persistance.DBFacade;
 import blackmediamanager.mediascanner.util.StringHelper;
 import blackmediamanager.scrapers.mediainfo.MediaInfoFile;
 import blackmediamanager.scrapers.tmdbinfo.TmdbInfo;
+import blackmediamanager.util.ApplicationServices;
 
 public class MovieReader {
-	public static Movie read(File file) throws MovieDbException, IOException {
+	public static Movie read(File file) throws MovieDbException, IOException, DataAccessException {
 
 		MediaInfoFile mediaInfoFile = new MediaInfoFile(file);
 		MovieInfo movieInfo = readMovieInfo(file);
@@ -261,8 +262,8 @@ public class MovieReader {
 		}
 	}
 
-	private static Set<Genrepos> getGenres(MovieInfo movieInfo) {
-		List<Genrepos> allGenres = DBFacade.instance.getAllGenrePoses();
+	private static Set<Genrepos> getGenres(MovieInfo movieInfo) throws DataAccessException {
+		List<Genrepos> allGenres = ApplicationServices.instance.getRemoteDatabaseRegistry().getGenreposDao().getAll();
 		Set<Genrepos> genres = new HashSet<>();
 
 		for (int i = 0; i < movieInfo.getGenreIds().size(); i++) {

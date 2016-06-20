@@ -8,10 +8,12 @@ import java.util.Set;
 
 import com.omertron.themoviedbapi.MovieDbException;
 
-import blackmediamanager.application.converter.MovieReader;
+import blackmediamanager.application.reader.MovieReader;
+import blackmediamanager.database.dao.DataAccessException;
 import blackmediamanager.database.dao.MovieDao;
 import blackmediamanager.database.domain.Movie;
 import blackmediamanager.mediascanner.FileScanner;
+import blackmediamanager.util.ApplicationServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -34,8 +36,9 @@ public class ContentScannerAppController {
 		void invoke(int workDone, int maxWork);
 	}
 
-	public void addFilesToDatabase(UpdateProgressCallback callback) throws MovieDbException, IOException {
-		MovieDao movieDao = new MovieDao();
+	public void addFilesToDatabase(UpdateProgressCallback callback)
+			throws MovieDbException, IOException, DataAccessException {
+		MovieDao movieDao = ApplicationServices.instance.getRemoteDatabaseRegistry().getMovieDao();
 		_tmdbNotFoundFiles.clear();
 
 		if (_scannedFiles.size() > 0) {

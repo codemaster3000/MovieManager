@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import com.omertron.themoviedbapi.MovieDbException;
 
 import blackmediamanager.application.controller.ContentMovieAppController;
+import blackmediamanager.database.dao.DataAccessException;
 import blackmediamanager.database.domain.Audioline;
 import blackmediamanager.database.domain.Audiolinepos;
 import blackmediamanager.database.domain.Movie;
@@ -118,7 +119,13 @@ public class ContentMovieController implements Initializable {
 
 		// Load data
 		dataHandler = new ContentMovieAppController();
-		List<Movie> movies = dataHandler.getAllMovies();
+		List<Movie> movies = null;
+		try {
+			movies = dataHandler.getAllMovies();
+		} catch (DataAccessException e1) {
+			// TODO show error log
+			e1.printStackTrace();
+		}
 		setMoviesIntoTable(movies);
 
 		// Table movies
@@ -141,7 +148,12 @@ public class ContentMovieController implements Initializable {
 
 		// add Filter
 		textfieldSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-			setMoviesIntoTable(dataHandler.getFilteredMovies(textfieldSearch.getText()));
+			try {
+				setMoviesIntoTable(dataHandler.getFilteredMovies(textfieldSearch.getText()));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		});
 		/*
 		 * tableMovies.setOnMouseClicked(new EventHandler<MouseEvent>() {

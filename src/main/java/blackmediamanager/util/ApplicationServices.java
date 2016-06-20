@@ -1,14 +1,25 @@
 package blackmediamanager.util;
 
+import blackmediamanager.database.dao.DaoRegistry;
+
+//Todo(Norskan): add directory path resolver
+
 public class ApplicationServices {
 	public static ApplicationServices instance = new ApplicationServices();
-	
-	private ResourcePathResolver resourcePathResolver;
+
+	private final ResourcePathResolver resourcePathResolver = new ResourcePathResolver();
+
 	public ResourcePathResolver getResourcePathResolver() {
-		if(resourcePathResolver == null) {
-			resourcePathResolver = new ResourcePathResolver();
-		}
-		
 		return resourcePathResolver;
+	}
+
+	private DaoRegistry remoteDatabaseRegistry;
+
+	public void setRemoteDatabaseRegistry(DaoRegistry remoteDatabaseRegistry) {
+		this.remoteDatabaseRegistry = remoteDatabaseRegistry;
+	}
+
+	public DaoRegistry getRemoteDatabaseRegistry() {
+		return remoteDatabaseRegistry;
 	}
 }

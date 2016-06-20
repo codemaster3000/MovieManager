@@ -8,8 +8,9 @@ package blackmediamanager.application.controller;
 import java.util.LinkedList;
 import java.util.List;
 
-import blackmediamanager.database.dao.DataHandler;
+import blackmediamanager.database.dao.DataAccessException;
 import blackmediamanager.database.domain.Movie;
+import blackmediamanager.util.ApplicationServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -20,17 +21,13 @@ import javafx.collections.ObservableList;
 public class StatisticsCalculator {
 
 	private final int MAX_VALUE = 10; // value of Top10
-	private DataHandler dataHandler;
 
 	public StatisticsCalculator() {
 	}
 
-	public void setDataHandler(DataHandler dh) {
-		dataHandler = dh;
-	}
-
-	public ObservableList<String> calcTop10MovieBiggestSize() {
-		List<Movie> movies = dataHandler.getAllMoviesOrderByFileSize();
+	public ObservableList<String> calcTop10MovieBiggestSize() throws DataAccessException {
+		List<Movie> movies = ApplicationServices.instance.getRemoteDatabaseRegistry().getMovieDao()
+				.getAllMoviesOrderByFileSize();
 		List top10List = new LinkedList();
 
 		// counter for top 10, if movies smaller 10, use number of moviss
@@ -45,8 +42,9 @@ public class StatisticsCalculator {
 		return FXCollections.observableArrayList(top10List);
 	}
 
-	public ObservableList<String> calcTop10MovieOldestMovies() {
-		List<Movie> movies = dataHandler.getAllMoviesOrderByOldest();
+	public ObservableList<String> calcTop10MovieOldestMovies() throws DataAccessException {
+		List<Movie> movies = ApplicationServices.instance.getRemoteDatabaseRegistry().getMovieDao()
+				.getAllMoviesOrderByOldest();
 		List top10List = new LinkedList();
 
 		// counter for top 10, if movies smaller 10, use number of moviss

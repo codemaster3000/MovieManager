@@ -1,6 +1,8 @@
 package blackmediamanager.application.setup.task;
 
-import blackmediamanager.database.persistance.DBFacade;
+import blackmediamanager.database.dao.DaoRegistry;
+import blackmediamanager.database.persistance.DatabaseAccessFacade;
+import blackmediamanager.util.ApplicationServices;
 
 public class TaskDatabaseLoad extends LoadTask {
 
@@ -10,7 +12,13 @@ public class TaskDatabaseLoad extends LoadTask {
 
 	@Override
 	public void run() {
-		DBFacade.instance.load();
+		DatabaseAccessFacade databaseAccessFacade = new DatabaseAccessFacade();
+		// TODO: initialize database
+		// databaseAccessFacade.init(annotationFileDirectory,
+		// databaseConnectionProperties);
+
+		DaoRegistry remoteDaoRegistry = new DaoRegistry(databaseAccessFacade);
+		ApplicationServices.instance.setRemoteDatabaseRegistry(remoteDaoRegistry);
 	}
 
 }

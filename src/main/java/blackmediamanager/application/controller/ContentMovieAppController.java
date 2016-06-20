@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import blackmediamanager.database.dao.DataAccessException;
 import blackmediamanager.database.domain.Movie;
-import blackmediamanager.database.persistance.DBFacade;
+import blackmediamanager.util.ApplicationServices;
 
 /**
  *
@@ -17,11 +18,11 @@ import blackmediamanager.database.persistance.DBFacade;
 public class ContentMovieAppController {
 
 	// Methods
-	public List<Movie> getAllMovies() {
-		return DBFacade.instance.getAllMovies();
+	public List<Movie> getAllMovies() throws DataAccessException {
+		return ApplicationServices.instance.getRemoteDatabaseRegistry().getMovieDao().getAll();
 	}
 
-	public List<Movie> getFilteredMovies(final String movie) {
+	public List<Movie> getFilteredMovies(final String movie) throws DataAccessException {
 		Predicate<Movie> filter = new Predicate<Movie>() {
 			@Override
 			public boolean test(Movie mov) {
@@ -29,6 +30,7 @@ public class ContentMovieAppController {
 				return (mov.getFileName().toLowerCase().contains(m.toLowerCase()) || m.isEmpty());
 			}
 		};
-		return DBFacade.instance.getAllMovies().parallelStream().filter(filter).collect(Collectors.<Movie> toList());
+		return ApplicationServices.instance.getRemoteDatabaseRegistry().getMovieDao().getAll().parallelStream()
+				.filter(filter).collect(Collectors.<Movie> toList());
 	}
 }

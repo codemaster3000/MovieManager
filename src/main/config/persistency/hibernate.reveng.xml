@@ -2,13 +2,22 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="moviedb"/>
-  <table-filter match-name="genre"/>
-  <table-filter match-name="ownerpos"/>
-  <table-filter match-name="audioline"/>
-  <table-filter match-name="videoline"/>
-  <table-filter match-name="movie"/>
-  <table-filter match-name="audiolinepos"/>
-  <table-filter match-name="owner"/>
-  <table-filter match-name="genrepos"/>
+  <table-filter match-name="tvshow_has_season"/>
+  <table-filter match-name="tvshow_has_genre"/>
+  <table-filter match-name="movie_has_edition"/>
+  <table-filter match-name="season_has_owner"/>
+  <table-filter match-name="season"/>
+  <table-filter match-name="edition"/>
+  <table-filter match-name="movie_collection"/>
   <table-filter match-name="tmdbinfo"/>
+  <table-filter match-name="season_has_audioline"/>
+  <table-filter match-name="videoline"/>
+  <table-filter match-name="tvshow"/>
+  <table-filter match-name="genre"/>
+  <table-filter match-name="audioline"/>
+  <table-filter match-name="owner"/>
+  <table-filter match-name="movie"/>
+  <table-filter match-name="movie_has_genre"/>
+  <table-filter match-name="movie_has_audioline"/>
+  <table-filter match-name="movie_has_owner"/>
 </hibernate-reverse-engineering>

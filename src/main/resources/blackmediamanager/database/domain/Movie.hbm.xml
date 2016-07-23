@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 03.06.2016 20:33:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="blackmediamanager.database.domain.Movie" table="movie" catalog="moviedb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="movieCollection" class="blackmediamanager.database.domain.MovieCollection" fetch="select">
+            <column name="movie_collection_id" />
+        </many-to-one>
+        <many-to-one name="tmdbinfo" class="blackmediamanager.database.domain.Tmdbinfo" fetch="select">
+            <column name="tmdbInfo_id" />
+        </many-to-one>
+        <many-to-one name="videoline" class="blackmediamanager.database.domain.Videoline" fetch="select">
+            <column name="videoLine_id" />
+        </many-to-one>
+        <property name="active" type="java.lang.Byte">
+            <column name="active" />
+        </property>
+        <property name="note" type="string">
+            <column name="note" />
+        </property>
+        <property name="remux" type="java.lang.Boolean">
+            <column name="remux" />
+        </property>
+        <property name="fileName" type="string">
+            <column name="fileName" />
+        </property>
+        <property name="fileSize" type="java.lang.Double">
+            <column name="fileSize" precision="22" scale="0" />
+        </property>
+        <property name="fileFormat" type="string">
+            <column name="fileFormat" />
+        </property>
+        <property name="dateAdded" type="date">
+            <column name="dateAdded" length="10" />
+        </property>
+        <property name="dateModified" type="timestamp">
+            <column name="dateModified" length="19" />
+        </property>
+        <set name="movieHasEditions" table="movie_has_edition" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="movie_id" not-null="true" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.MovieHasEdition" />
+        </set>
+        <set name="movieHasGenres" table="movie_has_genre" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="movie_id" not-null="true" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.MovieHasGenre" />
+        </set>
+        <set name="movieHasOwners" table="movie_has_owner" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="movie_id" not-null="true" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.MovieHasOwner" />
+        </set>
+        <set name="movieHasAudiolines" table="movie_has_audioline" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="movie_id" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.MovieHasAudioline" />
+        </set>
+    </class>
+</hibernate-mapping>

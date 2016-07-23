@@ -8,14 +8,23 @@
     <property name="hibernate.connection.username">adminDB</property>
     <property name="hibernate.connection.password">waschmaschine</property>
     <property name="hibernate.show_sql">true</property>
-    <mapping resource="database/domain/Genrepos.hbm.xml"/>
-    <mapping resource="database/domain/Videoline.hbm.xml"/>
-    <mapping resource="database/domain/Ownerpos.hbm.xml"/>
-    <mapping resource="database/domain/Owner.hbm.xml"/>
-    <mapping resource="database/domain/Audiolinepos.hbm.xml"/>
-    <mapping resource="database/domain/Audioline.hbm.xml"/>
-    <mapping resource="database/domain/Genre.hbm.xml"/>
-    <mapping resource="database/domain/Movie.hbm.xml"/>
-    <mapping resource="database/domain/Tmdbinfo.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/MovieHasGenre.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/TvshowHasSeason.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/SeasonHasAudioline.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/MovieHasAudioline.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/Season.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/Edition.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/MovieHasEdition.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/Movie.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/TvshowHasGenre.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/MovieHasOwner.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/Tmdbinfo.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/Tvshow.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/Genre.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/MovieCollection.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/Owner.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/Videoline.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/Audioline.hbm.xml"/>
+    <mapping resource="blackmediamanager/database/domain/SeasonHasOwner.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

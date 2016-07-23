@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 03.06.2016 20:33:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="blackmediamanager.database.domain.Tmdbinfo" table="tmdbinfo" catalog="moviedb" optimistic-lock="version">
+        <id name="tmdbId" type="java.lang.Integer">
+            <column name="tmdbId" />
+            <generator class="identity" />
+        </id>
+        <property name="title" type="string">
+            <column name="title" />
+        </property>
+        <property name="orginalTitel" type="string">
+            <column name="orginalTitel" />
+        </property>
+        <property name="releaseDate" type="date">
+            <column name="releaseDate" length="10" />
+        </property>
+        <property name="rating" type="java.lang.Double">
+            <column name="rating" precision="22" scale="0" />
+        </property>
+        <property name="duration" type="java.lang.Integer">
+            <column name="duration" />
+        </property>
+        <property name="overview" type="string">
+            <column name="overview" length="65535" />
+        </property>
+        <property name="tagline" type="string">
+            <column name="tagline" />
+        </property>
+        <property name="coverUrl" type="string">
+            <column name="coverURL" />
+        </property>
+        <set name="movies" table="movie" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tmdbInfo_id" />
+            </key>
+            <one-to-many class="blackmediamanager.database.domain.Movie" />
+        </set>
+    </class>
+</hibernate-mapping>

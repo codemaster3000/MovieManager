@@ -1,6 +1,8 @@
 import com.omertron.themoviedbapi.MovieDbException;
-import application.helpers.AppConfig;
-import services.tmdbinfo.TmdbInfo;
+
+import blackmediamanager.application.helpers.AppConfig;
+import blackmediamanager.scrapers.tmdbinfo.TmdbInfo;
+
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;

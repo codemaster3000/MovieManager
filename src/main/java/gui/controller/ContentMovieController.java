@@ -125,8 +125,8 @@ public class ContentMovieController implements Initializable {
         tableColumnAudioLineDTSMod.setCellValueFactory(new PropertyValueFactory<Audiolinepos, Boolean>("dtsMod"));
 
 
-        initializeMovieTable();
-        tableMovies.getSelectionModel().selectFirst();
+        //initializeMovieTable();
+        //tableMovies.getSelectionModel().selectFirst();
 
         try {
             tminf = new TmdbInfo(cfg.API_KEY);

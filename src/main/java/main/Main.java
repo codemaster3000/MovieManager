@@ -1,5 +1,6 @@
 package main;
 
+import application.helpers.AppConfig;
 import java.io.IOException;
 import application.setup.ApplicationController;
 import application.setup.LoadFinishedCallbackHandler;
@@ -15,10 +16,10 @@ import util.ApplicationServices;
 import util.ResourcePathResolver.ImageType;
 
 public class Main extends Application {
-	private final static String appName = "Black Movie Manager";
 	private final static String themeFileName = "theme_default";
 	private final static String iconFile = "black_folder-icon";
 	private static Stage _primaryStage;
+        private AppConfig _cfg = AppConfig.getInstance();
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -66,10 +67,22 @@ public class Main extends Application {
 
 		stage.initStyle(StageStyle.DECORATED);
 		stage.setScene(scene);
-		stage.setTitle(appName);
-		stage.setMinHeight(650);
-		stage.setMinWidth(1000);
-		stage.setMaximized(false);
+		stage.setTitle(_cfg.APP_NAME + " " + _cfg.APP_VERSION);
+                
+                try{
+                    stage.setMinHeight(Integer.parseInt(_cfg.STARTUP_WINDOWHEIGHT));
+                    stage.setMinWidth(Integer.parseInt(_cfg.STARTUP_WINDOWWIDTH));
+                } catch (Exception e) {
+                    // parse error, use default min width & height
+                    System.out.println("App config error: no valid window width & height values");
+                    stage.setMinHeight(720);
+                    stage.setMinWidth(1000);
+                }
+                if(_cfg.STARTUP_WINDOWMAXIMIZED.equals("true")){
+                    stage.setMaximized(true);
+                } else {
+                    stage.setMaximized(false);
+                }
 		stage.centerOnScreen();
 		stage.getIcons().add(new Image(ApplicationServices.instance.getResourcePathResolver()
 				.resovleIconPath(iconFile, ImageType.PNG).openStream()));
